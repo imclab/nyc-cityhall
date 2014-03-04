@@ -2,6 +2,11 @@
 
 #### SQL
 
+* username TEXT
+* password TEXT
+* date TEXT
+ 
+
 ```sql
 SELECT log_in('demo','aaa','2014-03-03T00:00:00+00:00') AS token
 ```
@@ -19,8 +24,10 @@ SELECT log_in('demo','aaa','2014-03-03T00:00:00+00:00') AS token
 
 #### SQL
 
+* token TEXT
+
 ```
-SELECT * FROM agency_overview(token) 
+SELECT * FROM agency_overview("cdfdbcb0e4ed8ce3604c8f9fe7d6b1a7") 
 ```
 
 #### Example response
