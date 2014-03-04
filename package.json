@@ -25,7 +25,8 @@
     "grunt-rev": "^0.1.0",
     "time-grunt": "^0.2.10",
     "grunt-usemin": "^2.0.2",
-    "grunt-bower-install": "^1.0.2"
+    "grunt-bower-install": "^1.0.2",
+    "grunt-s3": "^0.2.0-alpha.3"
   },
   "engines": {
     "node": ">=0.10.0"

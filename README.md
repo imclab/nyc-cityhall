@@ -28,7 +28,6 @@ Watching (for development)
 
     grunt watch
 
+Deploy to S3
 
-# Deploy
-
-    bundle exec cap staging deploy
+    grunt deploy

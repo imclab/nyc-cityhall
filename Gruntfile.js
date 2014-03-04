@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 
+  var secrets = require('./config/secrets');
+
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
@@ -66,8 +68,8 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          baseUrl: './',
-          include: '<%= root.app %>/scripts/main',
+          baseUrl: '<%= root.app %>/scripts',
+          include: 'main',
           out: '<%= root.dist %>/scripts/main.js',
           mainConfigFile: '<%= root.app %>/scripts/main.js',
         }
@@ -202,6 +204,35 @@ module.exports = function(grunt) {
           ]
         }]
       }
+    },
+
+    s3: {
+      staging: {
+        options: {
+          key: secrets.staging.key,
+          secret: secrets.staging.secret,
+          bucket: secrets.staging.bucket,
+          access: secrets.staging.access
+        },
+        upload: [{
+          src: '<%= root.dist %>/**/*.*',
+          dest: '/',
+          gzip: true
+        }]
+      },
+      production: {
+        options: {
+          key: secrets.production.key,
+          secret: secrets.production.secret,
+          bucket: secrets.production.bucket,
+          access: secrets.production.access
+        },
+        upload: [{
+          src: '<%= root.dist %>/**/*.*',
+          dest: '/',
+          gzip: true
+        }]
+      }
     }
 
   });
@@ -224,6 +255,10 @@ module.exports = function(grunt) {
     'rev',
     'usemin',
     'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    's3:staging'
   ]);
 
   grunt.registerTask('default', [
