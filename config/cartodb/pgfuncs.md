@@ -27,13 +27,21 @@ SELECT log_in('demo','aaa','2014-03-03T00:00:00+00:00') AS token
 * token TEXT
 
 ```
-SELECT * FROM agency_overview("cdfdbcb0e4ed8ce3604c8f9fe7d6b1a7") 
+SELECT * FROM agency_overview('cdfdbcb0e4ed8ce3604c8f9fe7d6b1a7') 
 ```
 
 #### Example response
 
 ```json
-todo
+rows: [
+{
+agency: "NYPD",
+indicator_name: "robbery ",
+indicator_id: "robbery",
+frequency: "weekly",
+full_green_percent: -2.5,
+change: -4.5
+},
 ```
 
 
