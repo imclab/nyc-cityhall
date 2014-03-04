@@ -42,6 +42,15 @@ frequency: "weekly",
 full_green_percent: -2.5,
 change: -4.5
 },
+{
+agency: "NYPD",
+indicator_name: "major felony crime",
+indicator_id: "major_felony_crime",
+frequency: "weekly",
+full_green_percent: 50,
+change: -1.1
+}
+]
 ```
 
 
