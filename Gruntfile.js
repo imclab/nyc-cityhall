@@ -207,18 +207,21 @@ module.exports = function(grunt) {
     },
 
     s3: {
+      options: {
+        upload: [{
+          src: '<%= root.dist %>/**/*.*',
+          dest: '/',
+          gzip: true
+        }],
+      },
       staging: {
         options: {
           key: secrets.staging.key,
           secret: secrets.staging.secret,
           bucket: secrets.staging.bucket,
-          access: secrets.staging.access
+          access: secrets.staging.access,
+          debug: true
         },
-        upload: [{
-          src: '<%= root.dist %>/**/*.*',
-          dest: '/',
-          gzip: true
-        }]
       },
       production: {
         options: {
@@ -226,12 +229,7 @@ module.exports = function(grunt) {
           secret: secrets.production.secret,
           bucket: secrets.production.bucket,
           access: secrets.production.access
-        },
-        upload: [{
-          src: '<%= root.dist %>/**/*.*',
-          dest: '/',
-          gzip: true
-        }]
+        }
       }
     }
 
