@@ -1,0 +1,25 @@
+#header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+}
+
+.page {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 130px;
+
+  &.is-page-active {
+    display: block;
+  }
+
+  &#index {
+    top: 0;
+    z-index: 1;
+  }
+}

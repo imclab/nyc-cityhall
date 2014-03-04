@@ -10,7 +10,8 @@ module.exports = function(grunt) {
     root: {
       app: 'public/app',
       dist: 'public/dist',
-      tmp: 'public/.tmp'
+      tmp: 'public/.tmp',
+      test: 'public/test'
     },
 
     watch: {
@@ -50,6 +51,10 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         '<%= root.app %>/scripts/{,*/}{,*/}*.js'
       ]
+    },
+
+    mocha_phantomjs: {
+      all: ['<%= root.test %>/index.html']
     },
 
     requirejs: {
@@ -201,7 +206,13 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerTask('test', [
+    'jshint',
+    'mocha_phantomjs'
+  ]);
+
   grunt.registerTask('build', [
+    'test',
     'clean:dist',
     'requirejs',
     'useminPrepare',
@@ -217,7 +228,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'clean:server',
-    'jshint',
+    'test',
     'compass:server'
   ]);
 };

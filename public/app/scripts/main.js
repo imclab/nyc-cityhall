@@ -6,7 +6,8 @@ require.config({
     jquery: '../vendor/jquery/dist/jquery',
     underscore: '../vendor/underscore/underscore',
     backbone: '../vendor/backbone/backbone',
-    handlebars: '../vendor/handlebars/handlebars'
+    handlebars: '../vendor/handlebars/handlebars',
+    text: '../vendor/requirejs-text/text'
   },
 
   shim: {
@@ -27,7 +28,7 @@ require.config({
 
 });
 
-require(['routes'], function(Router) {
+require(['router'], function(Router) {
 
   new Router();
 
