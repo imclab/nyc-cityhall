@@ -1,0 +1,25 @@
+{
+  "name": "nyc-cityhall",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Vizzuality/nyc-cityhall",
+  "authors": [
+    "David Inga <david.inga@simbiotica.es>"
+  ],
+  "description": "A New York dashboard for the Mayor",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/app/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "backbone": "~1.1.2",
+    "underscore": "~1.6.0",
+    "requirejs-text": "~2.0.10",
+    "handlebars": "~1.3.0",
+    "jquery": "~2.1.0"
+  }
+}
