@@ -29,12 +29,12 @@ define([
         if (err) {
           throw err.responseText;
         } else {
-          self.render();
+          self.sortAndRender();
         }
       });
 
       this.filter.on('change:period', this.changePeriod, this);
-      this.filter.on('change:sort', this.sortBy, this);
+      this.filter.on('change:sort', this.sortAndRender, this);
     },
 
     render: function() {
@@ -66,7 +66,7 @@ define([
       });
     },
 
-    sortBy: function() {
+    sortAndRender: function() {
       var self = this;
 
       function sortByPeriod() {
@@ -100,6 +100,9 @@ define([
         this.indicators.comparator = function(indicator) {
           return -indicator.get(sortByPeriod()) + indicator.get('full');
         };
+        break;
+      case 'department':
+          this.indicators.comparator = 'agency';
         break;
       }
 
