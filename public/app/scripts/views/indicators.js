@@ -1,12 +1,13 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone',
   'handlebars',
   'models/filter',
   'collections/indicators',
   'text!../../templates/indicators.handlebars'
-], function(Backbone, Handlebars, filterModel, IndicatorsCollection, tpl) {
+], function(_, Backbone, Handlebars, filterModel, IndicatorsCollection, tpl) {
 
   var IndicatorsView = Backbone.View.extend({
 
