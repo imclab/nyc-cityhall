@@ -10,6 +10,7 @@ require.config({
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
     text: '../vendor/requirejs-text/text',
+    sprintf: '../vendor/sprintf/src/sprintf',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
   },
@@ -27,6 +28,9 @@ require.config({
     },
     handlebars: {
       exports: 'Handlebars'
+    },
+    sprintf: {
+      exports: 'sprintf'
     },
     mocha: {
       exports: 'mocha'

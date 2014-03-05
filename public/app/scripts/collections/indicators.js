@@ -19,6 +19,7 @@ define([
           id: row.indicator_id,
           name: row.indicator_name,
           agency: row.agency,
+          type: row.measure_type,
           full: row.full_green_percent,
           daily: null,
           weekly: row.weekly_percent,
