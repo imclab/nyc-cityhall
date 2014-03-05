@@ -134,6 +134,63 @@ Now, let's look at the Three menu options for 'TIMEFRAME'. These change the valu
 |Bottom left| current + "%"|
 |Bottom right| previous + "%"|
 
+## Level 2: Map
+
+
+#### SQL
+
+* indicator_id TEXT
+* geog_type TEXT (verbatum from the geog_type1  or geog_type2 response)
+* token TEXT
+* cache_buster TEXT
+
+```
+select * FROM get_agg_geo(indicator_id, geog_type,'"+token+"','"+buster+"')
+```
+
+#### Example in cartodb.js SQL request
+
+```javascript
+
+      function main() {
+        var map = new L.Map('map', { 
+          zoomControl: false,
+          center: [40.7, -74],
+          zoom: 11
+        });
+
+        L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+          attribution: 'Stamen'
+        }).addTo(map);
+
+        var indicator_id = "robbery",
+            geog_type1 = "nypp",
+            date = "03/03/2014",
+            buster = "03/05/2014",
+            token = "a5a35ecf6876cffd1f283780d7bc89a9";
+
+        var sql = "WITH indicator AS (" +
+                  "SELECT * FROM get_agg_geo('"+indicator_id+"','"+geog_type1+"','"+token+"','"+buster+"') WHERE date = '"+date+"')" +
+                  "SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.value, i.percent_change FROM "+geog_type1+" g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)";
+                  console.log(sql)
+        // TODO, cartocss will need to be calculated better..
+        var cartocss = '#'+geog_type1+' {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [value = null] {polygon-fill: #777;}}';
+        // create a layer with 1 sublayer
+        cartodb.createLayer(map, {
+          user_name: 'nyc-cityhall',
+          type: 'cartodb',
+          sublayers: [{
+            sql: sql,
+            cartocss: cartocss
+          }]
+        }).done(function(layer) {
+          // add the layer to our map which already contains 1 sublayer
+          map.addLayer(layer);
+        });
+      }
+
+      window.onload = main;
+```
 
 
 
