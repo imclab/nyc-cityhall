@@ -25,10 +25,10 @@ SELECT log_in('demo','aaa','2014-03-03T00:00:00+00:00') AS token
 #### SQL
 
 * token TEXT
+* cache_buster TEXT
 
 ```
-WITH cache_buster AS (SELECT '2014-03-03')
-select * FROM data_overview('0a6dadd0123676f4830340de8d382cd4')
+select * FROM data_overview('0a6dadd0123676f4830340de8d382cd4', '2014-03-03')
 ```
 
 #### Example response
@@ -38,26 +38,34 @@ rows: [
 {
 agency: "NYPD",
 interest_type: "government",
+measure_type: "basic services",
 indicator_name: "robbery ",
 indicator_id: "robbery",
 frequency: "weekly",
 full_green_percent: -2.5,
-monthly_percent: -4.5,
-weekly_percent: -1.2,
-yearly_percent: null,
-year_ago_percent: null
+recording_units: "value",
+current: 30,
+previous: 12,
+current_fytd: 321,
+previous_fytd: 345,
+previous_year_period: 28,
+date: "03/03/2014"
 },
 {
 agency: "NYPD",
 interest_type: "government",
+measure_type: "basic services",
 indicator_name: "major felony crime",
 indicator_id: "major_felony_crime",
 frequency: "weekly",
 full_green_percent: -1.25,
-monthly_percent: -1.1,
-weekly_percent: -0.2,
-yearly_percent: -0.1,
-year_ago_percent: 0.1
+recording_units: "precent",
+current: -0.2,
+previous: -1.1,
+current_fytd: 0.1,
+previous_fytd: -0.1,
+previous_year_period: 0.1,
+date: "03/03/2014"
 }
 ]
 ```
