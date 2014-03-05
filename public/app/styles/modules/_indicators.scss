@@ -1,0 +1,27 @@
+.mod-indicators {
+  @include clearfix;
+}
+
+.mod-indicators-item {
+  float: left;
+  margin: 1%;
+  width: 18%;
+
+  background: #ccc;
+
+
+  .mod-indicators-row {
+    border-bottom: 1px solid $secondary;
+    padding: 10px;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .mod-indicators-value {
+    font-size: 60px;
+    font-weight: normal;
+  }
+
+}

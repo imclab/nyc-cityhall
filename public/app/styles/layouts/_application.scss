@@ -6,6 +6,14 @@
   height: 130px;
 }
 
+.layout-header {
+  border-bottom: 2px solid $secondary;
+}
+
+.layout-toolbar {
+  border-bottom: 2px solid $secondary;
+}
+
 .page {
   display: none;
   position: absolute;

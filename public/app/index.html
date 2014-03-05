@@ -11,32 +11,50 @@
     <!-- endbuild -->
   </head>
   <body>
-    <header class="is-hidden" id="header">
-      <div>
-        <div class="logo">NYC Dashboard</div>
-        <div id="timeView">
-          <select name="" id="">
-            <option value="">Fiscal year to date</option>
-          </select>
+    <header id="header">
+      <div class="layout-header">
+        <h1 class="logo">NYC Dashboard</h1>
+        <h2 id="titleView"></h2>
+      </div>
+      <nav class="layout-toolbar">
+        <div class="mod-toolbar" id="toolbarView">
+          <div class="mod-toolbar-item">
+            <label for="indicatorType">Viewing</label>
+            <select id="indicatorType">
+              <option value="all">All Indicators</option>
+              <option value="operation">Operation Priorities</option>
+              <option value="equality">Equality Priorities</option>
+              <option value="urgent">Urgent Attention Needed</option>
+              <option value="trending-up">Trending Up</option>
+              <option value="trending-down">Trending Down</option>
+            </select>
+          </div>
+          <div class="mod-toolbar-item">
+            <label for="indicatorPeriod">By</label>
+            <select id="indicatorPeriod">
+              <option value="year">Fiscal Year to Date</option>
+              <option value="month">Month</option>
+              <option value="week">Week</option>
+              <option value="day">Day</option>
+            </select>
+          </div>
+          <div class="mod-toolbar-item">
+            <label for="indicatorSort">Sort</label>
+            <select id="indicatorSort">
+              <option value="department">By Department</option>
+              <option value="worst">Worst to Best</option>
+              <option value="best">Best to Worst</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div>
-        <div id="titleView"></div>
-        <div class="mod-agencies-menu"></div>
-      </div>
+      </nav>
     </header>
 
-    <section class="page is-page-active" id="index">
-      <div class="logo">NYC Dashboard</div>
-      <div class="mod-agencies" id="agenciesView"></div>
+    <section class="page is-page-active" id="indicators">
+      <div class="mod-indicators" id="indicatorsView"></div>
     </section>
 
-    <section class="page" id="agency">
-      Indicators list
-    </section>
-
-    <section class="page" id="indicator">
-      SubIndicators list
+    <section class="page" id="map">
       <div id="mapView"></div>
     </section>
 

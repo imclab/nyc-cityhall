@@ -7,7 +7,8 @@ require.config({
     underscore: '../vendor/underscore/underscore',
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
-    text: '../vendor/requirejs-text/text'
+    text: '../vendor/requirejs-text/text',
+    sprintf: '../vendor/sprintf/src/sprintf'
   },
 
   shim: {
@@ -23,6 +24,9 @@ require.config({
     },
     handlebars: {
       exports: 'Handlebars'
+    },
+    sprintf: {
+      exports: 'sprintf'
     }
   }
 

@@ -1,7 +1,12 @@
 @import
   "compass/css3",
+
   "settings",
   "mixins",
   "base",
   "states",
-  "layouts/application";
+
+  "layouts/application",
+
+  "modules/toolbar",
+  "modules/indicators";

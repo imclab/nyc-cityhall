@@ -1,0 +1,26 @@
+{{#each indicators}}
+  <article class="mod-indicators-item">
+    <header class="mod-indicators-row">
+      <a href="#" class="mod-indicators-agency" data-agency="{{agency}}">{{agency}}</a>
+      <h2>{{name}}</h2>
+    </header>
+    <div class="mod-indicators-row">
+      <strong class="mod-indicators-value is-hidden" data-period="year">{{yearly}}</strong>
+      <strong class="mod-indicators-value is-hidden" data-period="month">{{monthly}}</strong>
+      <strong class="mod-indicators-value is-hidden" data-period="week">{{weekly}}</strong>
+      <strong class="mod-indicators-value is-hidden" data-period="day">{{daily}}</strong>
+    </div>
+    <div class="mod-indicators-row">
+      <table>
+        <tr>
+          <th>FYTD</th>
+          <th>Previous FYTD</th>
+        </tr>
+        <tr>
+          <td>{{year}}</td>
+          <td>{{yearAgo}}</td>
+        </tr>
+      </table>
+    </div>
+  </article>
+{{/each}}

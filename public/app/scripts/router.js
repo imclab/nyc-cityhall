@@ -2,25 +2,22 @@
 
 define([
   'backbone',
-  'views/agencies'
-], function(Backbone, AgenciesView) {
+  'views/toolbar',
+  'views/indicators'
+], function(Backbone, ToolbarView, IndicatorsView) {
 
-  var pages, headerPage, indexPage, agencyPage, indicatorPage;
+  var pages, indicatorsPage;
 
   pages = $('.page');
-  headerPage = $('#header');
-  indexPage = $('#index');
-  agencyPage = $('#agency');
-  indicatorPage = $('#indicator');
+  indicatorsPage = $('#indicators');
 
-  new AgenciesView();
+  new ToolbarView();
+  new IndicatorsView();
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      '': 'showIntro',
-      'agency/:agency': 'showAgency',
-      'agency/:agency/indicator/:indicator': 'showIndicator'
+      '': 'showIndicators'
     },
 
     initialize: function() {
@@ -29,25 +26,9 @@ define([
       });
     },
 
-    showIntro: function() {
-      console.log('intro');
-      headerPage.addClass('is-hidden');
+    showIndicators: function() {
       pages.removeClass('is-page-active');
-      indexPage.addClass('is-page-active');
-    },
-
-    showAgency: function(agency) {
-      console.log('agency: ' + agency);
-      headerPage.removeClass('is-hidden');
-      pages.removeClass('is-page-active');
-      agencyPage.addClass('is-page-active');
-    },
-
-    showIndicator: function(agency, indicator) {
-      console.log('agency: ' + agency, ' and indicator: ' + indicator);
-      headerPage.removeClass('is-hidden');
-      pages.removeClass('is-page-active');
-      indicatorPage.addClass('is-page-active');
+      indicatorsPage.addClass('is-page-active');
     }
 
   });
