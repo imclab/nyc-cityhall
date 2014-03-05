@@ -92,37 +92,47 @@ Now, let's look at the Three menu options for 'TIMEFRAME'. These change the valu
 
 *major_felony_crime (recording_units = "percent")*
 
-Main value:  (current_fytd - previous_fytd) + "%"
-Bottom left: current_fytd + "%"
-Bottom right: previous_fytd + "%"
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current_fytd - previous_fytd) + "%"|
+|Bottom left| current_fytd + "%"|
+|Bottom right| previous_fytd + "%"|
 
 ##### Same period last year
 
 *robbery (recording_units = "value")*
 
-Main value:  100 * (1.0 - (current / previous_year_period)) + "%"
-Bottom left: current
-Bottom right: previous_year_period
+| value | calculation |
+|:------:|:-------:|
+|Main value|  100 * (1.0 - (current / previous_year_period)) + "%"|
+|Bottom left| current|
+|Bottom right| previous_year_period|
 
 *major_felony_crime (recording_units = "percent")*
 
-Main value:  (current - previous_year_period) + "%"
-Bottom left: current + "%"
-Bottom right: previous_year_period + "%"
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current - previous_year_period) + "%"|
+|Bottom left| current + "%"|
+|Bottom right| previous_year_period + "%"|
 
 ##### Last month/day/year
 
 *robbery (recording_units = "value")*
 
-Main value:  100 * (1.0 - (current / previous)) + "%"
-Bottom left: current
-Bottom right: previous
+| value | calculation |
+|:------:|:-------:|
+|Main value|  100 * (1.0 - (current / previous)) + "%"|
+|Bottom left| current|
+|Bottom right| previous|
 
 *major_felony_crime (recording_units = "percent")*
 
-Main value:  (current - previous) + "%"
-Bottom left: current + "%"
-Bottom right: previous + "%"
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current - previous) + "%"|
+|Bottom left| current + "%"|
+|Bottom right| previous + "%"|
 
 
 
