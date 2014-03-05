@@ -18,6 +18,8 @@
 }
 
 .mod-toolbar-label {
+  color: $thirth;
+  font-size: 11px;
   text-transform: uppercase;
 }
 
@@ -25,9 +27,12 @@
   & > li {
     position: relative;
   }
+
+  font-size: 15px;
 }
 
 .mod-toolbar-options {
+  min-width: 150px;
   max-height: 0;
   position: absolute;
 
@@ -38,6 +43,17 @@
 
   &.is-expanded {
     max-height: 300px;
+  }
+
+  li {
+    display: block;
+    background-color: $thirth;
+    margin: 0;
+    padding: 3px 10px;
+  }
+
+  a {
+    display: block;
   }
 }
 

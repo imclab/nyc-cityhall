@@ -12,16 +12,20 @@
 
   @include clearfix;
 
-  h1, h2 {
-    display: inline-block;
+  h1, .logo-image {
+    display: block;
+    float: left;
     margin: 0;
     padding: 0 20px;
   }
 
+  .logo-image {
+    margin-left: -20px;
+  }
+
   h1 {
     line-height: 1;
-    border-right: 2px solid $secondary;
-    margin-left: -20px;
+    border-left: 2px solid $secondary;
   }
 }
 
