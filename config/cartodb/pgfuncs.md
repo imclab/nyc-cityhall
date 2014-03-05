@@ -85,7 +85,7 @@ Now, let's look at the Three menu options for 'TIMEFRAME'. These change the valu
 *robbery (recording_units = "value")*
 
 | value | calculation |
-|*------*|*-------*|
+|:------:|:-------:|
 |Main value | 100 * (1.0 - (current_fytd / previous_fytd)) + "%" |
 |Bottom left | current_fytd |
 |Bottom right | previous_fytd |
