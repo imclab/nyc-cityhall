@@ -141,17 +141,19 @@ Now, let's look at the Three menu options for 'TIMEFRAME'. These change the valu
 
 * indicator_id TEXT
 * geog_type TEXT (verbatum from the geog_type1  or geog_type2 response)
+* date TEXT
 * token TEXT
 * cache_buster TEXT
 
+Date is the date to compare for your data. If NULL, add data is returned. 
+
 ```
-select * FROM get_agg_geo(indicator_id, geog_type,'"+token+"','"+buster+"')
+select * FROM get_agg_geo(indicator_id, geog_type, date, token, buster)
 ```
 
 #### Example in cartodb.js SQL request
 
 ```javascript
-
       function main() {
         var map = new L.Map('map', { 
           zoomControl: false,
@@ -166,11 +168,11 @@ select * FROM get_agg_geo(indicator_id, geog_type,'"+token+"','"+buster+"')
         var indicator_id = "robbery",
             geog_type1 = "nypp",
             date = "03/03/2014",
-            buster = "03/05/2014",
+            buster = "03/04/2014",
             token = "a5a35ecf6876cffd1f283780d7bc89a9";
 
         var sql = "WITH indicator AS (" +
-                  "SELECT * FROM get_agg_geo('"+indicator_id+"','"+geog_type1+"','"+token+"','"+buster+"') WHERE date = '"+date+"')" +
+                  "SELECT * FROM get_agg_geo('"+indicator_id+"','"+geog_type1+"','"+date+"','"+token+"','"+buster+"'))" +
                   "SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.value, i.percent_change FROM "+geog_type1+" g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)";
                   console.log(sql)
         // TODO, cartocss will need to be calculated better..
