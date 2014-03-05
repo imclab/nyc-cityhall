@@ -19,32 +19,47 @@
       <nav class="layout-toolbar">
         <div class="mod-toolbar" id="toolbarView">
           <div class="mod-toolbar-item">
-            <label for="indicatorType">Viewing</label>
-            <select id="indicatorType">
-              <option value="all">All Indicators</option>
-              <option value="operation">Operation Priorities</option>
-              <option value="equality">Equality Priorities</option>
-              <option value="urgent">Urgent Attention Needed</option>
-              <option value="trending-up">Trending Up</option>
-              <option value="trending-down">Trending Down</option>
-            </select>
+            <span class="mod-toolbar-label">Viewing</span>
+            <ul class="mod-toolbar-selector" id="indicatorType">
+              <li>
+                <span class="current">All Indicators</span>
+                <ul class="mod-toolbar-options">
+                  <li><a href="#" data-filter="type" data-value="all">All Indicators</a></li>
+                  <li><a href="#" data-filter="type" data-value="operation">Operation Priorities</a></li>
+                  <li><a href="#" data-filter="type" data-value="equality">Equality Priorities</a></li>
+                  <li><a href="#" data-filter="type" data-value="urgent">Urgent Attention Needed</a></li>
+                  <li><a href="#" data-filter="type" data-value="trending-up">Trending Up</a></li>
+                  <li><a href="#" data-filter="type" data-value="trending-down">Trending Down</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
           <div class="mod-toolbar-item">
-            <label for="indicatorPeriod">By</label>
-            <select id="indicatorPeriod">
-              <option value="year">Fiscal Year to Date</option>
-              <option value="month">Month</option>
-              <option value="week">Week</option>
-              <option value="day">Day</option>
-            </select>
+            <span class="mod-toolbar-label">By</span>
+            <ul class="mod-toolbar-selector" id="indicatorPeriod">
+              <li>
+                <span class="current">Fiscal year to Date</span>
+                <ul class="mod-toolbar-options">
+                  <li><a href="#" data-filter="period" data-value="year">Fiscal Year to Date</a></li>
+                  <li><a href="#" data-filter="period" data-value="month">Month</a></li>
+                  <li><a href="#" data-filter="period" data-value="week">Week</a></li>
+                  <li><a href="#" data-filter="period" data-value="day">Day</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
           <div class="mod-toolbar-item">
-            <label for="indicatorSort">Sort</label>
-            <select id="indicatorSort">
-              <option value="department">By Department</option>
-              <option value="worst">Worst to Best</option>
-              <option value="best">Best to Worst</option>
-            </select>
+            <span class="mod-toolbar-label">Sort</span>
+            <ul class="mod-toolbar-selector" id="indicatorSort">
+              <li>
+                <span class="current">By Department</span>
+                <ul class="mod-toolbar-options">
+                  <li><a href="#" data-filter="sort" data-value="department">By Department</a></li>
+                  <li><a href="#" data-filter="sort" data-value="worst">Worst to Best</a></li>
+                  <li><a href="#" data-filter="sort" data-value="best">Best to Worst</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>

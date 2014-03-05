@@ -10,34 +10,42 @@ define([
     el: '#toolbarView',
 
     events: {
-      'change #indicatorType': 'changeType',
-      'change #indicatorPeriod': 'changePeriod',
-      'change #indicatorSort': 'changeSort'
+      'click .mod-toolbar-selector a': 'changeFilter',
+      'click .mod-toolbar-selector .current': 'expandOptions'
     },
 
     initialize: function() {
       var self = this;
 
       this.filter = filterModel;
+      this.$options = this.$el.find('.mod-toolbar-options');
 
       this.filter.on('change', function() {
         console.log(self.filter.toJSON());
       });
     },
 
-    changeType: function(e) {
-      var value = $(e.currentTarget).val();
-      this.filter.set('type', value);
+    changeFilter: function(e) {
+      var element, current;
+
+      element = $(e.currentTarget),
+      current = element.closest('.mod-toolbar-selector').find('.current');
+
+      current.text(element.text());
+      this.filter.set(element.data('filter'), element.data('value'));
+
+      this.contractOptions();
+
+      e.preventDefault();
     },
 
-    changePeriod: function(e) {
-      var value = $(e.currentTarget).val();
-      this.filter.set('period', value);
+    expandOptions: function(e) {
+      this.contractOptions();
+      $(e.currentTarget).closest('li').find('.mod-toolbar-options').toggleClass('is-expanded');
     },
 
-    changeSort: function(e) {
-      var value = $(e.currentTarget).val();
-      this.filter.set('sort', value);
+    contractOptions: function() {
+      this.$options.removeClass('is-expanded');
     }
 
   });

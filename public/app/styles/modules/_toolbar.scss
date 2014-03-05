@@ -5,3 +5,28 @@
 .mod-toolbar-item {
   float: left;
 }
+
+.mod-toolbar-label, .mod-toolbar-selector {
+  display: inline-block;
+}
+
+.mod-toolbar-selector {
+  & > li {
+    position: relative;
+  }
+}
+
+.mod-toolbar-options {
+  max-height: 0;
+  position: absolute;
+
+  overflow: hidden;
+  z-index: 100;
+
+  @include transition(all .15s ease);
+
+  &.is-expanded {
+    max-height: 300px;
+  }
+}
+
