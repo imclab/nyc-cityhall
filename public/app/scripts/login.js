@@ -20,6 +20,9 @@ require.config({
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
+    },
+    sprintf: {
+      exports: 'sprintf'
     }
   }
 

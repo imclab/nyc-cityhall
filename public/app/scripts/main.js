@@ -30,6 +30,10 @@ require.config({
 
 require(['router'], function(Router) {
 
+  if (!window.sessionStorage.getItem('token')) {
+    window.location.href = 'login.html';
+  }
+
   new Router();
 
 });

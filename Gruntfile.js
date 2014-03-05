@@ -208,28 +208,25 @@ module.exports = function(grunt) {
 
     s3: {
       options: {
-        upload: [{
-          src: '<%= root.dist %>/**/*.*',
-          dest: '/',
-          gzip: true
-        }],
+        gzip: true
       },
       staging: {
         options: {
-          key: secrets.staging.key,
-          secret: secrets.staging.secret,
+          accessKeyId: secrets.staging.key,
+          secretAccessKey: secrets.staging.secret,
           bucket: secrets.staging.bucket,
-          access: secrets.staging.access,
-          debug: true
         },
+        cwd: '<%= root.dist %>',
+        src: '**'
       },
       production: {
         options: {
-          key: secrets.production.key,
-          secret: secrets.production.secret,
-          bucket: secrets.production.bucket,
-          access: secrets.production.access
-        }
+          accessKeyId: secrets.production.key,
+          secretAccessKey: secrets.production.secret,
+          bucket: secrets.production.bucket
+        },
+        cwd: '<%= root.dist %>',
+        src: '**'
       }
     }
 
@@ -255,13 +252,18 @@ module.exports = function(grunt) {
     'htmlmin'
   ]);
 
-  grunt.registerTask('deploy', [
-    's3:staging'
-  ]);
+  grunt.registerTask('deploy', 'Deploying... be patient', function(env) {
+    if (env === 'staging') {
+      grunt.task.run(['build', 's3:staging']);
+    } else if (env === 'production') {
+      grunt.task.run(['build', 's3:production']);
+    }
+  });
 
   grunt.registerTask('default', [
     'clean:server',
     'test',
     'compass:server'
   ]);
+
 };
