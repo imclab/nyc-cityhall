@@ -40,7 +40,18 @@ define([
     },
 
     expandOptions: function(e) {
-      $(e.currentTarget).closest('li').find('.mod-toolbar-options').toggleClass('is-expanded');
+      var currentOptions, expanded;
+
+      currentOptions = $(e.currentTarget).closest('li').find('.mod-toolbar-options');
+      expanded = currentOptions.hasClass('is-expanded');
+
+      this.contractOptions();
+
+      if (expanded) {
+        currentOptions.removeClass('is-expanded');
+      } else {
+        currentOptions.addClass('is-expanded');
+      }
     },
 
     contractOptions: function() {
