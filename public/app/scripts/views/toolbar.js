@@ -10,8 +10,8 @@ define([
     el: '#toolbarView',
 
     events: {
-      'click .mod-toolbar-selector a': 'changeFilter',
-      'click .mod-toolbar-selector .current': 'expandOptions'
+      'touchstart .mod-toolbar-selector a': 'changeFilter',
+      'touchstart .mod-toolbar-selector .current': 'expandOptions'
     },
 
     initialize: function() {

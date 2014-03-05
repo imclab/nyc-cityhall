@@ -26,6 +26,7 @@
 .mod-toolbar-selector {
   & > li {
     position: relative;
+    padding: 10px 0;
   }
 
   font-size: 15px;
@@ -35,6 +36,8 @@
   min-width: 150px;
   max-height: 0;
   position: absolute;
+
+  background-color: $thirth;
 
   overflow: hidden;
   z-index: 100;
@@ -47,13 +50,16 @@
 
   li {
     display: block;
-    background-color: $thirth;
     margin: 0;
-    padding: 3px 10px;
+    padding: 0;
   }
 
   a {
     display: block;
+    padding: 5px 10px;
+    &:active {
+      background-color: darken($thirth, 10%)
+    }
   }
 }
 

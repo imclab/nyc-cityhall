@@ -14,7 +14,7 @@ define([
     el: '#indicatorsView',
 
     events: {
-      'click .mod-indicators-agency': 'filterByAgency'
+      'touchstart .mod-indicators-agency': 'filterByAgency'
     },
 
     template: Handlebars.compile(tpl),
@@ -93,16 +93,16 @@ define([
       switch (this.filter.get('sort')) {
       case 'worst':
         this.indicators.comparator = function(indicator) {
-          return indicator.get(sortByPeriod()) + indicator.get('full');
+          return indicator.get(sortByPeriod()) / indicator.get('full');
         };
         break;
       case 'best':
         this.indicators.comparator = function(indicator) {
-          return -indicator.get(sortByPeriod()) + indicator.get('full');
+          return -(indicator.get(sortByPeriod()) / indicator.get('full'));
         };
         break;
       case 'department':
-          this.indicators.comparator = 'agency';
+        this.indicators.comparator = 'agency';
         break;
       }
 
