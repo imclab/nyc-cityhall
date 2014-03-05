@@ -25,41 +25,116 @@ SELECT log_in('demo','aaa','2014-03-03T00:00:00+00:00') AS token
 #### SQL
 
 * token TEXT
+* cache_buster TEXT
 
 ```
-WITH cache_buster AS (SELECT '2014-03-03')
-select * FROM data_overview('0a6dadd0123676f4830340de8d382cd4')
+select * FROM data_overview('0a6dadd0123676f4830340de8d382cd4', '2014-03-03')
 ```
 
 #### Example response
 
 ```json
 rows: [
-{
-agency: "NYPD",
-interest_type: "government",
-indicator_name: "robbery ",
-indicator_id: "robbery",
-frequency: "weekly",
-full_green_percent: -2.5,
-monthly_percent: -4.5,
-weekly_percent: -1.2,
-yearly_percent: null,
-year_ago_percent: null
-},
-{
-agency: "NYPD",
-interest_type: "government",
-indicator_name: "major felony crime",
-indicator_id: "major_felony_crime",
-frequency: "weekly",
-full_green_percent: -1.25,
-monthly_percent: -1.1,
-weekly_percent: -0.2,
-yearly_percent: -0.1,
-year_ago_percent: 0.1
-}
+	{
+		agency: "NYPD",
+		interest_type: "government",
+		measure_type: "basic services",
+		indicator_name: "robbery ",
+		indicator_id: "robbery",
+		geog_type1: "points",
+		geog_type2: null,
+		frequency: "weekly",
+		full_green_percent: -2.5,
+		recording_units: "value",
+		current: 30,
+		previous: 12,
+		current_fytd: 321,
+		previous_fytd: 345,
+		previous_year_period: 28,
+		date: "03/03/2014"
+	},
+	{
+		agency: "NYPD",
+		interest_type: "government",
+		measure_type: "basic services",
+		indicator_name: "major felony crime",
+		indicator_id: "major_felony_crime",
+		geog_type1: "nypp",
+		geog_type2: "nycd",
+		frequency: "weekly",
+		full_green_percent: -1.25,
+		recording_units: "percent",
+		current: -0.2,
+		previous: -1.1,
+		current_fytd: 0.1,
+		previous_fytd: -0.1,
+		previous_year_period: 0.1,
+		date: "03/03/2014"
+	}
 ]
 ```
+
+** Sort by ** 
+
+Always works by the (full_green_percent - "Main value"). I'll show you how to calculate the main value below.
+
+Now, let's look at the Three menu options for 'TIMEFRAME'. These change the values displayed in the cards. 
+
+##### Fiscal Year To Date
+
+*robbery (recording_units = "value")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value | 100 * (1.0 - (current_fytd / previous_fytd)) + "%" |
+|Bottom left | current_fytd |
+|Bottom right | previous_fytd |
+
+*major_felony_crime (recording_units = "percent")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current_fytd - previous_fytd) + "%"|
+|Bottom left| current_fytd + "%"|
+|Bottom right| previous_fytd + "%"|
+
+##### Same period last year
+
+*robbery (recording_units = "value")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value|  100 * (1.0 - (current / previous_year_period)) + "%"|
+|Bottom left| current|
+|Bottom right| previous_year_period|
+
+*major_felony_crime (recording_units = "percent")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current - previous_year_period) + "%"|
+|Bottom left| current + "%"|
+|Bottom right| previous_year_period + "%"|
+
+##### Last month/day/year
+
+*robbery (recording_units = "value")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value|  100 * (1.0 - (current / previous)) + "%"|
+|Bottom left| current|
+|Bottom right| previous|
+
+*major_felony_crime (recording_units = "percent")*
+
+| value | calculation |
+|:------:|:-------:|
+|Main value|  (current - previous) + "%"|
+|Bottom left| current + "%"|
+|Bottom right| previous + "%"|
+
+
+
 
 
