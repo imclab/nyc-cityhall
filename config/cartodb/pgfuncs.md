@@ -74,4 +74,55 @@ rows: [
 ]
 ```
 
+** Sort by ** 
+
+Always works by the (full_green_percent - "Main value"). I'll show you how to calculate the main value below.
+
+Now, let's look at the Three menu options for 'TIMEFRAME'. These change the values displayed in the cards. 
+
+##### Fiscal Year To Date
+
+** robbery (recording_units = "value") **
+
+Main value:  100 * (1.0 - (current_fytd / previous_fytd)) + "%"
+Bottom left: current_fytd
+Bottom right: previous_fytd
+
+** major_felony_crime (recording_units = "percent") **
+
+Main value:  (current_fytd - previous_fytd) + "%"
+Bottom left: current_fytd + "%"
+Bottom right: previous_fytd + "%"
+
+##### Same period last year
+
+** robbery (recording_units = "value") **
+
+Main value:  100 * (1.0 - (current / previous_year_period)) + "%"
+Bottom left: current
+Bottom right: previous_year_period
+
+** major_felony_crime (recording_units = "percent") **
+
+Main value:  (current - previous_year_period) + "%"
+Bottom left: current + "%"
+Bottom right: previous_year_period + "%"
+
+##### Last month/day/year
+
+** robbery (recording_units = "value") **
+
+Main value:  100 * (1.0 - (current / previous)) + "%"
+Bottom left: current
+Bottom right: previous
+
+** major_felony_crime (recording_units = "percent") **
+
+Main value:  (current - previous) + "%"
+Bottom left: current + "%"
+Bottom right: previous + "%"
+
+
+
+
 
