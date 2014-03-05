@@ -35,38 +35,42 @@ select * FROM data_overview('0a6dadd0123676f4830340de8d382cd4', '2014-03-03')
 
 ```json
 rows: [
-{
-agency: "NYPD",
-interest_type: "government",
-measure_type: "basic services",
-indicator_name: "robbery ",
-indicator_id: "robbery",
-frequency: "weekly",
-full_green_percent: -2.5,
-recording_units: "value",
-current: 30,
-previous: 12,
-current_fytd: 321,
-previous_fytd: 345,
-previous_year_period: 28,
-date: "03/03/2014"
-},
-{
-agency: "NYPD",
-interest_type: "government",
-measure_type: "basic services",
-indicator_name: "major felony crime",
-indicator_id: "major_felony_crime",
-frequency: "weekly",
-full_green_percent: -1.25,
-recording_units: "percent",
-current: -0.2,
-previous: -1.1,
-current_fytd: 0.1,
-previous_fytd: -0.1,
-previous_year_period: 0.1,
-date: "03/03/2014"
-}
+	{
+		agency: "NYPD",
+		interest_type: "government",
+		measure_type: "basic services",
+		indicator_name: "robbery ",
+		indicator_id: "robbery",
+		geog_type1: "points",
+		geog_type2: null,
+		frequency: "weekly",
+		full_green_percent: -2.5,
+		recording_units: "value",
+		current: 30,
+		previous: 12,
+		current_fytd: 321,
+		previous_fytd: 345,
+		previous_year_period: 28,
+		date: "03/03/2014"
+	},
+	{
+		agency: "NYPD",
+		interest_type: "government",
+		measure_type: "basic services",
+		indicator_name: "major felony crime",
+		indicator_id: "major_felony_crime",
+		geog_type1: "nypp",
+		geog_type2: "nycd",
+		frequency: "weekly",
+		full_green_percent: -1.25,
+		recording_units: "percent",
+		current: -0.2,
+		previous: -1.1,
+		current_fytd: 0.1,
+		previous_fytd: -0.1,
+		previous_year_period: 0.1,
+		date: "03/03/2014"
+	}
 ]
 ```
 
