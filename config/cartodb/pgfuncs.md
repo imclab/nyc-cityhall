@@ -74,7 +74,7 @@ rows: [
 ]
 ```
 
-** Sort by ** 
+**Sort by** 
 
 Always works by the (full_green_percent - "Main value"). I'll show you how to calculate the main value below.
 
