@@ -19,20 +19,19 @@ define([
           id: row.indicator_id,
           name: row.indicator_name,
           agency: row.agency,
-          min: row.full_green_percent,
-          max: -row.full_green_percent,
+          full: row.full_green_percent,
           daily: null,
-          weekly: row.weekly_percent + '%',
-          monthly: row.monthly_percent + '%',
-          yearly: row.yearly_percent + '%'
+          weekly: row.weekly_percent,
+          monthly: row.monthly_percent,
+          yearly: row.yearly_percent
         };
 
         if (row.year_ago_percent && row.yearly_percent) {
-          indicator.year = row.year_ago_percent + row.yearly_percent + '%';
+          indicator.year = row.year_ago_percent + row.yearly_percent;
         }
 
         if (row.year_ago_percent) {
-          indicator.yearAgo = row.year_ago_percent + '%';
+          indicator.yearAgo = row.year_ago_percent;
         }
 
         return indicator;

@@ -1,13 +1,24 @@
 .mod-toolbar {
   @include clearfix;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .mod-toolbar-item {
   float: left;
+  margin-right: 40px;
 }
 
 .mod-toolbar-label, .mod-toolbar-selector {
   display: inline-block;
+}
+
+.mod-toolbar-label {
+  text-transform: uppercase;
 }
 
 .mod-toolbar-selector {

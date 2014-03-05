@@ -40,7 +40,6 @@ define([
     },
 
     expandOptions: function(e) {
-      this.contractOptions();
       $(e.currentTarget).closest('li').find('.mod-toolbar-options').toggleClass('is-expanded');
     },
 

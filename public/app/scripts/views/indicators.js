@@ -34,6 +34,7 @@ define([
       });
 
       this.filter.on('change:period', this.changePeriod, this);
+      this.filter.on('change:sort', this.sortBy, this);
     },
 
     render: function() {
@@ -63,6 +64,47 @@ define([
           $el.removeClass('is-hidden');
         }
       });
+    },
+
+    sortBy: function() {
+      var self = this;
+
+      function sortByPeriod() {
+        var comparator;
+
+        switch (self.filter.get('period')) {
+        case 'year':
+          comparator = 'yearly';
+          break;
+        case 'month':
+          comparator = 'monthly';
+          break;
+        case 'week':
+          comparator = 'weekly';
+          break;
+        case 'day':
+          comparator = 'daily';
+          break;
+        }
+
+        return comparator;
+      }
+
+      switch (this.filter.get('sort')) {
+      case 'worst':
+        this.indicators.comparator = function(indicator) {
+          return indicator.get(sortByPeriod()) + indicator.get('full');
+        };
+        break;
+      case 'best':
+        this.indicators.comparator = function(indicator) {
+          return -indicator.get(sortByPeriod()) + indicator.get('full');
+        };
+        break;
+      }
+
+      this.indicators.sort();
+      this.render();
     }
 
   });

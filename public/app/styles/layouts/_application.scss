@@ -8,10 +8,26 @@
 
 .layout-header {
   border-bottom: 2px solid $secondary;
+  padding: 20px;
+
+  @include clearfix;
+
+  h1, h2 {
+    display: inline-block;
+    margin: 0;
+    padding: 0 20px;
+  }
+
+  h1 {
+    line-height: 1;
+    border-right: 2px solid $secondary;
+    margin-left: -20px;
+  }
 }
 
 .layout-toolbar {
   border-bottom: 2px solid $secondary;
+  padding: 20px;
 }
 
 .page {
