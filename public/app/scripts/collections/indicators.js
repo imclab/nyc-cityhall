@@ -32,7 +32,8 @@ define([
           currentValue: row.current_fytd,
           previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
           previousValue: row.previous_fytd,
-          full: row.full_green_percent
+          full: row.full_green_percent,
+          unit: row.recording_units
         };
 
         switch(self.filter.get('period')) {

@@ -33,12 +33,8 @@ define([
       this.filter = filterModel.instance;
       this.indicators = new IndicatorsCollection();
 
-      Backbone.on('routeapp', function() {
-        console.log('app');
-      }, this);
-
-      //this.filter.on('change:period', this.changePeriod, this);
-      //this.filter.on('change:sort', this.sortAndRender, this);
+      this.filter.on('change:period', this.getData, this);
+      this.filter.on('change:sort', this.sortAndRender, this);
     },
 
     getData: function() {
@@ -57,8 +53,6 @@ define([
       this.$el.html(this.template({
         indicators: this.indicators.toJSON()
       }));
-
-      //this.changePeriod();
     },
 
     filterByAgency: function(e) {
@@ -67,54 +61,20 @@ define([
       e.preventDefault();
     },
 
-    changePeriod: function() {
-      var self, elements;
-
-      self = this;
-      elements = this.$el.find('.mod-indicators-value-item');
-
-      elements.addClass('is-hidden');
-      _.each(elements, function(el) {
-        var $el = $(el);
-        if ($el.data('period') === self.filter.get('period')) {
-          $el.removeClass('is-hidden');
-        }
-      });
-    },
-
     sortAndRender: function() {
-      var self = this;
-
-      function sortByPeriod() {
-        var comparator;
-
-        switch (self.filter.get('period')) {
-        case 'year':
-          comparator = 'yearly';
-          break;
-        case 'month':
-          comparator = 'monthly';
-          break;
-        case 'week':
-          comparator = 'weekly';
-          break;
-        case 'day':
-          comparator = 'daily';
-          break;
-        }
-
-        return comparator;
+      function getValue(indicator) {
+        return Number(indicator.get('value').split('%')[0]);
       }
 
       switch (this.filter.get('sort')) {
       case 'worst':
         this.indicators.comparator = function(indicator) {
-          return indicator.get(sortByPeriod()) / indicator.get('full');
+          return getValue(indicator) / indicator.get('full');
         };
         break;
       case 'best':
         this.indicators.comparator = function(indicator) {
-          return -(indicator.get(sortByPeriod()) / indicator.get('full'));
+          return -(getValue(indicator) / indicator.get('full'));
         };
         break;
       case 'department':
