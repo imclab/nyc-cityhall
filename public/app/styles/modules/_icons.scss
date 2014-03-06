@@ -2,10 +2,22 @@
   display: block;
 }
 
+button.icon {
+  border: 0;
+}
+
 .icon-menu {
   height: 23px;
   width: 28px;
 
   background: image-url("assets/icon-menu.png");
   background-size: 28px 23px;
+}
+
+.icon-close {
+  width: 12px;
+  height: 12px;
+
+  background: image-url("assets/icon-close.png");
+  background-size: 12px 12px;
 }

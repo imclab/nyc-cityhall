@@ -13,6 +13,23 @@ define([
 
     el: '#asideView',
 
+    events: function() {
+
+      if ('ontouchstart' in window) {
+        return {
+          'touchstart .icon-close': 'close',
+          'touchstart .mod-aside-agencies a': 'changeAgency',
+          'touchstart .mod-aside-types a': 'changeIndicatorType'
+        };
+      }
+
+      return {
+        'click .icon-close': 'close',
+        'click .mod-aside-agencies a': 'changeAgency',
+        'click .mod-aside-types a': 'changeIndicatorType'
+      };
+    },
+
     template: Handlebars.compile(tpl),
 
     initialize: function() {
@@ -23,8 +40,6 @@ define([
     },
 
     render: function() {
-      var self = this;
-
       this.$el.html(this.template({
         agencies: this.agencies.toJSON(),
         types: this.types.toJSON()
@@ -51,6 +66,18 @@ define([
       this.types.add(types);
 
       this.render();
+    },
+
+    changeAgency: function(e) {
+      e.preventDefault();
+    },
+
+    changeIndicatorType: function(e) {
+      e.preventDefault();
+    },
+
+    close: function() {
+      Backbone.Events.trigger('application:toggle');
     }
 
   });

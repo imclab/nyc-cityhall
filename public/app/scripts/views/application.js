@@ -20,8 +20,14 @@ define([
       };
     },
 
+    initialize: function() {
+      Backbone.Events.on('application:toggle', this.toggleAside, this);
+    },
+
     toggleAside: function(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
       this.$el.toggleClass('is-moved');
     }
 

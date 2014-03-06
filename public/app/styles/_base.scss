@@ -19,3 +19,13 @@ a {
   color: $secondary;
   text-decoration: none;
 }
+
+button {
+  cursor: pointer;
+}
+
+a, button {
+  &:focus {
+    outline: none;
+  }
+}

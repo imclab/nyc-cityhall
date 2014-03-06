@@ -1,15 +1,18 @@
 <div class="row">
   <div class="grid-2 grid-md-5 grid-sm-8">
-    <ul>
-      {{#each agencies}}
-        <li>{{name}}</li>
-      {{/each}}
-    </ul>
+    <div class="mod-aside-content">
+      <button class="icon icon-close"></button>
+      <ul class="mod-aside-agencies">
+        {{#each agencies}}
+          <li><a href="#{{name}}" data-agency="{{name}}">{{name}}</a></li>
+        {{/each}}
+      </ul>
 
-    <ul>
-      {{#each types}}
-        <li>{{name}}</li>
-      {{/each}}
-    </ul>
+      <ul class="mod-aside-types">
+        {{#each types}}
+          <li><a href="#{{name}}" data-type="{{name}}">{{name}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </div>
