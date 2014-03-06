@@ -2,8 +2,14 @@ body {
   background: $primary;
 
   color: $secondary;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-family: $font-family;
+  font-size: $font-size;
+
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 30px;
 }
 
 a {

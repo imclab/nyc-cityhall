@@ -8,7 +8,8 @@ require.config({
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
     text: '../vendor/requirejs-text/text',
-    sprintf: '../vendor/sprintf/src/sprintf'
+    sprintf: '../vendor/sprintf/src/sprintf',
+    moment: '../vendor/momentjs/moment'
   },
 
   shim: {
@@ -33,10 +34,6 @@ require.config({
 });
 
 require(['router'], function(Router) {
-
-  if (!window.sessionStorage.getItem('token')) {
-    window.location.href = 'login.html';
-  }
 
   new Router();
 

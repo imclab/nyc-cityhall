@@ -3,35 +3,72 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 130px;
+  height: 122px;
+}
+
+.layout-main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  background: $primary;
+
+  z-index: 1;
+
+  @include transition(all .15s ease);
+
+  &.is-moved {
+    left: 20%;
+  }
+}
+
+.layout-aside {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 20%;
+
+  background: $fourth;
+  z-index: 0;
 }
 
 .layout-header {
-  border-bottom: 2px solid $secondary;
-  padding: 20px;
+  border-bottom: 1px solid $thirth;
+  height: 40px;
+  margin: 0 1%;
+  padding: 20px 0;
 
   @include clearfix;
 
-  h1, .logo-image {
+  .logo-image {
     display: block;
-    float: left;
-    margin: 0;
-    padding: 0 20px;
+    float: right;
+    margin: 9px 0;
   }
 
-  .logo-image {
-    margin-left: -20px;
+  .toggle-aside {
+    float: left;
+  }
+
+  .icon-menu {
+    margin-top: 8px;
   }
 
   h1 {
-    line-height: 1;
-    border-left: 2px solid $secondary;
+    float: left;
+    margin: 0 0 0 20px;
+
+    line-height: 40px;
   }
 }
 
 .layout-toolbar {
-  border-bottom: 2px solid $secondary;
-  padding: 10px 20px;
+  height: 40px;
+  border-bottom: 1px solid $thirth;
+  margin: 0 1%;
 }
 
 .page {
@@ -44,10 +81,6 @@
 
   &.is-page-active {
     display: block;
-  }
-
-  &#index {
-    top: 0;
-    z-index: 1;
+    z-index: 3;
   }
 }

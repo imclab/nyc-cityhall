@@ -11,67 +11,92 @@
     <!-- endbuild -->
   </head>
   <body>
-    <header id="header">
-      <div class="layout-header">
-        <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="77" height="26">
-        <h1 id="titleView">All Indicators</h1>
-      </div>
-      <nav class="layout-toolbar">
-        <div class="mod-toolbar" id="toolbarView">
-          <div class="mod-toolbar-item">
-            <span class="mod-toolbar-label">Viewing</span>
-            <ul class="mod-toolbar-selector" id="indicatorType">
-              <li>
-                <span class="current">All Indicators</span>
-                <ul class="mod-toolbar-options">
-                  <li><a href="#" data-filter="type" data-value="all">All Indicators</a></li>
-                  <li><a href="#" data-filter="type" data-value="operation">Operation Priorities</a></li>
-                  <li><a href="#" data-filter="type" data-value="equality">Equality Priorities</a></li>
-                  <li><a href="#" data-filter="type" data-value="urgent">Urgent Attention Needed</a></li>
-                  <li><a href="#" data-filter="type" data-value="trending-up">Trending Up</a></li>
-                  <li><a href="#" data-filter="type" data-value="trending-down">Trending Down</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="mod-toolbar-item">
-            <span class="mod-toolbar-label">By</span>
-            <ul class="mod-toolbar-selector" id="indicatorPeriod">
-              <li>
-                <span class="current">Fiscal year to Date</span>
-                <ul class="mod-toolbar-options">
-                  <li><a href="#" data-filter="period" data-value="year">Fiscal Year to Date</a></li>
-                  <li><a href="#" data-filter="period" data-value="month">Month</a></li>
-                  <li><a href="#" data-filter="period" data-value="week">Week</a></li>
-                  <li><a href="#" data-filter="period" data-value="day">Day</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="mod-toolbar-item">
-            <span class="mod-toolbar-label">Sort</span>
-            <ul class="mod-toolbar-selector" id="indicatorSort">
-              <li>
-                <span class="current">By Department</span>
-                <ul class="mod-toolbar-options">
-                  <li><a href="#" data-filter="sort" data-value="department">By Department</a></li>
-                  <li><a href="#" data-filter="sort" data-value="worst">Worst to Best</a></li>
-                  <li><a href="#" data-filter="sort" data-value="best">Best to Worst</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+    <div class="layout-main is-hidden" id="applicationView">
+
+      <header id="header">
+        <div class="layout-header">
+          <nav class="toggle-aside">
+            <a href="#" id="toggleAsideBtn" class="icon icon-menu"></a>
+          </nav>
+          <h1 id="titleView">All Indicators</h1>
+          <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="70" height="23">
         </div>
-      </nav>
-    </header>
+        <nav class="layout-toolbar">
+          <div class="mod-toolbar" id="toolbarView">
+            <div class="mod-toolbar-item">
+              <span class="mod-toolbar-label">Viewing</span>
+              <ul class="mod-toolbar-selector" id="indicatorType">
+                <li>
+                  <span class="current">All Indicators</span>
+                  <ul class="mod-toolbar-options">
+                    <li><a href="#" data-filter="type" data-value="all">All Indicators</a></li>
+                    <li><a href="#" data-filter="type" data-value="operation">Operation Priorities</a></li>
+                    <li><a href="#" data-filter="type" data-value="equality">Equality Priorities</a></li>
+                    <li><a href="#" data-filter="type" data-value="urgent">Urgent Attention Needed</a></li>
+                    <li><a href="#" data-filter="type" data-value="trending-up">Trending Up</a></li>
+                    <li><a href="#" data-filter="type" data-value="trending-down">Trending Down</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="mod-toolbar-item">
+              <span class="mod-toolbar-label">By</span>
+              <ul class="mod-toolbar-selector" id="indicatorPeriod">
+                <li>
+                  <span class="current">Fiscal year to Date</span>
+                  <ul class="mod-toolbar-options">
+                    <li><a href="#" data-filter="period" data-value="year">Fiscal Year to Date</a></li>
+                    <li><a href="#" data-filter="period" data-value="month">Month</a></li>
+                    <li><a href="#" data-filter="period" data-value="week">Week</a></li>
+                    <li><a href="#" data-filter="period" data-value="day">Day</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="mod-toolbar-item">
+              <span class="mod-toolbar-label">Sort</span>
+              <ul class="mod-toolbar-selector" id="indicatorSort">
+                <li>
+                  <span class="current">By Department</span>
+                  <ul class="mod-toolbar-options">
+                    <li><a href="#" data-filter="sort" data-value="department">By Department</a></li>
+                    <li><a href="#" data-filter="sort" data-value="worst">Worst to Best</a></li>
+                    <li><a href="#" data-filter="sort" data-value="best">Best to Worst</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
 
-    <section class="page is-page-active" id="indicators">
-      <div class="mod-indicators" id="indicatorsView"></div>
-    </section>
+      <section class="page is-page-active" id="indicators">
+        <div class="mod-indicators" id="indicatorsView"></div>
+      </section>
 
-    <section class="page" id="map">
-      <div id="mapView"></div>
-    </section>
+      <section class="page" id="map">
+        <div id="mapView"></div>
+      </section>
+
+    </div>
+
+    <div class="layout-main is-hidden" id="loginView">
+      <form action="#">
+        <div class="form-row">
+          <label for="username">User</label>
+          <input type="text" name="username">
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" name="password">
+        </div>
+        <div class="form-row">
+          <input type="submit" value="Login">
+        </div>
+      </form>
+    </div>
+
+    <aside class="layout-aside is-hidden" id="asideView"></aside>
 
     <script data-main="scripts/main" src="vendor/requirejs/require.js"></script>
   </body>

@@ -8,10 +8,10 @@ define([
 
   var LoginView = Backbone.View.extend({
 
-    el: '#loginFormView',
+    el: '#loginView',
 
     events: {
-      'submit': 'onSubmit'
+      'submit form': 'onSubmit'
     },
 
     initialize: function() {
@@ -23,11 +23,12 @@ define([
 
       function callback(err, user) {
         if (err) {
-          throw err.responseText;
+          window.sessionStorage.removeItem('token');
         } else {
           window.sessionStorage.setItem('token', user.get('token'));
-          window.location.href = 'index.html';
         }
+
+        Backbone.Events.trigger('login:submitted');
       }
 
       this.user.check(params[0].value, params[1].value, callback);

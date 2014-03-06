@@ -2,33 +2,61 @@
 
 define([
   'backbone',
+  'views/application',
+  'views/login',
+  'views/aside',
   'views/toolbar',
   'views/indicators'
-], function(Backbone, ToolbarView, IndicatorsView) {
+], function(Backbone, ApplicationView, LoginView, AsideView, ToolbarView, IndicatorsView) {
 
-  var pages, indicatorsPage;
+  var app = {}, Router;
 
-  pages = $('.page');
-  indicatorsPage = $('#indicators');
+  app.application = new ApplicationView();
+  app.login = new LoginView();
+  app.aside = new AsideView();
 
   new ToolbarView();
   new IndicatorsView();
 
-  var Router = Backbone.Router.extend({
+  Router = Backbone.Router.extend({
 
     routes: {
-      '': 'showIndicators'
+      'login': 'showLogin',
+      'app': 'showApp'
     },
 
     initialize: function() {
       Backbone.history.start({
         pushState: false
       });
+
+      Backbone.Events.on('login:submitted', this.checkAuth, this);
+
+      this.checkAuth();
     },
 
-    showIndicators: function() {
-      pages.removeClass('is-page-active');
-      indicatorsPage.addClass('is-page-active');
+    showLogin: function() {
+      app.application.$el.addClass('is-hidden');
+      app.aside.$el.addClass('is-hidden');
+      app.login.$el.removeClass('is-hidden');
+    },
+
+    showApp: function() {
+      app.login.$el.addClass('is-hidden');
+      app.aside.$el.removeClass('is-hidden');
+      app.application.$el.removeClass('is-hidden');
+    },
+
+    checkAuth: function() {
+      if (!window.sessionStorage.getItem('token')) {
+        this.navigate('login', {
+          trigger: true
+        });
+      } else {
+        this.navigate('app', {
+          trigger: true
+        });
+      }
     }
 
   });
