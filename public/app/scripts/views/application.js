@@ -8,8 +8,16 @@ define([
 
     el: '#applicationView',
 
-    events: {
-      'click #toggleAsideBtn': 'toggleAside'
+    events: function() {
+      if ('ontouchstart' in window) {
+        return {
+          'touchstart #toggleAsideBtn': 'toggleAside'
+        };
+      }
+
+      return {
+        'click #toggleAsideBtn': 'toggleAside'
+      };
     },
 
     toggleAside: function(e) {

@@ -13,8 +13,16 @@ define([
 
     el: '#indicatorsView',
 
-    events: {
-      'touchstart .mod-indicators-agency': 'filterByAgency'
+    events: function() {
+      if ('ontouchstart' in window) {
+        return {
+          'touchstart .mod-indicators-agency': 'filterByAgency'
+        };
+      }
+
+      return {
+        'click .mod-indicators-agency': 'filterByAgency'
+      };
     },
 
     template: Handlebars.compile(tpl),

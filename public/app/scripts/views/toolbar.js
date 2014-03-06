@@ -9,9 +9,18 @@ define([
 
     el: '#toolbarView',
 
-    events: {
-      'touchstart .mod-toolbar-selector a': 'changeFilter',
-      'touchstart .mod-toolbar-selector .current': 'expandOptions'
+    events: function() {
+      if ('ontouchstart' in window) {
+        return {
+          'touchstart .mod-toolbar-selector a': 'changeFilter',
+          'touchstart .mod-toolbar-selector .current': 'expandOptions'
+        };
+      }
+
+      return {
+        'click .mod-toolbar-selector a': 'changeFilter',
+        'click .mod-toolbar-selector .current': 'expandOptions'
+      };
     },
 
     initialize: function() {
