@@ -39,21 +39,21 @@ define([
         switch(self.filter.get('period')) {
         case 'fytd':
           if (row.recording_units === 'value') {
-            indicator.value = (100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1) + '%';
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current_fytd - row.previous_fytd).toFixed(1) + '%';
           }
           break;
         case 'lastyear':
           if (row.recording_units === 'value') {
-            indicator.value = (100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1) + '%';
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous_year_period).toFixed(1) + '%';
           }
           break;
         case 'mmddyy':
           if (row.recording_units === 'value') {
-            indicator.value = (100 * (1.0 - (row.current / row.previous))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1) + '%';
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous).toFixed(1) + '%';
           }
