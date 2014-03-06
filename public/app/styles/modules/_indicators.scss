@@ -3,12 +3,13 @@
 }
 
 .mod-indicators-item {
-  float: left;
   position: relative;
-  margin: 1%;
-  width: 23%;
+  margin: 1% 0;
+  padding: 1%;
 
   background: $thirth;
+
+  @include clearfix;
 
   h2 {
     margin: 0;
@@ -28,8 +29,7 @@
   }
 
   .mod-indicators-row {
-    border-bottom: 1px solid $secondary;
-    padding: 10px;
+    border-bottom: 1px solid $primary;
 
     &:last-child {
       border-bottom: 0;
@@ -45,7 +45,7 @@
     background-color: darken($thirth, 10%);
   }
 
-  .mod-indicators-value {
+  .mod-indicators-value-item {
     display: block;
     font-size: 60px;
     font-weight: normal;
@@ -53,4 +53,21 @@
     line-height: 100px;
   }
 
+}
+
+@media only screen and (max-width: 769px) {
+  .mod-indicators-item {
+    float: none;
+    width: auto;
+
+    .mod-indicators-row {
+      float: left;
+      border-bottom: 0;
+      border-right: 1px solid $primary;
+    }
+    .mod-indicators-value {
+      float: right;
+      border-right: 0;
+    }
+  }
 }

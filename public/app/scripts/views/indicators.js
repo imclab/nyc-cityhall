@@ -63,7 +63,7 @@ define([
       var self, elements;
 
       self = this;
-      elements = this.$el.find('.mod-indicators-value');
+      elements = this.$el.find('.mod-indicators-value-item');
 
       elements.addClass('is-hidden');
       _.each(elements, function(el) {

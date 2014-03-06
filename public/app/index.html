@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>NYC Dashboard</title>
     <meta name="description" content="NYC Dashboard for the Mayor">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
     <!-- build:css(.tmp) styles/main.css -->
       <link rel="stylesheet" href="../.tmp/styles/main.css">
@@ -24,7 +24,7 @@
         <nav class="layout-toolbar">
           <div class="mod-toolbar" id="toolbarView">
             <div class="mod-toolbar-item">
-              <span class="mod-toolbar-label">Viewing</span>
+              <span class="mod-toolbar-label">Type</span>
               <ul class="mod-toolbar-selector" id="indicatorType">
                 <li>
                   <span class="current">All Indicators</span>
@@ -40,7 +40,7 @@
               </ul>
             </div>
             <div class="mod-toolbar-item">
-              <span class="mod-toolbar-label">By</span>
+              <span class="mod-toolbar-label">Timeframe</span>
               <ul class="mod-toolbar-selector" id="indicatorPeriod">
                 <li>
                   <span class="current">Fiscal year to Date</span>
@@ -96,7 +96,13 @@
       </form>
     </div>
 
-    <aside class="layout-aside is-hidden" id="asideView"></aside>
+    <aside class="layout-aside is-hidden" id="asideView">
+      <div class="row">
+        <div class="grid-2 grid-md-5 grid-sm-8">
+          <p>Menu</p>
+        </div>
+      </div>
+    </aside>
 
     <script data-main="scripts/main" src="vendor/requirejs/require.js"></script>
   </body>

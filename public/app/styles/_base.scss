@@ -6,6 +6,9 @@ body {
   font-size: $font-size;
 
   overflow: hidden;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1 {
