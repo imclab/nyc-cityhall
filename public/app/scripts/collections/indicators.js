@@ -65,8 +65,6 @@ define([
           indicator.previousValue = indicator.previousValue + '%';
         }
 
-        console.log(indicator);
-
         return indicator;
       });
 
