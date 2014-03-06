@@ -46,8 +46,21 @@ require(['require', 'mocha'], function(require, mocha) {
 
   require([
     '../../test/specs/models/agency',
+    '../../test/specs/models/filter',
+    '../../test/specs/models/indicator',
+    '../../test/specs/models/user',
+
     '../../test/specs/collections/agencies',
+    '../../test/specs/collections/indicators',
+
     '../../test/specs/views/agencies',
+    '../../test/specs/views/application',
+    '../../test/specs/views/aside',
+    '../../test/specs/views/indicators',
+    '../../test/specs/views/login',
+    '../../test/specs/views/map',
+    '../../test/specs/views/toolbar',
+
     '../../test/specs/router'
   ], function() {
 

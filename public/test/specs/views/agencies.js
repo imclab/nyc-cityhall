@@ -8,7 +8,7 @@ define([
   var expect = Chai.expect;
   var agencies = new AgenciesView();
 
-  describe('#View: AgenciesView', function() {
+  describe('#View: Agencies', function() {
 
     describe('@Create', function() {
 

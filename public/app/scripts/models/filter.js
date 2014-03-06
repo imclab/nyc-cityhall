@@ -13,6 +13,9 @@ define(['backbone'], function(Backbone) {
 
   });
 
-  return new FilterModel();
+  return {
+    model: FilterModel,
+    instance: new FilterModel()
+  };
 
 });

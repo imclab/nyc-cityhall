@@ -51,7 +51,8 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= root.app %>/scripts/{,*/}{,*/}*.js'
+        '<%= root.app %>/scripts/{,*/}{,*/}*.js',
+        '<%= root.tmp %>/scripts/{,*/}{,*/}*.js'
       ]
     },
 
@@ -163,14 +164,14 @@ module.exports = function(grunt) {
     htmlmin: {
       dist: {
         options: {
-          // collapseBooleanAttributes: true,
-          // collapseWhitespace: true,
-          // removeAttributeQuotes: true,
-          // removeCommentsFromCDATA: true,
-          // removeEmptyAttributes: true,
-          // removeOptionalTags: true,
-          // removeRedundantAttributes: true,
-          // useShortDoctype: true
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true,
+          removeCommentsFromCDATA: true,
+          removeEmptyAttributes: true,
+          removeOptionalTags: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true
         },
         files: [{
           expand: true,

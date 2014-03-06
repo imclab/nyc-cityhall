@@ -32,7 +32,7 @@ define([
     initialize: function() {
       var self = this;
 
-      this.filter = filterModel;
+      this.filter = filterModel.instance;
       this.indicators = new IndicatorsCollection();
 
       this.indicators.getData(function(err) {

@@ -26,7 +26,7 @@ define([
     initialize: function() {
       var self = this;
 
-      this.filter = filterModel;
+      this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
 
       this.filter.on('change', function() {
