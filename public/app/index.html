@@ -24,22 +24,6 @@
         <nav class="layout-toolbar">
           <div class="mod-toolbar" id="toolbarView">
             <div class="mod-toolbar-item">
-              <span class="mod-toolbar-label">Type</span>
-              <ul class="mod-toolbar-selector" id="indicatorType">
-                <li>
-                  <span class="current">All Indicators</span>
-                  <ul class="mod-toolbar-options">
-                    <li><a href="#" data-filter="type" data-value="all">All Indicators</a></li>
-                    <li><a href="#" data-filter="type" data-value="operation">Operation Priorities</a></li>
-                    <li><a href="#" data-filter="type" data-value="equality">Equality Priorities</a></li>
-                    <li><a href="#" data-filter="type" data-value="urgent">Urgent Attention Needed</a></li>
-                    <li><a href="#" data-filter="type" data-value="trending-up">Trending Up</a></li>
-                    <li><a href="#" data-filter="type" data-value="trending-down">Trending Down</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            <div class="mod-toolbar-item">
               <span class="mod-toolbar-label">Timeframe</span>
               <ul class="mod-toolbar-selector" id="indicatorPeriod">
                 <li>
@@ -94,13 +78,7 @@
       </form>
     </div>
 
-    <aside class="layout-aside is-hidden" id="asideView">
-      <div class="row">
-        <div class="grid-2 grid-md-5 grid-sm-8">
-          <p>Menu</p>
-        </div>
-      </div>
-    </aside>
+    <aside class="layout-aside is-hidden" id="asideView"></aside>
 
     <script data-main="scripts/main" src="vendor/requirejs/require.js"></script>
   </body>

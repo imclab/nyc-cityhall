@@ -33,7 +33,7 @@ define([
           previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
           previousValue: row.previous_fytd,
           full: row.full_green_percent,
-          unit: row.recording_units
+          type: row.measure_type
         };
 
         switch(self.filter.get('period')) {
@@ -67,6 +67,8 @@ define([
 
         return indicator;
       });
+
+      Backbone.Events.trigger('indicators:loaded', result);
 
       return result;
     },
