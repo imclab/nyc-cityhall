@@ -1,5 +1,5 @@
 .mod-map {
-  position: absolute;
+  position: fixed;
   top: 100%;
   left: 0;
   width: 100%;
@@ -12,6 +12,6 @@
   @include transition(all .15s ease);
 
   &.is-active {
-    top: 0;
+    top: 130px;
   }
 }

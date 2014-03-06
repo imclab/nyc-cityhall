@@ -79,6 +79,8 @@
   right: 0;
   top: 130px;
 
+  overflow: auto;
+
   &.is-page-active {
     display: block;
     z-index: 3;

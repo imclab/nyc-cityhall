@@ -111,7 +111,7 @@ define([
 
     getData: function(callback) {
 
-      var query = sprintf('select * FROM data_overview(\'%s\')', window.sessionStorage.getItem('token'));
+      var query = sprintf('select * FROM data_overview(\'%s\', \'%s\')', window.sessionStorage.getItem('token'), moment().format());
 
       function onError(collection, err) {
         if (callback  && typeof callback === 'function') {

@@ -86,9 +86,9 @@ module.exports = function(grunt) {
         javascriptsDir: '<%= root.app %>/scripts',
         fontsDir: '<%= root.app %>/styles/fonts',
         importPath: '<%= root.app %>/vendor',
-        httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
+        httpImagesPath: '/nyc-cityhall.vizzuality.com/images',
+        httpGeneratedImagesPath: '/nyc-cityhall.vizzuality.com/images/generated',
+        httpFontsPath: '/nyc-cityhall.vizzuality.com/fonts',
         relativeAssets: false,
         assetCacheBuster: false
       },
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
           src: [
             '<%= root.dist %>/scripts/{,*/}*.js',
             '<%= root.dist %>/styles/{,*/}*.css',
-            '<%= root.dist %>/images/{,*/}*.{gif,jpeg,jpg,png,webp}',
+            '<%= root.dist %>/images/*.{gif,jpeg,jpg,png,webp}',
             '<%= root.dist %>/styles/fonts/{,*/}*.*'
           ]
         }
