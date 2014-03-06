@@ -15,10 +15,9 @@ define([
   app.application = new ApplicationView();
   app.login = new LoginView();
   app.aside = new AsideView();
-
-  new ToolbarView();
-  new IndicatorsView();
-  new MapView();
+  app.toolbar = new ToolbarView();
+  app.indicators = new IndicatorsView();
+  app.map = new MapView();
 
   Router = Backbone.Router.extend({
 
@@ -47,6 +46,9 @@ define([
       app.login.$el.addClass('is-hidden');
       app.aside.$el.removeClass('is-hidden');
       app.application.$el.removeClass('is-hidden');
+      if (window.sessionStorage.getItem('token')) {
+        app.indicators.getData();
+      }
     },
 
     checkAuth: function() {

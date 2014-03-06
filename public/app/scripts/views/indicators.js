@@ -30,21 +30,27 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      var self = this;
-
       this.filter = filterModel.instance;
       this.indicators = new IndicatorsCollection();
 
+      Backbone.on('routeapp', function() {
+        console.log('app');
+      }, this);
+
+      //this.filter.on('change:period', this.changePeriod, this);
+      //this.filter.on('change:sort', this.sortAndRender, this);
+    },
+
+    getData: function() {
+      var self = this;
+
       this.indicators.getData(function(err) {
         if (err) {
-          throw err.responseText;
+          console.log(err.responseText);
         } else {
           self.sortAndRender();
         }
       });
-
-      //this.filter.on('change:period', this.changePeriod, this);
-      //this.filter.on('change:sort', this.sortAndRender, this);
     },
 
     render: function() {
