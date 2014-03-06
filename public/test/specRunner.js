@@ -11,6 +11,7 @@ require.config({
     handlebars: '../vendor/handlebars/handlebars',
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
+    moment: '../vendor/momentjs/moment',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
   },
