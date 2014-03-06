@@ -16,12 +16,14 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart .mod-indicators-agency': 'filterByAgency'
+          'touchstart .mod-indicators-agency': 'filterByAgency',
+          'touchstart': 'openMapView'
         };
       }
 
       return {
-        'click .mod-indicators-agency': 'filterByAgency'
+        'click .mod-indicators-agency': 'filterByAgency',
+        'click': 'openMapView'
       };
     },
 
@@ -116,6 +118,10 @@ define([
 
       this.indicators.sort();
       this.render();
+    },
+
+    openMapView: function() {
+      Backbone.Events.trigger('map:open');
     }
 
   });
