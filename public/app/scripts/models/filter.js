@@ -6,7 +6,7 @@ define(['backbone'], function(Backbone) {
 
     defaults: {
       type: 'all',
-      period: 'year',
+      period: 'fytd',
       sort: 'department',
       agency: 'all'
     }

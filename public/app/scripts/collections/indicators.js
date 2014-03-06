@@ -3,9 +3,11 @@
 define([
   'underscore',
   'backbone',
+  'moment',
   'sprintf',
+  'models/filter',
   'models/indicator'
-], function(_, Backbone, sprintf, IndicatorModel) {
+], function(_, Backbone, moment, sprintf, filterModel, IndicatorModel) {
 
   var IndicatorsCollection = Backbone.Collection.extend({
 
@@ -13,27 +15,43 @@ define([
 
     url: 'http://nyc-cityhall.cartodb.com/api/v2/sql',
 
+    initialize: function() {
+      this.filter = filterModel.instance;
+    },
+
     parse: function(data) {
-      var result = _.map(data.rows, function(row) {
+      var self, result;
+
+      self = this;
+      result = _.map(data.rows, function(row) {
         var indicator = {
-          id: row.indicator_id,
-          name: row.indicator_name,
           agency: row.agency,
-          type: row.measure_type,
-          full: row.full_green_percent,
-          daily: null,
-          weekly: row.weekly_percent,
-          monthly: row.monthly_percent,
-          yearly: row.yearly_percent
+          frequency: row.frequency,
+          name: row.indicator_name,
+          currentDate: moment(row.date).format('MMM. YYYY'),
+          currentValue: row.current_fytd,
+          previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
+          previousValue: row.previous_fytd
         };
 
-        if (row.year_ago_percent && row.yearly_percent) {
-          indicator.year = row.year_ago_percent + row.yearly_percent;
+        switch(self.filter.get('period')) {
+        case 'fytd':
+          indicator.value = (100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1) + '%';
+          break;
+        case 'lastyear':
+          indicator.value = (100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1) + '%';
+          break;
+        case 'mmddyy':
+          indicator.value = (100 * (1.0 - (row.current / row.previous))).toFixed(1) + '%';
+          break;
         }
 
-        if (row.year_ago_percent) {
-          indicator.yearAgo = row.year_ago_percent;
+        if (row.recording_units === 'percent') {
+          indicator.currentValue = indicator.currentValue + '%';
+          indicator.previousValue = indicator.previousValue + '%';
         }
+
+        console.log(indicator);
 
         return indicator;
       });

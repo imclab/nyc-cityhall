@@ -17,13 +17,13 @@ define([
       if ('ontouchstart' in window) {
         return {
           'touchstart .mod-indicators-agency': 'filterByAgency',
-          'touchstart': 'openMapView'
+          'touchstart .mod-indicators-item': 'openMapView'
         };
       }
 
       return {
         'click .mod-indicators-agency': 'filterByAgency',
-        'click': 'openMapView'
+        'click .mod-indicators-item': 'openMapView'
       };
     },
 
@@ -43,8 +43,8 @@ define([
         }
       });
 
-      this.filter.on('change:period', this.changePeriod, this);
-      this.filter.on('change:sort', this.sortAndRender, this);
+      //this.filter.on('change:period', this.changePeriod, this);
+      //this.filter.on('change:sort', this.sortAndRender, this);
     },
 
     render: function() {
@@ -52,7 +52,7 @@ define([
         indicators: this.indicators.toJSON()
       }));
 
-      this.changePeriod();
+      //this.changePeriod();
     },
 
     filterByAgency: function(e) {

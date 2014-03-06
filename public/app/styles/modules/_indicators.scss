@@ -9,9 +9,15 @@
 
   background: $thirth;
 
+  color: $primary;
+
   cursor: pointer;
 
   @include clearfix;
+
+  a {
+    color: $primary;
+  }
 
   h2 {
     margin: 0;
@@ -38,6 +44,12 @@
     }
   }
 
+  .mod-indicators-frequency {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
   .mod-indicators-agency {
     display: block;
     padding: 3px 10px;
@@ -49,7 +61,7 @@
 
   .mod-indicators-value-item {
     display: block;
-    font-size: 60px;
+    font-size: 45px;
     font-weight: normal;
     text-align: center;
     line-height: 100px;
