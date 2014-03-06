@@ -85,13 +85,13 @@
   }
 }
 
-@media screen and (min-width: 321px) and (max-width: 769px) {
+@media screen and (min-width: $max-width-mobile) and (max-width: $max-width-tablet) {
   .layout-main.is-moved {
     left: 50%;
   }
 }
 
-@media screen and (max-width: 321px) {
+@media screen and (max-width: $max-width-mobile) {
   .layout-main.is-moved {
     left: 80%;
   }

@@ -5,7 +5,7 @@
 .mod-indicators-item {
   position: relative;
   margin: 1% 0;
-  padding: 1%;
+  padding: 10px;
 
   background: $thirth;
 
@@ -28,7 +28,7 @@
     font-size: 11px;
   }
 
-  .mod-indicators-row {
+  .mod-indicators-header, .mod-indicators-value, .mod-indicators-footer {
     border-bottom: 1px solid $primary;
 
     &:last-child {
@@ -55,19 +55,36 @@
 
 }
 
-@media only screen and (max-width: 769px) {
+@media only screen and (max-width: $max-width-tablet) {
   .mod-indicators-item {
     float: none;
     width: auto;
 
-    .mod-indicators-row {
+    .mod-indicators-header, .mod-indicators-footer {
       float: left;
       border-bottom: 0;
       border-right: 1px solid $primary;
+      width: 48%;
+    }
+    .mod-indicators-value, .mod-indicators-footer {
+      float: right;
+      width: 25%;
     }
     .mod-indicators-value {
-      float: right;
+      border-bottom: 0;
       border-right: 0;
+      width: 25%;
+    }
+  }
+}
+
+@media only screen and (max-width: $max-width-mobile) {
+  .mod-indicators-item {
+    .mod-indicators-header {
+      width: 60%;
+    }
+    .mod-indicators-value {
+      width: 30%;
     }
   }
 }
