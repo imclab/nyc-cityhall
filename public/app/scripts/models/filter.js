@@ -8,7 +8,8 @@ define(['backbone'], function(Backbone) {
       type: 'all',
       period: 'fytd',
       sort: 'department',
-      agency: 'all'
+      agency: 'all',
+      priority: 'all'
     }
 
   });
