@@ -16,13 +16,13 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart .mod-indicators-agency': 'filterByAgency',
+          'touchstart .mod-indicators-agency': 'setAgency',
           'touchstart .mod-indicators-item': 'openMapView'
         };
       }
 
       return {
-        'click .mod-indicators-agency': 'filterByAgency',
+        'click .mod-indicators-agency': 'setAgency',
         'click .mod-indicators-item': 'openMapView'
       };
     },
@@ -35,18 +35,24 @@ define([
 
       this.filter.on('change:period', this.getData, this);
       this.filter.on('change:sort', this.sortAndRender, this);
+      this.filter.on('change:agency', this.filterByAgency, this);
     },
 
     getData: function() {
       var self = this;
 
-      this.indicators.getData(function(err) {
-        if (err) {
-          console.log(err.responseText);
-        } else {
-          self.sortAndRender();
-        }
-      });
+      if (this.indicators.length > 0) {
+        this.indicators.set(this.indicators.getDataByFilters(), {remove: true});
+        this.sortAndRender();
+      } else {
+        this.indicators.getData(function(err) {
+          if (err) {
+            console.log(err.responseText);
+          } else {
+            self.sortAndRender();
+          }
+        });
+      }
     },
 
     render: function() {
@@ -55,10 +61,19 @@ define([
       }));
     },
 
-    filterByAgency: function(e) {
+    setAgency: function(e) {
       var value = $(e.currentTarget).data('agency');
       this.filter.set('agency', value);
       e.preventDefault();
+    },
+
+    filterByAgency: function() {
+      if (this.filter.get('agency') === 'all') {
+        $('.mod-indicators-layout').removeClass('is-hidden');
+      } else {
+        $('.mod-indicators-layout').addClass('is-hidden');
+        $('.mod-indicators-layout[data-agency="' + this.filter.get('agency') + '"]').removeClass('is-hidden');
+      }
     },
 
     sortAndRender: function() {

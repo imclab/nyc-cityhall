@@ -20,10 +20,20 @@ define([
     },
 
     parse: function(data) {
+      this.data = data.rows;
+      return this.getDataByFilters();
+    },
+
+    getDataByFilters: function() {
       var self, result;
 
       self = this;
-      result = _.map(data.rows, function(row) {
+
+      if (!this.data) {
+        return [];
+      }
+
+      result = _.map(this.data, function(row) {
         var indicator = {
           agency: row.agency,
           frequency: row.frequency,
@@ -104,8 +114,6 @@ define([
         return indicator;
       });
 
-      Backbone.Events.trigger('indicators:loaded', result);
-
       return result;
     },
 
@@ -120,8 +128,10 @@ define([
       }
 
       function onSuccess(collection) {
+        console.log(collection);
         if (callback  && typeof callback === 'function') {
           callback(undefined, collection);
+          Backbone.Events.trigger('indicators:loaded', collection.toJSON());
         }
       }
 

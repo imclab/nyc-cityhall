@@ -4,10 +4,11 @@ define([
   'underscore',
   'backbone',
   'handlebars',
+  'models/filter',
   'collections/indicators-types',
   'collections/agencies',
   'text!../../templates/aside.handlebars'
-], function(_, Backbone, Handlebars, IndicatorsTypesCollection, AgenciesCollections, tpl) {
+], function(_, Backbone, Handlebars, filterModel, IndicatorsTypesCollection, AgenciesCollections, tpl) {
 
   var AsideView = Backbone.View.extend({
 
@@ -33,6 +34,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      this.filter = filterModel.instance;
       this.agencies = new AgenciesCollections();
       this.types = new IndicatorsTypesCollection();
 
@@ -70,6 +72,7 @@ define([
 
     changeAgency: function(e) {
       e.preventDefault();
+      this.filter.set('agency', $(e.currentTarget).data('agency'));
     },
 
     changeIndicatorType: function(e) {

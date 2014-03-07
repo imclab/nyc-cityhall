@@ -53,7 +53,6 @@ require(['require', 'mocha'], function(require, mocha) {
     '../../test/specs/collections/agencies',
     '../../test/specs/collections/indicators',
 
-    '../../test/specs/views/agencies',
     '../../test/specs/views/application',
     '../../test/specs/views/aside',
     '../../test/specs/views/indicators',
