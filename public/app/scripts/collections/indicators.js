@@ -53,9 +53,9 @@ define([
         switch(self.filter.get('period')) {
         case 'fytd':
           if (row.recording_units === 'value') {
-            indicator.value = (-100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1);
           } else if(row.recording_units === 'percent') {
-            indicator.value = (row.current_fytd - row.previous_fytd).toFixed(1) + '%';
+            indicator.value = (row.current_fytd - row.previous_fytd).toFixed(1) ;
           }
           indicator.currentValue = row.current_fytd;
           indicator.previousValue = row.previous_fytd;
@@ -64,9 +64,9 @@ define([
           break;
         case 'lastyear':
           if (row.recording_units === 'value') {
-            indicator.value = (-100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1);
           } else if(row.recording_units === 'percent') {
-            indicator.value = (row.current - row.previous_year_period).toFixed(1) + '%';
+            indicator.value = (row.current - row.previous_year_period).toFixed(1);
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous_year_period;
@@ -87,9 +87,9 @@ define([
           break;
         case 'mmddyy':
           if (row.recording_units === 'value') {
-            indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1) + '%';
+            indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1) ;
           } else if(row.recording_units === 'percent') {
-            indicator.value = (row.current - row.previous).toFixed(1) + '%';
+            indicator.value = (row.current - row.previous).toFixed(1) ;
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous;
@@ -118,13 +118,15 @@ define([
         for (var i=1; i<16; i++){
           steps.push(indicator.full-(i*indicator.full/8));
         }
+        console.log (steps);
+        console.log(indicator.value);
         var colors=['#088246','#379d4e','#66b757','#95d25f','#b1de79','#cce994','#e8f5ae','#fff8c3','#fddc9f','#fbbe79','#faa052','#f8822c','#ef632b','#e7452b','#de262a'];
         //TODO optimize this
         indicator.color='#088246';
         for (var i = 0, len = steps.length; i < len; i++) {
           if (indicator.value<steps[i]) indicator.color=colors[i];
         }
-
+        indicator.value=indicator.value+ '%';
         return indicator;
       });
 
