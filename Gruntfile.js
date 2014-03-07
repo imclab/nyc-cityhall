@@ -186,8 +186,9 @@ module.exports = function(grunt) {
       dist: {
         files: {
           '<%= root.dist %>/styles/main.css': [
+            '<%= root.app %>/vendor/cartodb.js/dist/cartodb.css',
             '<%= root.tmp %>/styles/{,*/}*.css',
-            '<%= root.app %>/styles/{,*/}*.css'
+            '<%= root.app %>/styles/{,*/}*.css',
           ]
         }
       }
