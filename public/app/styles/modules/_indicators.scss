@@ -47,6 +47,10 @@
     font-size: 11px;
   }
 
+  td {
+    font-size: 19px;
+  }
+
   .mod-indicators-header, .mod-indicators-value, .mod-indicators-footer {
     border-bottom: 1px solid $primary;
 
@@ -55,19 +59,13 @@
     }
   }
 
-  .mod-indicators-frequency {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  .mod-indicators-frequency, .mod-indicators-agency {
+    display: block;
   }
 
   .mod-indicators-agency {
-    display: block;
-    padding: 3px 10px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
     background-color: $primary;
+    padding: 3px 10px;
     color: $secondary;
   }
 
@@ -87,15 +85,26 @@
   }
 }
 
-@media only screen and (max-width: $xl) {
+@media only screen and (min-width: $lg) {
   .mod-indicators-item {
     width: 24%;
   }
 }
 
-@media only screen and (max-width: $lg) {
+@media only screen and (min-width: $md) {
   .mod-indicators-item {
     width: 32.33333%;
+  }
+  .mod-indicators-frequency {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .mod-indicators-agency {
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 }
 
@@ -106,13 +115,34 @@
 
     h2 {
       height: auto;
+      font-size: 13px;
+      font-weight: normal;
+      padding-right: 10px;
+    }
+
+    table {
+      margin-top: 10px;
+    }
+
+    td {
+      font-size: 17px;
+    }
+
+    .mod-indicators-agency, .mod-indicators-frequency {
+      float: left;
+    }
+
+    .mod-indicators-frequency {
+      margin-left: 10px;
+      margin-top: 3px;
     }
 
     .mod-indicators-header, .mod-indicators-footer {
       float: left;
       border-bottom: 0;
       border-right: 1px solid $primary;
-      width: 48%;
+      width: 49.5%;
+      height: 65px;
     }
     .mod-indicators-value, .mod-indicators-footer {
       float: right;
@@ -123,16 +153,31 @@
       border-right: 0;
       width: 25%;
     }
+    .mod-indicators-value-item {
+      font-size: 40px;
+      line-height: 65px;
+    }
   }
 }
 
 @media only screen and (max-width: $sm) {
   .mod-indicators-item {
+    h2 {
+      height: 75px;
+    }
     .mod-indicators-header {
-      width: 60%;
+      width: 78%;
+      height: 75px;
     }
     .mod-indicators-value {
-      width: 30%;
+      width: 20%;
+    }
+    .mod-indicators-footer {
+      display: none;
+    }
+    .mod-indicators-value-item {
+      font-size: 20px;
+      line-height: 75px;
     }
   }
 }
