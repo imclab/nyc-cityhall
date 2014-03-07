@@ -32,6 +32,8 @@ define([
       this.filter.on('change', function() {
         console.log(self.filter.toJSON());
       });
+
+      //Backbone.Events.on('map:open', this.open, this);
     },
 
     changeFilter: function(e) {

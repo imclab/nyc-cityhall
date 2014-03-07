@@ -6,8 +6,9 @@ define([
   'sprintf',
   'moment',
   'cartodb',
+  'models/filter',
   'models/indicator'
-], function(_, Backbone, sprintf, moment, cartodbLib, IndicatorModel) {
+], function(_, Backbone, sprintf, moment, cartodbLib, filterModel, IndicatorModel) {
 
   var MapView = Backbone.View.extend({
 
@@ -27,7 +28,8 @@ define([
       cartodb: {
         user_name: 'nyc-cityhall',
         type: 'cartodb'
-      }
+      },
+      colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a']
     },
 
     events: function() {
@@ -44,9 +46,11 @@ define([
 
     initialize: function() {
       this.indicator = new IndicatorModel();
+      this.filter = filterModel.instance;
       this.setMap();
 
       this.indicator.on('change', this.changeVisualization, this);
+      this.filter.on('change', this.changeVisualization, this);
       Backbone.Events.on('map:open', this.open, this);
     },
 
@@ -59,23 +63,21 @@ define([
     },
 
     changeVisualization: function() {
-      var self, indicator, sql, cartocss, options, steps, colors;
+      if (!this.$el.hasClass('is-active')) {
+        return false;
+      }
+      var self, indicator, sql, cartocss, options;
 
       self = this;
-      steps = [];
       indicator = this.indicator.toJSON();
-      colors = ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'];
-
-      for (var i = 1; i < 16; i++) {
-        steps.push(indicator.full - (i * indicator.full / 8));
-      }
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.value, i.percent_change FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [value = null] {polygon-fill: #777;}}', indicator.id);
 
-      _.each(steps, function(step, index) {
-        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, colors[index]);
+      _.each(this.options.colors, function(color, index) {
+        var step = indicator.full - ((index + 1) * indicator.full / 8);
+        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, color);
       });
 
       options = _.extend({}, this.options.cartodb, {
