@@ -1,5 +1,5 @@
 {{#each indicators}}
-  <div class="mod-indicators-item" data-id="{{id}}" data-agency="{{agency}}" data-full="{{full}}">
+  <div class="mod-indicators-item" data-id="{{id}}" data-agency="{{agency}}" data-full="{{full}}" data-value="{{value}}" data-percent="{{percent}}">
     <article class="mod-indicators-content" style="background-color: {{color}}">
       <header class="mod-indicators-header">
         <a href="#" class="mod-indicators-agency" data-agency="{{agency}}">{{agency}}</a>
@@ -7,7 +7,7 @@
         <h2>{{name}}</h2>
       </header>
       <div class="mod-indicators-value">
-        <strong class="mod-indicators-value-item">{{value}}</strong>
+        <strong class="mod-indicators-value-item">{{value}}%</strong>
       </div>
       <div class="mod-indicators-footer sm-hidden">
         <table>

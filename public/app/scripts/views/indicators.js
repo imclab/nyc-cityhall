@@ -78,6 +78,22 @@ define([
       }
     },
 
+    filterByPriority: function() {
+
+      var $mods = $('.mod-indicators-item');
+      if (this.filter.get('priority') === 'improving') {
+        $mods.addClass('is-hidden');
+        $('.mod-indicators-item[data-percent>0]').removeClass('is-hidden');
+      } else if (this.filter.get('priority') === 'worsening') {
+        $mods.addClass('is-hidden');
+        $('.mod-indicators-item[data-percent<0]').removeClass('is-hidden');
+      } else if (this.filter.get('priority') === 'urgent') {
+        $mods.addClass('is-hidden');
+        $('.mod-indicators-item[data-percent<-1]').removeClass('is-hidden');
+      }
+
+    },
+
     sortAndRender: function() {
       function getValue(indicator) {
         return Number(indicator.get('value').split('%')[0]);

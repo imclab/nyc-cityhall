@@ -138,7 +138,7 @@ define([
           }
         });
 
-        indicator.value = indicator.value + '%';
+        indicator.percent = indicator.value/indicator.full;
 
         return indicator;
       });
