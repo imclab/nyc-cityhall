@@ -4,9 +4,10 @@ define([
   'underscore',
   'backbone',
   'sprintf',
+  'moment',
   'cartodb',
   'models/indicator'
-], function(_, Backbone, sprintf, cartodbLib, IndicatorModel) {
+], function(_, Backbone, sprintf, moment, cartodbLib, IndicatorModel) {
 
   var MapView = Backbone.View.extend({
 
@@ -58,29 +59,24 @@ define([
     },
 
     changeVisualization: function() {
-      var self, indicator, sql, cartocss, options;
-
+      var self, indicator, sql, cartocss, options, steps, colors;
 
       self = this;
-
+      steps = [];
       indicator = this.indicator.toJSON();
+      colors = ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'];
 
-
-      var steps=new Array();
-      for (var i=1; i<16; i++){
-        steps.push(indicator.full-(i*indicator.full/8));
-      }
-      var colors=['#088246','#379d4e','#66b757','#95d25f','#b1de79','#cce994','#e8f5ae','#fff8c3','#fddc9f','#fbbe79','#faa052','#f8822c','#ef632b','#e7452b','#de262a'];
-
-      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.value, i.percent_change FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), new Date());
-
-      cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [percent_change = null] {polygon-fill: #777;}}', '1');
-
-      for (var i = 0, len = steps.length; i < len; i++) {
-        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', '1', steps[i], colors[i]);
+      for (var i = 1; i < 16; i++) {
+        steps.push(indicator.full - (i * indicator.full / 8));
       }
 
-      console.log(indicator, sql, cartocss);
+      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.value, i.percent_change FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
+
+      cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [value = null] {polygon-fill: #777;}}', indicator.id);
+
+      _.each(steps, function(step, index) {
+        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, colors[index]);
+      });
 
       options = _.extend({}, this.options.cartodb, {
         sublayers: [{
@@ -90,6 +86,10 @@ define([
       });
 
       function onDone(layer) {
+        if (self.currentLayer) {
+          self.map.removeLayer(self.currentLayer);
+        }
+        self.currentLayer = layer;
         self.map.addLayer(layer);
       }
 

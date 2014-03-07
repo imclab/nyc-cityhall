@@ -9,10 +9,10 @@
 
   z-index: 3;
 
-  @include transition(all .15s ease);
+  @include transition(all .3s ease);
 
   &.is-active {
-    top: 0;
+    top: 130px;
   }
 
   .icon-close {
