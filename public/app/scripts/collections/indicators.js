@@ -121,9 +121,19 @@ define([
 
         _.each(self.colors, function(color, index) {
           var step = indicator.full - ((index + 1) * indicator.full / 8);
-          if (indicator.value < step) {
-            indicator.color = color;
+          if (indicator.full>0){
+            if (indicator.value < step) {
+              indicator.color = color;
+            }
+          }else if (indicator.full<0){
+            if (indicator.value > step) {
+              indicator.color = color;
+            }
+
+          }else{
+            indicator.color = self.colors[7];
           }
+          if(indicator.value===0)indicator.color = self.colors[7];
         });
 
         indicator.value = indicator.value + '%';

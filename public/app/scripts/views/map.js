@@ -75,9 +75,15 @@ define([
 
       cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [value = null] {polygon-fill: #777;}}', indicator.id);
 
+
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
-        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, color);
+        if (indicator.full<0){
+          index=colors.length-index;
+        }else{
+          index=7;
+        }
+        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, colors[index]);
       });
 
       options = _.extend({}, this.options.cartodb, {
