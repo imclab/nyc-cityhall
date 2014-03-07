@@ -79,32 +79,25 @@
 
 }
 
-@media only screen and (min-width: $xl) {
+@media only screen and (max-width: $sm) {
   .mod-indicators-item {
-    width: 19%;
-  }
-}
-
-@media only screen and (min-width: $lg) {
-  .mod-indicators-item {
-    width: 24%;
-  }
-}
-
-@media only screen and (min-width: $md) {
-  .mod-indicators-item {
-    width: 32.33333%;
-  }
-  .mod-indicators-frequency {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-
-  .mod-indicators-agency {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    h2 {
+      height: 75px;
+    }
+    .mod-indicators-header {
+      width: 78%;
+      height: 75px;
+    }
+    .mod-indicators-value {
+      width: 20%;
+    }
+    .mod-indicators-footer {
+      display: none;
+    }
+    .mod-indicators-value-item {
+      font-size: 20px;
+      line-height: 75px;
+    }
   }
 }
 
@@ -160,24 +153,32 @@
   }
 }
 
-@media only screen and (max-width: $sm) {
+@media only screen and (min-width: $md) {
   .mod-indicators-item {
-    h2 {
-      height: 75px;
-    }
-    .mod-indicators-header {
-      width: 78%;
-      height: 75px;
-    }
-    .mod-indicators-value {
-      width: 20%;
-    }
-    .mod-indicators-footer {
-      display: none;
-    }
-    .mod-indicators-value-item {
-      font-size: 20px;
-      line-height: 75px;
-    }
+    width: 32.33333%;
+  }
+  .mod-indicators-frequency {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .mod-indicators-agency {
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 }
+
+@media only screen and (min-width: $lg) {
+  .mod-indicators-item {
+    width: 24%;
+  }
+}
+
+@media only screen and (min-width: $xl) {
+  .mod-indicators-item {
+    width: 19%;
+  }
+}
+
