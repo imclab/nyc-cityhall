@@ -1,5 +1,5 @@
 .mod-aside-content {
-  padding-top: 40px;
+  padding: 40px 25px 25px;
   position: relative;
 
   .icon-close {
@@ -17,5 +17,6 @@
   li {
     font-weight: bold;
     text-transform: capitalize;
+    font-size: 27px;
   }
 }

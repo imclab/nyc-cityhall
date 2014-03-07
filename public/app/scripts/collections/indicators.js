@@ -15,6 +15,8 @@ define([
 
     url: 'http://nyc-cityhall.cartodb.com/api/v2/sql',
 
+    colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
+
     initialize: function() {
       this.filter = filterModel.instance;
     },
@@ -114,19 +116,18 @@ define([
           indicator.currentValue = indicator.currentValue + '%';
           indicator.previousValue = indicator.previousValue + '%';
         }
-        var steps=[];
-        for (var i=1; i<16; i++){
-          steps.push(indicator.full-(i*indicator.full/8));
-        }
-        console.log (steps);
-        console.log(indicator.value);
-        var colors=['#088246','#379d4e','#66b757','#95d25f','#b1de79','#cce994','#e8f5ae','#fff8c3','#fddc9f','#fbbe79','#faa052','#f8822c','#ef632b','#e7452b','#de262a'];
-        //TODO optimize this
-        indicator.color='#088246';
-        for (var i = 0, len = steps.length; i < len; i++) {
-          if (indicator.value<steps[i]) indicator.color=colors[i];
-        }
-        indicator.value=indicator.value+ '%';
+
+        indicator.color = self.colors[0];
+
+        _.each(self.colors, function(color, index) {
+          var step = indicator.full - ((index + 1) * indicator.full / 8);
+          if (indicator.value < step) {
+            indicator.color = color;
+          }
+        });
+
+        indicator.value = indicator.value + '%';
+
         return indicator;
       });
 
