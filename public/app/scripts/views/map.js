@@ -63,9 +63,6 @@ define([
     },
 
     changeVisualization: function() {
-      if (!this.$el.hasClass('is-active')) {
-        return false;
-      }
       var self, indicator, sql, cartocss, options;
 
       self = this;
@@ -78,11 +75,11 @@ define([
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
         if (indicator.full < 0) {
-          index = colors.length - index;
+          index = self.options.colors.length - index;
         } else {
           index = 7;
         }
-        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, colors[index]);
+        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
       });
 
       options = _.extend({}, this.options.cartodb, {
@@ -93,6 +90,7 @@ define([
       });
 
       function onDone(layer) {
+        console.log(layer);
         if (self.currentLayer) {
           self.map.removeLayer(self.currentLayer);
         }
