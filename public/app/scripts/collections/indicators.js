@@ -143,7 +143,7 @@ define([
 
         indicator.displayValue=indicator.value+ '%';
 
-        if(indicator.value==='Infinity'){
+        if(indicator.value==='Infinity' || indicator.value==='NaN'){
           indicator.value='0';
           indicator.displayValue='-';
           indicator.color='#aaa';
