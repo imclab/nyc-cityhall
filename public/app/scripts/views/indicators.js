@@ -35,6 +35,7 @@ define([
       this.filter.on('change:period', this.getData, this);
       this.filter.on('change:sort', this.sortAndRender, this);
       this.filter.on('change:agency', this.filterByAgency, this);
+      this.filter.on('change:priority', this.filterByPriority, this);
     },
 
     getData: function() {

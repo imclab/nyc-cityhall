@@ -27,7 +27,8 @@ define([
       return {
         'click .icon-close': 'close',
         'click .mod-aside-agencies a': 'changeAgency',
-        'click .mod-aside-types a': 'changeIndicatorType'
+        'click .mod-aside-types a': 'changeIndicatorType',
+        'click .mod-aside-priorities a': 'changePriorityType'
       };
     },
 
@@ -74,6 +75,13 @@ define([
       var current = $(e.currentTarget);
       this.$el.find('.mod-aside-agencies a').removeClass('current');
       this.filter.set('agency', current.data('agency'));
+      current.addClass('current');
+      e.preventDefault();
+    },
+    changePriorityType: function(e) {
+      var current = $(e.currentTarget);
+      this.$el.find('.mod-aside-priorities a').removeClass('current');
+      this.filter.set('priority', current.data('priority'));
       current.addClass('current');
       e.preventDefault();
     },
