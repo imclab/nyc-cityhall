@@ -73,7 +73,7 @@ define([
           switch (row.frequency){
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).format('MMM')+','+(moment(row.date).format('YYYY')-1);
+              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM')+','+moment(row.date).format('YYYY');
               break;
             case 'weekly':
               indicator.currentDate = 'Week '+moment(row.date).format('WW, YYYY');
@@ -96,7 +96,7 @@ define([
           switch (row.frequency){
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).format('MMM')+','+(moment(row.date).format('YYYY')-1);
+              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM')+','+moment(row.date).format('YYYY');
               break;
             case 'weekly':
               indicator.currentDate = 'Week '+moment(row.date).format('WW, YYYY');
