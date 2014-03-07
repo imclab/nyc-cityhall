@@ -35,7 +35,7 @@ define([
       this.filter.on('change:period', this.getData, this);
       this.filter.on('change:sort', this.sortAndRender, this);
       this.filter.on('change:agency', this.filterByAgency, this);
-      this.filter.on('change:priority', this.filterByPriority, this);
+      this.filter.on('change:type', this.filterByType, this);
     },
 
     getData: function() {
@@ -79,18 +79,19 @@ define([
       }
     },
 
-    filterByPriority: function() {
+    filterByType: function() {
 
       var $mods = $('.mod-indicators-item');
-      if (this.filter.get('priority') === 'improving') {
+      if (this.filter.get('type') === 'improving') {
         $mods.addClass('is-hidden');
-        $('.mod-indicators-item[data-percent>0]').removeClass('is-hidden');
-      } else if (this.filter.get('priority') === 'worsening') {
+        $('.mod-indicators-item[data-status="improving"]').removeClass('is-hidden');
+        //$('.mod-indicators-item[data-agency<>"' + this.filter.get('agency') + '"]').addClass('is-hidden');
+      } else if (this.filter.get('type') === 'worsening') {
         $mods.addClass('is-hidden');
-        $('.mod-indicators-item[data-percent<0]').removeClass('is-hidden');
-      } else if (this.filter.get('priority') === 'urgent') {
+        $('.mod-indicators-item[data-status="worsening"]').removeClass('is-hidden');
+      } else if (this.filter.get('type') === 'urgent') {
         $mods.addClass('is-hidden');
-        $('.mod-indicators-item[data-percent<-1]').removeClass('is-hidden');
+        $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
       }
 
     },

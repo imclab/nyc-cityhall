@@ -27,8 +27,7 @@ define([
       return {
         'click .icon-close': 'close',
         'click .mod-aside-agencies a': 'changeAgency',
-        'click .mod-aside-types a': 'changeIndicatorType',
-        'click .mod-aside-priorities a': 'changePriorityType'
+        'click .mod-aside-types a': 'changeIndicatorType'
       };
     },
 
@@ -74,21 +73,25 @@ define([
     changeAgency: function(e) {
       var current = $(e.currentTarget);
       this.$el.find('.mod-aside-agencies a').removeClass('current');
+      this.$el.find('.mod-aside-types a').removeClass('current');
+      this.$el.find('.mod-aside-types a[data-type="all"]').addClass('current');
       this.filter.set('agency', current.data('agency'));
       current.addClass('current');
       e.preventDefault();
     },
-    changePriorityType: function(e) {
+    changeIndicatorType: function(e) {
       var current = $(e.currentTarget);
-      this.$el.find('.mod-aside-priorities a').removeClass('current');
-      this.filter.set('priority', current.data('priority'));
+      this.$el.find('.mod-aside-types a').removeClass('current');
+      this.$el.find('.mod-aside-agencies a').removeClass('current');
+      this.$el.find('.mod-aside-agencies a[data-agency="all"]').addClass('current');
+      this.filter.set('type', current.data('type'));
       current.addClass('current');
       e.preventDefault();
     },
 
-    changeIndicatorType: function(e) {
-      e.preventDefault();
-    },
+    // changeIndicatorType: function(e) {
+    //   e.preventDefault();
+    // },
 
     close: function() {
       Backbone.Events.trigger('application:toggle');

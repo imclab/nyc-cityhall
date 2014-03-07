@@ -138,7 +138,16 @@ define([
           }
         });
 
-        indicator.percent = indicator.value/indicator.full;
+        indicator.status = (indicator.value/indicator.full>0)?'improving':'worsening';
+        indicator.urgent = (indicator.value/indicator.full<=-1)?'true':'false';
+
+        indicator.displayValue=indicator.value+ '%';
+
+        if(indicator.value==='Infinity'){
+          indicator.value='0';
+          indicator.displayValue='-';
+          indicator.color='#aaa';
+        }
 
         return indicator;
       });
