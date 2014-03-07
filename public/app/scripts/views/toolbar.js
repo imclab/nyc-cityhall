@@ -28,12 +28,13 @@ define([
 
       this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
+      this.$sort = $('#indicatorSort');
 
       this.filter.on('change', function() {
         console.log(self.filter.toJSON());
       });
 
-      //Backbone.Events.on('map:open', this.open, this);
+      Backbone.Events.on('map:opened map:closed', this.toggleSort, this);
     },
 
     changeFilter: function(e) {
@@ -67,6 +68,10 @@ define([
 
     contractOptions: function() {
       this.$options.removeClass('is-expanded');
+    },
+
+    toggleSort: function() {
+      this.$sort.closest('.mod-toolbar-item').toggleClass('is-hidden');
     }
 
   });

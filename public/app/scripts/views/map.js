@@ -102,10 +102,12 @@ define([
       this.indicator.set(indicator);
       this.$el.addClass('is-active');
       this.map.invalidateSize();
+      Backbone.Events.trigger('map:opened');
     },
 
     close: function() {
       this.$el.removeClass('is-active');
+      Backbone.Events.trigger('map:closed');
     }
 
   });
