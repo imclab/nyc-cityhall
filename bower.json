@@ -24,6 +24,7 @@
     "chai": "~1.9.0",
     "mocha": "~1.17.1",
     "momentjs": "~2.5.1",
-    "sprintf": "*"
+    "sprintf": "*",
+    "cartodb.js": "~3.5.0"
   }
 }

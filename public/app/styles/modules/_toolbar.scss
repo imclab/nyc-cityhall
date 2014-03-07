@@ -26,13 +26,15 @@
 .mod-toolbar-selector {
   & > li {
     position: relative;
-    padding: 10px 0;
+    padding: 0;
     line-height: 20px;
   }
 
   font-size: 15px;
 
   .current {
+    display: block;
+    padding: 10px 0;
     cursor: pointer;
   }
 }

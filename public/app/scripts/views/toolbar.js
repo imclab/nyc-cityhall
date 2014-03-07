@@ -12,8 +12,8 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart .mod-toolbar-selector a': 'changeFilter',
-          'touchstart .mod-toolbar-selector .current': 'expandOptions'
+          'tap .mod-toolbar-selector a': 'changeFilter',
+          'tap .mod-toolbar-selector .current': 'expandOptions'
         };
       }
 
