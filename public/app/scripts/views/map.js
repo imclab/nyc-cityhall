@@ -70,7 +70,7 @@ define([
       console.log(indicator);
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, 100*(i.current - i.previous)/i.previous as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
       console.log(sql);
-      cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [value = null] {polygon-fill: #777;}}', indicator.id);
+      cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; [current = null] {polygon-fill: #777;}}', indicator.id);
 
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
@@ -79,7 +79,7 @@ define([
         } else {
           index = 7;
         }
-        cartocss = cartocss + sprintf(' #%s [percent_change <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+        cartocss = cartocss + sprintf(' #%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
       });
 
       options = _.extend({}, this.options.cartodb, {
