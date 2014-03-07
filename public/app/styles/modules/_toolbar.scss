@@ -6,67 +6,68 @@
     padding: 0;
     margin: 0;
   }
-}
 
-.mod-toolbar-item {
-  float: left;
-  margin-right: 40px;
-}
-
-.mod-toolbar-label, .mod-toolbar-selector {
-  display: inline-block;
-}
-
-.mod-toolbar-label {
-  color: $thirth;
-  font-size: 11px;
-  text-transform: uppercase;
-}
-
-.mod-toolbar-selector {
-  & > li {
-    position: relative;
-    padding: 0;
-    line-height: 20px;
+  .mod-toolbar-item {
+    float: left;
+    margin-right: 40px;
+    font-weight: bold;
   }
 
-  font-size: 15px;
-
-  .current {
-    display: block;
-    padding: 10px 0;
-    cursor: pointer;
-  }
-}
-
-.mod-toolbar-options {
-  min-width: 150px;
-  max-height: 0;
-  position: absolute;
-
-  background-color: $thirth;
-
-  overflow: hidden;
-  z-index: 10;
-
-  @include transition(all .3s ease);
-
-  &.is-expanded {
-    max-height: 300px;
+  .mod-toolbar-label, .mod-toolbar-selector {
+    display: inline-block;
   }
 
-  li {
-    display: block;
-    margin: 0;
-    padding: 0;
+  .mod-toolbar-label {
+    color: $thirth;
+    font-size: 11px;
+    text-transform: uppercase;
   }
 
-  a {
-    display: block;
-    padding: 5px 10px;
-    &:hover, &:active {
-      background-color: darken($thirth, 10%)
+  .mod-toolbar-selector {
+    & > li {
+      position: relative;
+      padding: 0;
+      line-height: 20px;
+    }
+
+    font-size: 15px;
+
+    .current {
+      display: block;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+  }
+
+  .mod-toolbar-options {
+    min-width: 150px;
+    max-height: 0;
+    position: absolute;
+
+    background-color: $thirth;
+
+    overflow: hidden;
+    z-index: 10;
+
+    @include transition(all .3s ease);
+
+    &.is-expanded {
+      max-height: 300px;
+    }
+
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      display: block;
+      padding: 7px 10px;
+      line-height: .9;
+      &:hover, &:active {
+        background-color: darken($thirth, 10%)
+      }
     }
   }
 }
-

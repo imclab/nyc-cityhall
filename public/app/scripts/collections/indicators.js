@@ -13,7 +13,7 @@ define([
 
     model: IndicatorModel,
 
-    url: 'http://nyc-cityhall.cartodb.com/api/v2/sql',
+    url: 'https://nyc-cityhall.cartodb.com/api/v2/sql',
 
     colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
 

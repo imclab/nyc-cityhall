@@ -4,7 +4,7 @@ define(['backbone', 'moment', 'sprintf'], function(Backbone, moment, sprintf) {
 
   var UserModel = Backbone.Model.extend({
 
-    url: 'http://nyc-cityhall.cartodb.com/api/v2/sql',
+    url: 'https://nyc-cityhall.cartodb.com/api/v2/sql',
 
     parse: function(data) {
       return data.rows[0];

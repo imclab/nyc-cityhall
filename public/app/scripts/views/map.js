@@ -22,7 +22,7 @@ define([
         zoom: 11
       },
       tiles: {
-        url: 'http://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
+        url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
         attribution: 'Mapbox'
       },
       cartodb: {
