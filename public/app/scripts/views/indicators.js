@@ -47,7 +47,7 @@ define([
       } else {
         this.indicators.getData(function(err) {
           if (err) {
-            console.log(err.responseText);
+            window.sessionStorage.removeItem('token');
           } else {
             self.sortAndRender();
           }
