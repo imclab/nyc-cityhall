@@ -9,18 +9,24 @@ require.config({
     handlebars: '../vendor/handlebars/handlebars',
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
-    moment: '../vendor/momentjs/moment'
+    moment: '../vendor/momentjs/moment',
+    jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
+    cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed'
   },
 
   shim: {
     jquery: {
       exports: '$'
     },
+    jquerymobile: {
+      deps: ['jquery'],
+      exports: '$'
+    },
     underscore: {
       exports: '_'
     },
     backbone: {
-      deps: ['jquery', 'underscore'],
+      deps: ['jquerymobile', 'underscore'],
       exports: 'Backbone'
     },
     handlebars: {
@@ -28,6 +34,9 @@ require.config({
     },
     sprintf: {
       exports: 'sprintf'
+    },
+    cartodb: {
+      exports: 'cartodb'
     }
   }
 

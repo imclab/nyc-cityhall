@@ -11,7 +11,7 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart #toggleAsideBtn': 'toggleAside'
+          'tap #toggleAsideBtn': 'toggleAside'
         };
       }
 
@@ -24,10 +24,7 @@ define([
       Backbone.Events.on('application:toggle', this.toggleAside, this);
     },
 
-    toggleAside: function(e) {
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
+    toggleAside: function() {
       this.$el.toggleClass('is-moved');
     }
 

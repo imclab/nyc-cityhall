@@ -1,5 +1,5 @@
 .mod-map {
-  position: fixed;
+  position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
@@ -12,6 +12,21 @@
   @include transition(all .15s ease);
 
   &.is-active {
-    top: 130px;
+    top: 0;
   }
+
+  .icon-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }

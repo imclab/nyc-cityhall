@@ -16,8 +16,8 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart .mod-indicators-agency': 'setAgency',
-          'touchstart .mod-indicators-item': 'openMapView'
+          'tap .mod-indicators-agency': 'setAgency',
+          'tap .mod-indicators-item': 'openMapView'
         };
       }
 
@@ -101,8 +101,10 @@ define([
       this.render();
     },
 
-    openMapView: function() {
-      Backbone.Events.trigger('map:open');
+    openMapView: function(e) {
+      var indicator = this.indicators.get($(e.currentTarget).data('id'));
+
+      Backbone.Events.trigger('map:open', indicator.toJSON());
     }
 
   });

@@ -23,6 +23,8 @@
   "undef": true,
   "unused": true,
   "predef": [
-    "define"
+    "define",
+    "L",
+    "cartodb"
   ]
 }

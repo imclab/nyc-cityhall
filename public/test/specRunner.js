@@ -12,6 +12,7 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
+    cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
   },
@@ -35,6 +36,9 @@ require.config({
     },
     mocha: {
       exports: 'mocha'
+    },
+    cartodb: {
+      exports: 'cartodb'
     }
   }
 

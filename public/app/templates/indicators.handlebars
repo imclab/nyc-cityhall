@@ -1,9 +1,9 @@
 <div class="row">
   {{#each indicators}}
     <div class="mod-indicators-layout grid-2 grid-md-10 grid-sm-10" data-agency="{{agency}}">
-      <article class="mod-indicators-item">
+      <article class="mod-indicators-item" data-id="{{id}}">
         <header class="mod-indicators-header">
-          <a href="#" class="mod-indicators-agency" data-agency="{{agency}}">{{agency}}</a>
+          {{!-- <a href="#" class="mod-indicators-agency" data-agency="{{agency}}">{{agency}}</a> --}}
           <span class="mod-indicators-frequency">{{frequency}}</span>
           <h2>{{name}}</h2>
         </header>

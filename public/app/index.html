@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
     <!-- build:css(.tmp) styles/main.css -->
+      <link rel="stylesheet" href="vendor/cartodb.js/themes/css/cartodb.css">
       <link rel="stylesheet" href="../.tmp/styles/main.css">
     <!-- endbuild -->
   </head>
@@ -16,7 +17,7 @@
       <header id="header">
         <div class="layout-header">
           <nav class="toggle-aside">
-            <a href="#" id="toggleAsideBtn" class="icon icon-menu"></a>
+            <button id="toggleAsideBtn" class="icon icon-menu"></button>
           </nav>
           <h1 id="titleView">All Indicators</h1>
           <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="70" height="23">
@@ -56,7 +57,8 @@
       <section class="page is-page-active" id="indicators">
         <div class="mod-indicators" id="indicatorsView"></div>
         <div class="mod-map" id="mapView">
-          <button class="mod-map-close">x</button>
+          <button class="icon icon-close"></button>
+          <div id="map"></div>
         </div>
       </section>
 
