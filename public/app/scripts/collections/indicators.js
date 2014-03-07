@@ -46,8 +46,8 @@ define([
           full: row.full_green_percent,
           type: row.measure_type,
           date: row.date,
-          geoType1: row.geo_type1,
-          geoType2: row.geo_type2
+          geoType1: row.geog_type1,
+          geoType2: row.geog_type2
         };
 
         switch(self.filter.get('period')) {
