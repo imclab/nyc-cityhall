@@ -16,7 +16,6 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .mod-indicators-agency': 'setAgency',
           'tap .mod-indicators-item': 'openMapView'
         };
       }
@@ -48,6 +47,7 @@ define([
         this.indicators.getData(function(err) {
           if (err) {
             window.sessionStorage.removeItem('token');
+            window.location.hash = 'login';
           } else {
             self.sortAndRender();
           }
@@ -65,6 +65,7 @@ define([
       var value = $(e.currentTarget).data('agency');
       this.filter.set('agency', value);
       e.preventDefault();
+      e.stopPropagation();
     },
 
     filterByAgency: function() {
@@ -100,6 +101,7 @@ define([
 
       this.indicators.sort();
       this.render();
+      this.filterByAgency();
     },
 
     openMapView: function(e) {
