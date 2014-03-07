@@ -22,8 +22,8 @@ define([
         zoom: 11
       },
       tiles: {
-        url: 'http://tile.stamen.com/toner/{z}/{x}/{y}.png',
-        attribution: 'Stamen'
+        url: 'http://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
+        attribution: 'Mapbox'
       },
       cartodb: {
         user_name: 'nyc-cityhall',
