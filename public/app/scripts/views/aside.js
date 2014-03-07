@@ -71,8 +71,11 @@ define([
     },
 
     changeAgency: function(e) {
+      var current = $(e.currentTarget);
+      this.$el.find('.mod-aside-agencies a').removeClass('current');
+      this.filter.set('agency', current.data('agency'));
+      current.addClass('current');
       e.preventDefault();
-      this.filter.set('agency', $(e.currentTarget).data('agency'));
     },
 
     changeIndicatorType: function(e) {
