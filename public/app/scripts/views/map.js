@@ -75,7 +75,7 @@ define([
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
         if (indicator.full < 0) {
-          index = self.options.colors.length - index;
+          index = self.options.colors.length - (index+1);
         } else {
           index = 7;
         }
