@@ -138,7 +138,7 @@ define([
           }
         });
 
-        indicator.status = (indicator.value/indicator.full>0)?'improving':'worsening';
+        indicator.status = (indicator.value/indicator.full>=0)?'improving':'worsening';
         indicator.urgent = (indicator.value/indicator.full<=-1)?'true':'false';
 
         indicator.displayValue=indicator.value+ '%';
