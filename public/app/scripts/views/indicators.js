@@ -97,19 +97,19 @@ define([
     },
 
     sortAndRender: function() {
-      function getValue(indicator) {
-        return Number(indicator.get('value').split('%')[0]);
-      }
+      // function getValue(indicator) {
+      //   return Number(indicator.get('value').split('%')[0]);
+      // }
 
       switch (this.filter.get('sort')) {
       case 'worst':
         this.indicators.comparator = function(indicator) {
-          return getValue(indicator) / indicator.get('full');
+          return indicator.get('value') / indicator.get('full');
         };
         break;
       case 'best':
         this.indicators.comparator = function(indicator) {
-          return -(getValue(indicator) / indicator.get('full'));
+          return -(indicator.get('value') / indicator.get('full'));
         };
         break;
       case 'department':
