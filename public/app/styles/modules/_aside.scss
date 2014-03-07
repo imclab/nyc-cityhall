@@ -22,5 +22,11 @@
 
   a {
     color: $fifth;
+
+    @include transition(all .3s ease);
+
+    &:hover, &:active, &.current {
+      color: $secondary;
+    }
   }
 }

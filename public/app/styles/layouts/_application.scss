@@ -18,7 +18,7 @@
   z-index: 1;
 
   @include box-shadow(0 0 15px rgba(0, 0, 0, .5));
-  @include transition(all .15s ease-out);
+  @include transition(all .3s ease);
 
   &.is-moved {
     left: 20%;
