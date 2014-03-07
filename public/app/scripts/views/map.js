@@ -50,7 +50,7 @@ define([
     },
 
     setMap: function() {
-      this.map = new L.Map(this.options.canvas, this.options.map);
+      this.map = L.map(this.options.canvas, this.options.map);
 
       L.tileLayer(this.options.tiles.url, {
         attribution: this.options.tiles.attribution

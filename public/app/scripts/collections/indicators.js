@@ -44,7 +44,10 @@ define([
           previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
           previousValue: row.previous_fytd,
           full: row.full_green_percent,
-          type: row.measure_type
+          type: row.measure_type,
+          date: row.date,
+          geoType1: row.geo_type1,
+          geoType2: row.geo_type2
         };
 
         switch(self.filter.get('period')) {
