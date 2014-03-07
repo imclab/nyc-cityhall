@@ -1,7 +1,12 @@
-$grid-columns: 10;
+$grid-columns: 60;
 $grid-gutter-width: .5%;
-$max-width-tablet: 769px;
-$max-width-mobile: 321px;
+
+$xs: 0px;
+$sm: 360px;
+$md: 768px;
+$lg: 900px;
+$xl: 1100px;
+
 
 $font-family: "Helvetica Neue", Helvetica, sans-serif;
 $font-size: 13px;
