@@ -105,13 +105,13 @@ define([
       case 'worst':
 
         this.indicators.comparator = function(indicator) {
-          if(indicator.get('value')===null || indicator.get('full')===0) return 0;
+          if(indicator.get('value')===null || indicator.get('full')===0) {return 0;}
           return indicator.get('value') / indicator.get('full');
         };
         break;
       case 'best':
         this.indicators.comparator = function(indicator) {
-          if(indicator.get('value')===null || indicator.get('full')===0) return 0;
+          if(indicator.get('value')===null || indicator.get('full')===0) {return 0;}
           return -(indicator.get('value') / indicator.get('full'));
         };
         break;
