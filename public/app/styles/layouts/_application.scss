@@ -88,7 +88,13 @@
   }
 }
 
-@media screen and (min-width: $sm) and (max-width: $md) {
+@media screen and (max-width: $lg) {
+  .layout-main.is-moved {
+    left: 30%;
+  }
+}
+
+@media screen and (max-width: $md) {
   .layout-main.is-moved {
     left: 50%;
   }

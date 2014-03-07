@@ -1,10 +1,15 @@
 .mod-indicators {
+  padding: 0 .5%;
   @include clearfix;
 }
 
 .mod-indicators-item {
+  float: left;
+  margin: 5px .5%;
+}
+
+.mod-indicators-content {
   position: relative;
-  margin: 5px 0;
   padding: 10px;
 
   background: $thirth;
@@ -69,6 +74,24 @@
     line-height: 100px;
   }
 
+}
+
+@media only screen and (min-width: $xl) {
+  .mod-indicators-item {
+    width: 19%;
+  }
+}
+
+@media only screen and (max-width: $xl) {
+  .mod-indicators-item {
+    width: 24%;
+  }
+}
+
+@media only screen and (max-width: $lg) {
+  .mod-indicators-item {
+    width: 32.33333%;
+  }
 }
 
 @media only screen and (max-width: $md) {

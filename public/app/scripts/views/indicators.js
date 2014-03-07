@@ -68,11 +68,12 @@ define([
     },
 
     filterByAgency: function() {
+      var $mods = $('.mod-indicators-item');
       if (this.filter.get('agency') === 'all') {
-        $('.mod-indicators-layout').removeClass('is-hidden');
+        $mods.removeClass('is-hidden');
       } else {
-        $('.mod-indicators-layout').addClass('is-hidden');
-        $('.mod-indicators-layout[data-agency="' + this.filter.get('agency') + '"]').removeClass('is-hidden');
+        $mods.addClass('is-hidden');
+        $('.mod-indicators-item[data-agency="' + this.filter.get('agency') + '"]').removeClass('is-hidden');
       }
     },
 
