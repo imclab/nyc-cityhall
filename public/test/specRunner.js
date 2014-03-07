@@ -61,7 +61,6 @@ require(['require', 'mocha'], function(require, mocha) {
     '../../test/specs/views/aside',
     '../../test/specs/views/indicators',
     '../../test/specs/views/login',
-    '../../test/specs/views/map',
     '../../test/specs/views/toolbar',
 
     '../../test/specs/router'
