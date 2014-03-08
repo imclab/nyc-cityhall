@@ -12,6 +12,7 @@ require.config({
     moment: '../vendor/momentjs/moment',
     jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
     mousewheel: '../vendor/jscrollpane/script/jquery.mousewheel',
+    mwheelIntent: '../vendor/jscrollpane/script/mwheelIntent',
     jscrollpane: '../vendor/jscrollpane/script/jquery.jscrollpane',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed'
   },
@@ -24,8 +25,15 @@ require.config({
       deps: ['jquery'],
       exports: '$'
     },
+    mousewheel: {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    mwheelIntent: {
+      deps: ['jquery']
+    },
     jscrollpane: {
-      deps: ['jquery', 'mousewheel'],
+      deps: ['mousewheel', 'mwheelIntent'],
       exports: '$'
     },
     underscore: {
