@@ -81,7 +81,7 @@ define([
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
-      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #000; polygon-opacity: 0.8; }', indicator.id);
+      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #000; line-width:2; polygon-opacity: 0.8; }', indicator.id);
       cartocss=cartocss+'[ last_monthdayyear != null]{ ';
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
