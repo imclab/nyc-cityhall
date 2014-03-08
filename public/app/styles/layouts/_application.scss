@@ -55,6 +55,10 @@
   background: $fourth;
 
   @include transition(all .3s ease);
+
+  &.is-active {
+    width: 20%;
+  }
 }
 
 .layout-header {
