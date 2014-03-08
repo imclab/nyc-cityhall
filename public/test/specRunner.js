@@ -12,6 +12,9 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
+    jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
+    mousewheel: '../vendor/jscrollpane/script/jquery.mousewheel',
+    jscrollpane: '../vendor/jscrollpane/script/jquery.jscrollpane',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
@@ -19,6 +22,14 @@ require.config({
 
   shim: {
     jquery: {
+      exports: '$'
+    },
+    jquerymobile: {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    jscrollpane: {
+      deps: ['jquery', 'mousewheel'],
       exports: '$'
     },
     underscore: {
