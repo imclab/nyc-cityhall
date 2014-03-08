@@ -25,6 +25,7 @@
     "mocha": "~1.17.1",
     "momentjs": "~2.5.1",
     "sprintf": "*",
-    "cartodb.js": "~3.5.0"
+    "cartodb.js": "~3.5.0",
+    "jscrollpane": "~2.0.14"
   }
 }
