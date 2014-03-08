@@ -21,6 +21,16 @@
     color: $thirth;
     font-size: 11px;
     text-transform: uppercase;
+
+    &:before {
+      display: inline-block;
+      content: ' ';
+      margin-right: 5px;
+      height: 10px;
+      width: 5px;
+      background: image-url("assets/icon-caret.png") no-repeat center center;
+      background-size: 5px 10px;
+    }
   }
 
   .mod-toolbar-selector {
@@ -40,11 +50,11 @@
   }
 
   .mod-toolbar-options {
-    min-width: 150px;
     max-height: 0;
     position: absolute;
+    width: 205px;
 
-    background-color: $thirth;
+    background: $fourth;
 
     overflow: hidden;
     z-index: 10;
@@ -57,16 +67,22 @@
 
     li {
       display: block;
-      margin: 0;
+      margin: .5em 1em;
       padding: 0;
+      &:first-child {
+        margin-top: 1em;
+      }
+      &:last-child {
+        margin-bottom: 1em;
+      }
     }
 
     a {
-      display: block;
-      padding: 7px 10px;
+      display: inline-block;
+      color: $thirth;
       line-height: .9;
       &:hover, &:active {
-        background-color: darken($thirth, 10%)
+        color: $secondary;
       }
     }
   }

@@ -79,6 +79,7 @@ define([
       current.addClass('current');
       e.preventDefault();
     },
+
     changeIndicatorType: function(e) {
       var current = $(e.currentTarget);
       this.$el.find('.mod-aside-types a').removeClass('current');
@@ -88,10 +89,6 @@ define([
       current.addClass('current');
       e.preventDefault();
     },
-
-    // changeIndicatorType: function(e) {
-    //   e.preventDefault();
-    // },
 
     close: function() {
       Backbone.Events.trigger('application:toggle');
