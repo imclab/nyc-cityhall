@@ -113,10 +113,8 @@ define([
           break;
         }
 
-        if (row.recording_units === 'percent') {
-          indicator.currentValue = indicator.currentValue + '%';
-          indicator.previousValue = indicator.previousValue + '%';
-        }
+
+
 
         indicator.color = self.colors[0];
 
@@ -139,10 +137,18 @@ define([
           }
         });
 
-        indicator.status = (indicator.value/indicator.full>=0)?'improving':'worsening';
-        indicator.urgent = (indicator.value/indicator.full<=-1)?'true':'false';
 
+
+        //format for display
         indicator.displayValue=indicator.value+ '%';
+
+        indicator.displayCurrentValue = self.numberWithCommas(indicator.currentValue);
+        indicator.displayPreviousValue = self.numberWithCommas(indicator.previousValue );
+
+        if (row.recording_units === 'percent') {
+          indicator.displayCurrentValue = indicator.displayCurrentValue + '%';
+          indicator.displayPreviousValue = indicator.displayPreviousValue + '%';
+        }
 
         if(indicator.value==='Infinity' || indicator.value==='NaN'){
           indicator.value='0';
@@ -150,10 +156,19 @@ define([
           indicator.color='#aaa';
         }
 
+        indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
+        indicator.urgent = (indicator.value/indicator.full<=-1 && indicator.full!==0 && indicator.value!==null)?'true':'false';
+
         return indicator;
       });
 
       return result;
+    },
+
+    numberWithCommas: function(num) {
+      if(num===null) {return null;}
+      num=num.toFixed(2);
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
 
     getData: function(callback) {
