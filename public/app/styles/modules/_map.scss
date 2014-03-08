@@ -25,15 +25,14 @@
 
 #map {
   position: absolute;
-  top: 110px;
+  top: 115px;
   left: 1%;
   right: 1%;
   bottom: 10px;
 }
 
-#indicator {
-  position: absolute;
-  top: 140px;
-  left: 1%;
-  right: 1%;
+@media only screen and (max-width: $sm) {
+  #map {
+    top: 195px;
+  }
 }

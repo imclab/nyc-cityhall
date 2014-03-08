@@ -1,5 +1,5 @@
 .mod-indicators {
-  padding: 0 .5%;
+  padding: 10px .5%;
   @include clearfix;
 }
 
@@ -64,6 +64,22 @@
     display: block;
   }
 
+  .mod-indicators-frequency {
+    text-transform: capitalize;
+    &:before {
+      display: inline-block;
+      content: ' ';
+      width: 15px;
+      height: 12px;
+      margin-right: 5px;
+
+      background: image-url("assets/icon-frequency.png") no-repeat center center;
+      background-size: 15px 12px;
+
+      vertical-align: -1px;
+    }
+  }
+
   .mod-indicators-agency {
     background-color: $primary;
     padding: 3px 10px;
@@ -80,82 +96,56 @@
 
 }
 
-#mapIndicatorView {
-  .mod-indicators-item {
-    float: none;
-    width: auto;
-    margin: 0 1%;
+.mod-indicators-map {
+  margin: 10px 1%;
 
-    h2 {
-      height: auto;
-      font-size: 17px;
-      font-weight: normal;
-      padding-right: 10px;
-    }
-
-    table {
-      margin-top: 10px;
-    }
-
-    td {
-      font-size: 17px;
-    }
-
-    .mod-indicators-agency, .mod-indicators-frequency {
-      position: relative;
-      float: left;
-      top: auto;
-      right: auto;
-      left: 0;
-    }
-
-    .mod-indicators-frequency {
-      margin-left: 10px;
-      margin-top: 3px;
-    }
-
-    .mod-indicators-header, .mod-indicators-footer {
-      float: left;
-      border-bottom: 0;
-      border-right: 1px solid $primary;
-      width: 49.5%;
-      height: 75px;
-    }
-    .mod-indicators-value, .mod-indicators-footer {
-      float: right;
-      width: 25%;
-    }
-    .mod-indicators-value {
-      border-bottom: 0;
-      border-right: 0;
-      width: 25%;
-    }
-    .mod-indicators-value-item {
-      font-size: 40px;
-      line-height: 75px;
-    }
+  h2 {
+    height: auto;
+    font-size: 17px;
+    font-weight: normal;
+    padding-right: 10px;
   }
-}
 
-@media only screen and (max-width: $sm) {
-  .mod-indicators-item {
-    h2 {
-      height: 75px;
-    }
-    .mod-indicators-header {
-      width: 78%;
-      height: 75px;
-    }
-    .mod-indicators-value {
-      width: 20%;
-    }
-    .mod-indicators-footer {
-      display: none;
-    }
-    .mod-indicators-value-item {
-      font-size: 20px;
-      line-height: 75px;
-    }
+  table {
+    margin-top: 10px;
+  }
+
+  td {
+    font-size: 17px;
+  }
+
+  .mod-indicators-agency, .mod-indicators-frequency {
+    position: relative;
+    float: left;
+    top: auto;
+    right: auto;
+    left: 0;
+  }
+
+  .mod-indicators-frequency {
+    margin-left: 10px;
+    margin-top: 3px;
+  }
+
+  .mod-indicators-header, .mod-indicators-footer {
+    float: left;
+    border-bottom: 0;
+    border-right: 1px solid $primary;
+    width: 49.5%;
+    height: 75px;
+  }
+  .mod-indicators-value, .mod-indicators-footer {
+    float: right;
+    width: 25%;
+  }
+  .mod-indicators-value {
+    border-bottom: 0;
+    border-right: 0;
+    width: 25%;
+  }
+  .mod-indicators-value-item {
+    font-size: 40px;
+    line-height: 75px;
   }
 }
 
@@ -176,7 +166,7 @@
     }
 
     td {
-      font-size: 17px;
+      font-size: 13px;
     }
 
     .mod-indicators-agency, .mod-indicators-frequency {
@@ -207,6 +197,56 @@
     .mod-indicators-value-item {
       font-size: 40px;
       line-height: 65px;
+    }
+  }
+}
+
+@media only screen and (max-width: $sm) {
+  .mod-indicators {
+    margin-top: 30px;
+  }
+  .mod-indicators-item {
+    h2 {
+      height: 75px;
+    }
+    .mod-indicators-header {
+      width: 78%;
+      height: 75px;
+    }
+    .mod-indicators-value {
+      width: 20%;
+    }
+    .mod-indicators-footer {
+      display: none;
+    }
+    .mod-indicators-value-item {
+      font-size: 20px;
+      line-height: 75px;
+    }
+  }
+
+  .mod-indicators-map {
+    .mod-indicators-header {
+      float: none;
+      width: auto;
+      border-right: 0;
+      border-bottom: 1px solid $primary;
+      height: 80px;
+      overflow: hidden;
+
+      h2 {
+        padding-bottom: 10px;
+      }
+    }
+    .mod-indicators-value, .mod-indicators-footer {
+      float: left;
+      border-right: 0;
+    }
+    .mod-indicators-value {
+      width: 40%;
+    }
+    .mod-indicators-footer {
+      width: 60%;
     }
   }
 }
