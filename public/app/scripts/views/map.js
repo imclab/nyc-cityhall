@@ -8,9 +8,8 @@ define([
   'moment',
   'cartodb',
   'models/filter',
-  'models/indicator',
-  'text!../../templates/indicator-map.handlebars'
-], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel, tpl) {
+  'models/indicator'
+], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel) {
 
   var MapView = Backbone.View.extend({
 
@@ -25,7 +24,8 @@ define([
         minZoom: 10
       },
       tiles: {
-        url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
+        //url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
+        url: 'images/assets/blanktile.png',
         attribution: 'Mapbox'
       },
       cartodb: {
@@ -48,22 +48,15 @@ define([
       };
     },
 
-    template: Handlebars.compile(tpl),
-
     initialize: function() {
       this.indicator = new IndicatorModel();
       this.filter = filterModel.instance;
-      this.$indicator = $('#indicator');
 
       this.setMap();
 
       this.indicator.on('change', this.changeVisualization, this);
       this.filter.on('change', this.changeVisualization, this);
       Backbone.Events.on('map:open', this.show, this);
-    },
-
-    render: function() {
-      this.$indicator.html(this.template());
     },
 
     setMap: function() {
@@ -83,6 +76,8 @@ define([
 
       self = this;
       indicator = this.indicator.toJSON();
+
+      Backbone.Events.trigger('map:changed', indicator);
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
