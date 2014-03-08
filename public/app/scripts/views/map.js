@@ -9,7 +9,7 @@ define([
   'cartodb',
   'models/filter',
   'models/indicator',
-  'text!../../templates/indicators.handlebars'
+  'text!../../templates/indicator-map.handlebars'
 ], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel, tpl) {
 
   var MapView = Backbone.View.extend({
@@ -21,7 +21,8 @@ define([
       map: {
         zoomControl: false,
         center: [40.7, -74],
-        zoom: 11
+        zoom: 11,
+        minZoom: 10
       },
       tiles: {
         url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
@@ -61,7 +62,7 @@ define([
     },
 
     render: function() {
-      this.$indicator.html('hola');
+      this.$indicator.html(this.template());
     },
 
     setMap: function() {
@@ -110,6 +111,7 @@ define([
         if (self.currentLayer) {
           self.map.removeLayer(self.currentLayer);
         }
+        self.map.setView(self.options.map.center, self.options.map.zoom);
         self.currentLayer = layer;
         self.map.addLayer(layer);
       }

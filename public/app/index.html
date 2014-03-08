@@ -12,14 +12,14 @@
     <!-- endbuild -->
   </head>
   <body>
-    <div class="layout-main is-hidden" id="applicationView">
+    <div class="layout-page is-hidden" id="applicationView">
 
       <header id="header">
         <div class="layout-header">
           <nav class="toggle-aside">
             <button id="toggleAsideBtn" class="icon icon-menu"></button>
           </nav>
-          <h1 id="titleView">All Indicators</h1>
+          <h1 id="applicationTitle">All Indicators</h1>
           <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="70" height="23">
         </div>
         <nav class="layout-toolbar">
@@ -54,19 +54,34 @@
         </nav>
       </header>
 
-      <section class="page is-page-active" id="indicators">
+      <section class="layout-content">
         <div class="mod-indicators" id="indicatorsView"></div>
       </section>
 
-      <div class="mod-map" id="mapView">
-        <button class="icon icon-close"></button>
-        <div id="indicator"></div>
-        <div id="map"></div>
-      </div>
-
     </div>
 
-    <div class="layout-main is-hidden" id="loginView">
+    <div class="layout-page is-hidden" id="mapView">
+      <header id="header">
+        <div class="layout-header">
+          <nav class="toggle-aside">
+            <button id="toggleAsideBtn" class="icon icon-back"></button>
+          </nav>
+          <h1 id="mapTitle">All Indicators</h1>
+          <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="70" height="23">
+        </div>
+        <nav class="layout-toolbar">
+          <div class="mod-toolbar" id="toolbarView">
+
+          </div>
+        </nav>
+      </header>
+
+      <section class="layout-content">
+        <div id="map"></div>
+      </section>
+    </div>
+
+    <div class="layout-page is-hidden" id="loginView">
       <form action="#">
         <div class="form-row">
           <label for="username">User</label>
@@ -81,6 +96,7 @@
         </div>
       </form>
     </div>
+
     <aside class="layout-aside is-hidden" id="asideView"></aside>
 
     <script data-main="scripts/main" src="vendor/requirejs/require.js"></script>

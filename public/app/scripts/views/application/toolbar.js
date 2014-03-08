@@ -28,8 +28,6 @@ define([
 
       this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
-      this.$sort = $('#indicatorSort');
-      this.$period = $('#indicatorPeriod');
 
       this.filter.on('change', function() {
         console.log(self.filter.toJSON());
@@ -69,11 +67,6 @@ define([
 
     contractOptions: function() {
       this.$options.removeClass('is-expanded');
-    },
-
-    toggleItems: function() {
-      this.$sort.closest('.mod-toolbar-item').toggleClass('is-hidden');
-      this.$period.closest('.mod-toolbar-item').toggleClass('is-hidden');
     }
 
   });

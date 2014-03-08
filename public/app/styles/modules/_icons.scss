@@ -18,10 +18,19 @@ button.icon {
 }
 
 .icon-close {
-  width: 20px;
-  height: 20px;
+  width: 23px;
+  height: 23px;
 
   background-image: image-url("assets/icon-close.png");
   background-position: center center;
-  background-size: 12px 12px;
+  background-size: 23px 23px;
+}
+
+.icon-back {
+  width: 37px;
+  height: 37px;
+
+  background-image: image-url("assets/icon-back.png");
+  background-position: center center;
+  background-size: 37px 37px;
 }

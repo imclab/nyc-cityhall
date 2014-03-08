@@ -3,12 +3,15 @@
 define([
   'backbone',
   'views/application',
+  'views/map',
   'views/login',
   'views/aside',
-  'views/toolbar',
-  'views/indicators',
-  'views/map'
-], function(Backbone, ApplicationView, LoginView, AsideView, ToolbarView, IndicatorsView, MapView) {
+
+  'views/application/toolbar',
+  'views/application/indicators',
+
+  'views/map/indicator'
+], function(Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView) {
 
   var app = {}, Router;
 
@@ -17,7 +20,9 @@ define([
   app.aside = new AsideView();
   app.toolbar = new ToolbarView();
   app.indicators = new IndicatorsView();
+
   app.map = new MapView();
+  app.mapIndicator = new MapIndicatorView();
 
   Router = Backbone.Router.extend({
 

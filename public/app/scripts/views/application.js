@@ -1,8 +1,9 @@
 'use strict';
 
 define([
-  'backbone'
-], function(Backbone) {
+  'backbone',
+  'models/filter'
+], function(Backbone, filterModel) {
 
   var ApplicationView = Backbone.View.extend({
 
@@ -21,11 +22,20 @@ define([
     },
 
     initialize: function() {
+      this.filter = filterModel.instance;
+      this.$titles = $('#applicationTitle, #mapTitle');
+
+      this.filter.on('change:type', this.changeTitle, this);
+
       Backbone.Events.on('application:toggle', this.toggleAside, this);
     },
 
     toggleAside: function() {
       this.$el.toggleClass('is-moved');
+    },
+
+    changeTitle: function() {
+      this.$titles.text($('.mod-aside-types').find('a[data-type="' + this.filter.get('type') + '"]').text());
     }
 
   });

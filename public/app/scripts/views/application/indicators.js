@@ -6,7 +6,7 @@ define([
   'handlebars',
   'models/filter',
   'collections/indicators',
-  'text!../../templates/indicators.handlebars'
+  'text!../../../templates/indicators-list.handlebars'
 ], function(_, Backbone, Handlebars, filterModel, IndicatorsCollection, tpl) {
 
   var IndicatorsView = Backbone.View.extend({
