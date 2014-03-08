@@ -34,6 +34,14 @@ define([
       this.user.check(params[0].value, params[1].value, callback);
 
       e.preventDefault();
+    },
+
+    show: function() {
+      this.$el.addClass('is-active');
+    },
+
+    hide: function() {
+      this.$el.removeClass('is-active');
     }
 
   });

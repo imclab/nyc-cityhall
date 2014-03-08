@@ -36,6 +36,14 @@ define([
 
     changeTitle: function() {
       this.$titles.text($('.mod-aside-types').find('a[data-type="' + this.filter.get('type') + '"]').text());
+    },
+
+    show: function() {
+      this.$el.addClass('is-active');
+    },
+
+    hide: function() {
+      this.$el.removeClass('is-active');
     }
 
   });

@@ -1,6 +1,7 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone',
   'views/application',
   'views/map',
@@ -11,7 +12,7 @@ define([
   'views/application/indicators',
 
   'views/map/indicator'
-], function(Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView) {
+], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView) {
 
   var app = {}, Router;
 
@@ -42,18 +43,24 @@ define([
     },
 
     showLogin: function() {
-      app.application.$el.addClass('is-hidden');
-      app.aside.$el.addClass('is-hidden');
-      app.login.$el.removeClass('is-hidden');
+      app.application.hide();
+      app.map.hide();
+      app.aside.hide();
+      app.login.show();
     },
 
     showApp: function() {
-      app.login.$el.addClass('is-hidden');
-      app.aside.$el.removeClass('is-hidden');
-      app.application.$el.removeClass('is-hidden');
+      app.login.hide();
+      app.map.hide();
+
+      app.application.show();
       if (window.sessionStorage.getItem('token')) {
         app.indicators.getData();
       }
+
+      _.delay(function() {
+        app.aside.show();
+      }, 300);
     },
 
     checkAuth: function() {

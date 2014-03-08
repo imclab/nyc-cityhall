@@ -12,7 +12,7 @@
     <!-- endbuild -->
   </head>
   <body>
-    <div class="layout-page is-hidden" id="applicationView">
+    <div class="layout-page" id="applicationView">
 
       <header id="header">
         <div class="layout-header">
@@ -60,7 +60,7 @@
 
     </div>
 
-    <div class="layout-page is-hidden" id="mapView">
+    <div class="layout-page" id="mapView">
       <header id="header">
         <div class="layout-header">
           <nav class="toggle-aside">
@@ -69,11 +69,7 @@
           <h1 id="mapTitle">All Indicators</h1>
           <img src="images/logo-nyc-cityhall.png" class="logo-image" alt="NYC" width="70" height="23">
         </div>
-        <nav class="layout-toolbar">
-          <div class="mod-toolbar" id="toolbarView">
-
-          </div>
-        </nav>
+        <nav class="layout-toolbar"></nav>
       </header>
 
       <section class="layout-content">
@@ -81,7 +77,7 @@
       </section>
     </div>
 
-    <div class="layout-page is-hidden" id="loginView">
+    <div class="layout-page" id="loginView">
       <form action="#">
         <div class="form-row">
           <label for="username">User</label>
@@ -97,7 +93,7 @@
       </form>
     </div>
 
-    <aside class="layout-aside is-hidden" id="asideView"></aside>
+    <aside class="layout-aside" id="asideView"></aside>
 
     <script data-main="scripts/main" src="vendor/requirejs/require.js"></script>
   </body>

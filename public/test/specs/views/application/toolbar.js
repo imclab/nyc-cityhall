@@ -2,7 +2,7 @@
 
 define([
   'chai',
-  'views/toolbar'
+  'views/application/toolbar'
 ], function(Chai, ToolbarView) {
 
   var expect = Chai.expect;
