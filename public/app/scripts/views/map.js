@@ -3,12 +3,14 @@
 define([
   'underscore',
   'backbone',
+  'handlebars',
   'sprintf',
   'moment',
   'cartodb',
   'models/filter',
-  'models/indicator'
-], function(_, Backbone, sprintf, moment, cartodbLib, filterModel, IndicatorModel) {
+  'models/indicator',
+  'text!../../templates/indicators.handlebars'
+], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel, tpl) {
 
   var MapView = Backbone.View.extend({
 
@@ -45,14 +47,22 @@ define([
       };
     },
 
+    template: Handlebars.compile(tpl),
+
     initialize: function() {
       this.indicator = new IndicatorModel();
       this.filter = filterModel.instance;
+      this.$indicator = $('#indicator');
+
       this.setMap();
 
       this.indicator.on('change', this.changeVisualization, this);
       this.filter.on('change', this.changeVisualization, this);
       Backbone.Events.on('map:open', this.open, this);
+    },
+
+    render: function() {
+      this.$indicator.html('hola');
     },
 
     setMap: function() {
