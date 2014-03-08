@@ -29,7 +29,8 @@ define([
         user_name: 'nyc-cityhall',
         type: 'cartodb'
       },
-      colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a']
+      colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
+      abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff',]
     },
 
     events: function() {
@@ -74,8 +75,8 @@ define([
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
-      cartocss = sprintf('#%s {polygon-fill: #FF0000; line-color: #000; polygon-opacity: 0.8; }', indicator.id);
-
+      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #000; polygon-opacity: 0.8; }', indicator.id);
+      cartocss=cartocss+'[ last_monthdayyear != null]{ ';
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
         if (indicator.full < 0) {
@@ -83,12 +84,20 @@ define([
         } else {
           index = 7;
         }
-        cartocss = cartocss + sprintf(' #%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+        cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
       });
+      cartocss=cartocss+'} ';
+      cartocss=cartocss+'[ last_monthdayyear = null]{ ';
+      _.each(this.options.abscolors, function(color, index) {
+        var step = 100 - ((index + 1) * 100/ 8);
+        index = self.options.abscolors.length - (index+1);
+        cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
+      });
+      cartocss=cartocss+'} ';
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-
-
+      //console.log(sql);
+      //console.log(cartocss);
       options = _.extend({}, this.options.cartodb, {
         sublayers: [{
           sql: sql,
