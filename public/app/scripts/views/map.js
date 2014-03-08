@@ -82,12 +82,12 @@ define([
       self = this;
       indicator = this.indicator.toJSON();
 
-      if (self.currentLayer) {
-        self.map.removeLayer(self.currentLayer);
+      if (this.currentLayer) {
+        this.map.removeLayer(this.currentLayer);
       }
 
-      if (self.infowindow) {
-        self.map.removeLayer(self.infowindow);
+      if (this.infowindow) {
+        this.infowindow._closeInfowindow();
       }
 
       Backbone.Events.trigger('map:changed', indicator);
