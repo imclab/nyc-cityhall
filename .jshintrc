@@ -24,6 +24,8 @@
   "unused": true,
   "predef": [
     "define",
+    "describe",
+    "it",
     "L",
     "cartodb"
   ]

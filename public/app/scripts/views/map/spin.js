@@ -11,9 +11,9 @@ define([
 
     options: {
       lines: 11, // The number of lines to draw
-      length: 5, // The length of each line
+      length: 10, // The length of each line
       width: 2, // The line thickness
-      radius: 5, // The radius of the inner circle
+      radius: 10, // The radius of the inner circle
       corners: 1, // Corner roundness (0..1)
       rotate: 0, // The rotation offset
       direction: 1, // 1: clockwise, -1: counterclockwise

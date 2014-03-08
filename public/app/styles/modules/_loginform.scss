@@ -1,0 +1,40 @@
+.mod-login-form {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-left: -200px;
+  width: 80%;
+  max-width: 400px;
+
+  .form-row {
+    position: relative;
+    margin: 1em 0;
+
+    @include clearfix;
+
+    label, input {
+      display: block;
+      float: left;
+      font-size: 15px;
+    }
+
+    label {
+      width: 38%;
+      margin-right: 2%;
+      text-align: right;
+    }
+
+    input {
+      padding: 5px 1%;
+      width: 58%;
+      border: 0;
+      color: $primary;
+    }
+
+    .btn-submit {
+      float: right;
+      width: auto;
+      padding: 5px 10%;
+    }
+  }
+}

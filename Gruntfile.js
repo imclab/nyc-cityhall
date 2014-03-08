@@ -20,9 +20,11 @@ module.exports = function(grunt) {
       js: {
         files: [
           '<%= root.app %>/scripts/{,*/}{,*/}*.js',
+          '<%= root.test %>/specs/{,*/}{,*/}*.js',
+          '<%= root.test %>/specRunner.js',
           'Gruntfile.js'
         ],
-        tasks: ['jshint']
+        tasks: ['jshint', 'mocha_phantomjs']
       },
       compass: {
         files: ['<%= root.app %>/styles/{,*/}*.{scss,sass}'],
@@ -52,7 +54,8 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         '<%= root.app %>/scripts/{,*/}{,*/}*.js',
-        '<%= root.tmp %>/scripts/{,*/}{,*/}*.js'
+        '<%= root.test %>/specs/{,*/}{,*/}*.js',
+        '<%= root.test %>/specRunner.js'
       ]
     },
 

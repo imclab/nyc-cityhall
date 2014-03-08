@@ -14,6 +14,7 @@ require.config({
     moment: '../vendor/momentjs/moment',
     jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed',
+    spin: '../vendor/spinjs/spin',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
   },
