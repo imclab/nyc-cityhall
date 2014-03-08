@@ -153,7 +153,7 @@ define([
         if(indicator.value==='Infinity' || indicator.value==='NaN'){
           indicator.value='0';
           indicator.displayValue='-';
-          indicator.color='#aaa';
+          indicator.color='#fff';
         }
 
         indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
