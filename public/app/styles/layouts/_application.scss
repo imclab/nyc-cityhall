@@ -4,6 +4,7 @@
   left: 0;
   right: 0;
   height: 122px;
+  z-index: 10;
 }
 
 .layout-page {
@@ -79,13 +80,16 @@
   bottom: 0;
   left: 0;
   right: 0;
-  top: 130px;
+  top: 122px;
 
   overflow: auto;
 }
 
 
 @media screen and (max-width: $sm) {
+  #header {
+    height: 95px;
+  }
   .layout-aside.is-active {
     width: 80%;
   }
@@ -99,6 +103,10 @@
       font-size: 20px;
       margin-left: 10px;
     }
+  }
+
+  .layout-content {
+    top: 95px;
   }
 }
 

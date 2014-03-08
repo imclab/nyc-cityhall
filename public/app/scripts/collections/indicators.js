@@ -167,8 +167,14 @@ define([
     },
 
     numberWithCommas: function(num) {
-      if(num===null) {return null;}
-      (num % 1 != 0)?num=num.toFixed(2):true;
+      if (num === null) {
+        return null;
+      }
+      if (num % 1 !== 0) {
+        num = num.toFixed(2);
+      } else {
+        num = true;
+      }
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
 

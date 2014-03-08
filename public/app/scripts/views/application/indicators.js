@@ -21,7 +21,6 @@ define([
       }
 
       return {
-        'click .mod-indicators-agency': 'setAgency',
         'click .mod-indicators-item': 'openMapView'
       };
     },
@@ -100,10 +99,6 @@ define([
     },
 
     sortAndRender: function() {
-      // function getValue(indicator) {
-      //   return Number(indicator.get('value').split('%')[0]);
-      // }
-
       switch (this.filter.get('sort')) {
       case 'worst':
 
