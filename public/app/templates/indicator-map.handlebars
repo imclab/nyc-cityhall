@@ -8,17 +8,19 @@
     <div class="mod-indicators-value">
       <strong class="mod-indicators-value-item">{{displayValue}}</strong>
     </div>
-    <div class="mod-indicators-footer sm-hidden">
-      <table>
-        <tr>
-          <th>{{currentDate}}</th>
-          <th>{{previousDate}}</th>
-        </tr>
-        <tr>
-          <td>{{displayCurrentValue}}</td>
-          <td>{{displayPreviousValue}}</td>
-        </tr>
-      </table>
-    </div>
+    {{#if displayCurrentValue}}
+      <div class="mod-indicators-footer sm-hidden">
+        <table>
+          <tr>
+            <th>{{currentDate}}</th>
+            <th>{{previousDate}}</th>
+          </tr>
+          <tr>
+            <td>{{displayCurrentValue}}</td>
+            <td>{{displayPreviousValue}}</td>
+          </tr>
+        </table>
+      </div>
+    {{/if}}
   </article>
 </div>

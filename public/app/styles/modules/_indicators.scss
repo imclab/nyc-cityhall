@@ -84,6 +84,7 @@
   .mod-indicators-item {
     float: none;
     width: auto;
+    margin: 0 1%;
 
     h2 {
       height: auto;
@@ -118,7 +119,7 @@
       border-bottom: 0;
       border-right: 1px solid $primary;
       width: 49.5%;
-      height: 65px;
+      height: 75px;
     }
     .mod-indicators-value, .mod-indicators-footer {
       float: right;
@@ -131,7 +132,7 @@
     }
     .mod-indicators-value-item {
       font-size: 40px;
-      line-height: 65px;
+      line-height: 75px;
     }
   }
 }
