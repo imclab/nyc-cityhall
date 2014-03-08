@@ -128,15 +128,10 @@ define([
       cartodb.createLayer(this.map, options, {https: true}).done(onDone);
     },
 
-    open: function(indicator) {
+    show: function(indicator) {
       this.$el.addClass('is-active');
       this.indicator.set(indicator);
       this.map.invalidateSize();
-      Backbone.Events.trigger('map:opened');
-    },
-
-    show: function() {
-      this.$el.addClass('is-active');
     },
 
     hide: function() {
