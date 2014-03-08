@@ -36,7 +36,7 @@ require.config({
       exports: '_'
     },
     backbone: {
-      deps: ['jquery', 'underscore'],
+      deps: ['jscrollpane', 'underscore'],
       exports: 'Backbone'
     },
     handlebars: {
