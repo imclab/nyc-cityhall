@@ -159,6 +159,8 @@ define([
         indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
         indicator.urgent = (indicator.value/indicator.full<=-1 && indicator.full!==0 && indicator.value!==null)?'true':'false';
 
+        console.log(indicator);
+
         return indicator;
       });
 
