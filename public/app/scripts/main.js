@@ -11,6 +11,8 @@ require.config({
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
     jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
+    mousewheel: '../vendor/jscrollpane/script/jquery.mousewheel',
+    jscrollpane: '../vendor/jscrollpane/script/jquery.jscrollpane',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed'
   },
 
@@ -22,11 +24,15 @@ require.config({
       deps: ['jquery'],
       exports: '$'
     },
+    jscrollpane: {
+      deps: ['jquery', 'mousewheel'],
+      exports: '$'
+    },
     underscore: {
       exports: '_'
     },
     backbone: {
-      deps: ['jquerymobile', 'underscore'],
+      deps: ['jquerymobile', 'jscrollpane', 'underscore'],
       exports: 'Backbone'
     },
     handlebars: {

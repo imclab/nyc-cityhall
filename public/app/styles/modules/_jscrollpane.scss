@@ -1,0 +1,18 @@
+.jspVerticalBar {
+  background: none;
+  width: 3px;
+}
+
+.jspTrack {
+  background: none;
+}
+
+.jspDrag {
+  background: $fifth;
+}
+
+@media screen and (max-device-width: $md) {
+  .jspVerticalBar, .jspHorizontalBar {
+    display: none;
+  }
+}

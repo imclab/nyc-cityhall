@@ -187,8 +187,8 @@ module.exports = function(grunt) {
         files: {
           '<%= root.dist %>/styles/main.css': [
             '<%= root.app %>/vendor/cartodb.js/dist/cartodb.css',
-            '<%= root.tmp %>/styles/{,*/}*.css',
-            '<%= root.app %>/styles/{,*/}*.css',
+            '<%= root.app %>/vendor/jscrollpane/style/jquery.jscrollpane.css',
+            '<%= root.tmp %>/styles/{,*/}*.css'
           ]
         }
       }

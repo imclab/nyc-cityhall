@@ -27,6 +27,10 @@ define([
 
       this.filter.on('change:type', this.changeTitle, this);
 
+      $('.layout-content').jScrollPane({
+        autoReinitialise: true
+      });
+
       Backbone.Events.on('application:toggle', this.toggleAside, this);
     },
 
