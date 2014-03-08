@@ -151,10 +151,13 @@ define([
         }
 
         if(indicator.value==='Infinity' || indicator.value==='NaN'){
-          indicator.value='0';
+          indicator.value=0;
+          indicator.full=0;
           indicator.displayValue='-';
-          indicator.color='#aaa';
+          indicator.color='#fff';
         }
+
+
 
         indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
         indicator.urgent = (indicator.value/indicator.full<=-1 && indicator.full!==0 && indicator.value!==null)?'true':'false';
@@ -167,7 +170,7 @@ define([
 
     numberWithCommas: function(num) {
       if(num===null) {return null;}
-      num=num.toFixed(2);
+      (num % 1 != 0)?num=num.toFixed(2):true;
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
 
