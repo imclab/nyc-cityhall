@@ -42,18 +42,26 @@ define([
     },
 
     showLogin: function() {
-      app.application.$el.addClass('is-hidden');
-      app.aside.$el.addClass('is-hidden');
-      app.login.$el.removeClass('is-hidden');
+      app.application.hide();
+      app.map.hide();
+      app.aside.hide();
+      app.login.show();
     },
 
     showApp: function() {
-      app.login.$el.addClass('is-hidden');
-      app.aside.$el.removeClass('is-hidden');
-      app.application.$el.removeClass('is-hidden');
-      if (window.sessionStorage.getItem('token')) {
-        app.indicators.getData();
-      }
+      app.login.hide();
+      app.map.hide();
+
+      _.delay(function() {
+        app.application.show();
+        if (window.sessionStorage.getItem('token')) {
+          app.indicators.getData();
+        }
+      }, 300);
+
+      _.delay(function() {
+        app.aside.show();
+      }, 600);
     },
 
     checkAuth: function() {

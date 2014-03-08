@@ -9,7 +9,7 @@
 .layout-page {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 100%;
   height: 100%;
   width: 100%;
 
@@ -20,6 +20,9 @@
   @include box-shadow(0 0 15px rgba(0, 0, 0, .5));
   @include transition(all .3s ease);
 
+  &.is-active {
+    left: 0;
+  }
   &.is-moved {
     left: 20%;
   }
@@ -30,9 +33,9 @@
   bottom: 0;
   left: 0;
   top: 0;
+  width: 0px;
 
   background: $fourth;
-  z-index: 0;
 }
 
 .layout-header {
@@ -85,27 +88,10 @@
   z-index: 1000;
 }
 
-@media screen and (max-width: $lg) {
-  .layout-aside {
-    right: 70%;
-  }
-  .layout-page.is-moved {
-    left: 30%;
-  }
-}
-
-@media screen and (max-width: $md) {
-  .layout-aside {
-    right: 50%;
-  }
-  .layout-page.is-moved {
-    left: 50%;
-  }
-}
 
 @media screen and (max-width: $sm) {
-  .layout-aside {
-    right: 20%;
+  .layout-aside.is-active {
+    width: 80%;
   }
   .layout-page.is-moved {
     left: 80%;
@@ -117,5 +103,23 @@
       font-size: 20px;
       margin-left: 10px;
     }
+  }
+}
+
+@media screen and (min-width: $sm) {
+  .layout-aside.is-active {
+    width: 50%;
+  }
+  .layout-page.is-moved {
+    left: 50%;
+  }
+}
+
+@media screen and (min-width: $md) {
+  .layout-aside.is-active {
+    width: 30%;
+  }
+  .layout-page.is-moved {
+    left: 30%;
   }
 }

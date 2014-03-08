@@ -39,12 +39,12 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .icon-close': 'close'
+          'tap .icon-back': 'hide'
         };
       }
 
       return {
-        'click .icon-close': 'close'
+        'click .icon-back': 'hide'
       };
     },
 
@@ -59,7 +59,7 @@ define([
 
       this.indicator.on('change', this.changeVisualization, this);
       this.filter.on('change', this.changeVisualization, this);
-      Backbone.Events.on('map:open', this.open, this);
+      Backbone.Events.on('map:open', this.show, this);
     },
 
     render: function() {
@@ -135,9 +135,12 @@ define([
       Backbone.Events.trigger('map:opened');
     },
 
-    close: function() {
+    show: function() {
+      this.$el.addClass('is-active');
+    },
+
+    hide: function() {
       this.$el.removeClass('is-active');
-      Backbone.Events.trigger('map:closed');
     }
 
   });

@@ -92,6 +92,14 @@ define([
 
     close: function() {
       Backbone.Events.trigger('application:toggle');
+    },
+
+    show: function() {
+      this.$el.addClass('is-active');
+    },
+
+    hide: function() {
+      this.$el.removeClass('is-active');
     }
 
   });
