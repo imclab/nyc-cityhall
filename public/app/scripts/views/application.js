@@ -27,7 +27,7 @@ define([
 
       this.filter.on('change:type', this.changeTitle, this);
 
-      $('.layout-content').jScrollPane({
+      this.$el.find('.layout-content').jScrollPane({
         autoReinitialise: true
       });
 
