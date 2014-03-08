@@ -151,13 +151,13 @@ define([
         }
 
         if(indicator.value==='Infinity' || indicator.value==='NaN'){
-          indicator.value='0';
+          indicator.value=0;
+          indicator.full=0;
           indicator.displayValue='-';
           indicator.color='#fff';
         }
 
-        //to avoid sorting issues with null values
-        if(indicator.value===null) indicator.value=0
+
 
         indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
         indicator.urgent = (indicator.value/indicator.full<=-1 && indicator.full!==0 && indicator.value!==null)?'true':'false';
