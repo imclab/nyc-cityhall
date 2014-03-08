@@ -72,10 +72,16 @@ define([
         return false;
       }
 
+      Backbone.Events.trigger('spinner:start');
+
       var self, indicator, sql, cartocss, options;
 
       self = this;
       indicator = this.indicator.toJSON();
+
+      if (self.currentLayer) {
+        self.map.removeLayer(self.currentLayer);
+      }
 
       Backbone.Events.trigger('map:changed', indicator);
 
@@ -102,8 +108,7 @@ define([
       cartocss=cartocss+'} ';
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-      //console.log(sql);
-      //console.log(cartocss);
+
       options = _.extend({}, this.options.cartodb, {
         sublayers: [{
           sql: sql,
@@ -112,15 +117,15 @@ define([
       });
 
       function onDone(layer) {
-        if (self.currentLayer) {
-          self.map.removeLayer(self.currentLayer);
-        }
         self.map.setView(self.options.map.center, self.options.map.zoom);
         self.currentLayer = layer;
         self.map.addLayer(layer);
+        Backbone.Events.trigger('spinner:stop');
       }
 
-      cartodb.createLayer(this.map, options, {https: true}).done(onDone);
+      _.delay(function() {
+        cartodb.createLayer(self.map, options, {https: true}).done(onDone);
+      }, 301);
     },
 
     show: function(indicator) {

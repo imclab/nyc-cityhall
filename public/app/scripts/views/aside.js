@@ -68,6 +68,7 @@ define([
       this.types.add(types);
 
       this.render();
+      this.show();
     },
 
     changeAgency: function(e) {

@@ -188,7 +188,6 @@ module.exports = function(grunt) {
           '<%= root.dist %>/styles/main.css': [
             '<%= root.app %>/vendor/normalize-css/normalize.css',
             '<%= root.app %>/vendor/cartodb.js/dist/cartodb.css',
-            '<%= root.app %>/vendor/jscrollpane/style/jquery.jscrollpane.css',
             '<%= root.tmp %>/styles/{,*/}*.css'
           ]
         }

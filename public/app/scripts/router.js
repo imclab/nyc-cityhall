@@ -11,8 +11,9 @@ define([
   'views/application/toolbar',
   'views/application/indicators',
 
-  'views/map/indicator'
-], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView) {
+  'views/map/indicator',
+  'views/map/spin'
+], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView, MapSpinView) {
 
   var app = {}, Router;
 
@@ -24,6 +25,7 @@ define([
 
   app.map = new MapView();
   app.mapIndicator = new MapIndicatorView();
+  app.mapSpinView = new MapSpinView();
 
   Router = Backbone.Router.extend({
 
@@ -45,7 +47,6 @@ define([
     showLogin: function() {
       app.application.hide();
       app.map.hide();
-      app.aside.hide();
       app.login.show();
     },
 
@@ -57,10 +58,6 @@ define([
       if (window.sessionStorage.getItem('token')) {
         app.indicators.getData();
       }
-
-      _.delay(function() {
-        app.aside.show();
-      }, 300);
     },
 
     checkAuth: function() {

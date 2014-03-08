@@ -79,15 +79,13 @@ define([
     },
 
     filterByType: function() {
-
       var $mods = $('.mod-indicators-item');
+
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
       } else if (this.filter.get('type') === 'improving') {
-
         $mods.addClass('is-hidden');
         $('.mod-indicators-item[data-status="improving"]').removeClass('is-hidden');
-        //$('.mod-indicators-item[data-agency<>"' + this.filter.get('agency') + '"]').addClass('is-hidden');
       } else if (this.filter.get('type') === 'worsening') {
         $mods.addClass('is-hidden');
         $('.mod-indicators-item[data-status="worsening"]').removeClass('is-hidden');

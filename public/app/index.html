@@ -13,10 +13,10 @@
       <link rel="stylesheet" href="../.tmp/styles/main.css">
     <!-- endbuild -->
   </head>
-  <body class="container">
+  <body>
     <div class="layout-page" id="applicationView">
 
-      <header id="header">
+      <header class="layout-page-header">
         <div class="layout-header">
           <nav class="toggle-aside">
             <button id="toggleAsideBtn" class="icon icon-menu"></button>
@@ -63,7 +63,7 @@
     </div>
 
     <div class="layout-page" id="mapView">
-      <header id="header">
+      <header class="layout-page-header">
         <div class="layout-header">
           <nav class="toggle-aside">
             <button id="toggleAsideBtn" class="icon icon-back"></button>
@@ -77,6 +77,7 @@
       <section class="layout-content">
         <div id="mapIndicatorView"></div>
         <div id="map"></div>
+        <div class="mod-spinner" id="mapSpinView"></div>
       </section>
     </div>
 

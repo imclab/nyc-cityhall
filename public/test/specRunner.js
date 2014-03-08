@@ -13,9 +13,6 @@ require.config({
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
     jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
-    mousewheel: '../vendor/jscrollpane/script/jquery.mousewheel',
-    mwheelIntent: '../vendor/jscrollpane/script/mwheelIntent',
-    jscrollpane: '../vendor/jscrollpane/script/jquery.jscrollpane',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed',
     mocha: '../vendor/mocha/mocha',
     chai: '../vendor/chai/chai'
@@ -29,22 +26,11 @@ require.config({
       deps: ['jquery'],
       exports: '$'
     },
-    mousewheel: {
-      deps: ['jquery'],
-      exports: '$'
-    },
-    mwheelIntent: {
-      deps: ['jquery']
-    },
-    jscrollpane: {
-      deps: ['mousewheel', 'mwheelIntent'],
-      exports: '$'
-    },
     underscore: {
       exports: '_'
     },
     backbone: {
-      deps: ['jscrollpane', 'underscore'],
+      deps: ['jquerymobile', 'underscore'],
       exports: 'Backbone'
     },
     handlebars: {
