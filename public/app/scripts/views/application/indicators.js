@@ -121,6 +121,7 @@ define([
       this.indicators.sort();
       this.render();
       this.filterByAgency();
+      this.filterByType();
     },
 
     openMapView: function(e) {
