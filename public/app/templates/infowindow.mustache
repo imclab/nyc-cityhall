@@ -1,0 +1,23 @@
+<div class="mod-infowindow">
+  <a href="#close" class="icon icon-close close"></a>
+  <header class="mod-infowindow-header">
+    <h2>{{name}}</h2>
+  </header>
+  <div class="mod-infowindow-content">
+    {{#previous}}
+      <div class="mod-infowindow-data">
+        <table>
+          <tr>
+            <th>%s</th>
+            <th>%s</th>
+          </tr>
+          <tr>
+            <td>%s</td>
+            <td>%s</td>
+          </tr>
+        </table>
+      </div>
+    {{/previous}}
+    <div class="mod-infowindow-value">{{current}}%</div>
+  </div>
+</div>

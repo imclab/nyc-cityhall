@@ -8,8 +8,9 @@ define([
   'moment',
   'cartodb',
   'models/filter',
-  'models/indicator'
-], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel) {
+  'models/indicator',
+  'text!../../templates/infowindow.mustache'
+], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel, tpl) {
 
   var MapView = Backbone.View.extend({
 
@@ -47,6 +48,8 @@ define([
         'click .icon-back': 'hide'
       };
     },
+
+    template: tpl,
 
     initialize: function() {
       this.indicator = new IndicatorModel();
@@ -110,21 +113,31 @@ define([
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
       options = _.extend({}, this.options.cartodb, {
+        interactivity: 'name, current',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
         }]
       });
 
-      function onDone(layer) {
-        self.map.setView(self.options.map.center, self.options.map.zoom);
+      function addLayerToMap(layer) {
+        var sublayer = layer.getSubLayer(0);
+
         self.currentLayer = layer;
+        self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
+          infowindowTemplate: self.template,
+          cursorInteraction: false
+        });
+
+        sublayer.setInteraction(true);
+        self.map.setView(self.options.map.center, self.options.map.zoom);
         self.map.addLayer(layer);
+
         Backbone.Events.trigger('spinner:stop');
       }
 
       _.delay(function() {
-        cartodb.createLayer(self.map, options, {https: true}).done(onDone);
+        cartodb.createLayer(self.map, options, {https: true}).done(addLayerToMap);
       }, 301);
     },
 

@@ -27,6 +27,7 @@
     "describe",
     "it",
     "L",
-    "cartodb"
+    "cartodb",
+    "cdb"
   ]
 }
