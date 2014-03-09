@@ -12,12 +12,12 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap #toggleAsideBtn': 'toggleAside'
+          'tap #toggleAsideBtn': 'toggle'
         };
       }
 
       return {
-        'click #toggleAsideBtn': 'toggleAside'
+        'click #toggleAsideBtn': 'toggle'
       };
     },
 
@@ -27,10 +27,10 @@ define([
 
       this.filter.on('change:type', this.changeTitle, this);
 
-      Backbone.Events.on('application:toggle', this.toggleAside, this);
+      Backbone.Events.on('application:toggle', this.toggle, this);
     },
 
-    toggleAside: function() {
+    toggle: function() {
       this.$el.toggleClass('is-moved');
     },
 
