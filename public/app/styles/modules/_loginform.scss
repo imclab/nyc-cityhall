@@ -38,3 +38,12 @@
     }
   }
 }
+
+@media screen and (max-width: $sm) {
+  .mod-login-form {
+    position: relative;
+    top: 30%;
+    left: auto;
+    margin: 0 auto;
+  }
+}
