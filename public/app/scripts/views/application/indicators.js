@@ -16,7 +16,7 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .mod-indicators-item': 'openMapView'
+          'touchstart .mod-indicators-item': 'openMapView'
         };
       }
 

@@ -18,9 +18,9 @@ define([
 
       if ('ontouchstart' in window) {
         return {
-          'tap .icon-close': 'close',
-          'tap .mod-aside-agencies a': 'changeAgency',
-          'tap .mod-aside-types a': 'changeIndicatorType'
+          'touchstart .icon-close': 'close',
+          'touchstart .mod-aside-agencies a': 'changeAgency',
+          'touchstart .mod-aside-types a': 'changeIndicatorType'
         };
       }
 

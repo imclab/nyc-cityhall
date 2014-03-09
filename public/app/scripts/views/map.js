@@ -40,7 +40,7 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .icon-back': 'hide'
+          'touchstart .icon-back': 'hide'
         };
       }
 

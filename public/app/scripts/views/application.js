@@ -12,7 +12,7 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap #toggleAsideBtn': 'toggle'
+          'touchstart #toggleAsideBtn': 'toggle'
         };
       }
 

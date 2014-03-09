@@ -12,7 +12,6 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
-    jquerymobile: '../lib/jquery.mobile/jquery.mobile.custom',
     cartodb: '../vendor/cartodb.js/dist/cartodb.full.uncompressed',
     spin: '../vendor/spinjs/spin',
     mocha: '../vendor/mocha/mocha',
@@ -23,15 +22,11 @@ require.config({
     jquery: {
       exports: '$'
     },
-    jquerymobile: {
-      deps: ['jquery'],
-      exports: '$'
-    },
     underscore: {
       exports: '_'
     },
     backbone: {
-      deps: ['jquerymobile', 'underscore'],
+      deps: ['jquery', 'underscore'],
       exports: 'Backbone'
     },
     handlebars: {
