@@ -26,10 +26,11 @@
       display: inline-block;
       content: ' ';
       margin-right: 5px;
-      height: 10px;
-      width: 5px;
-      background: image-url("assets/icon-caret.png") no-repeat center center;
-      background-size: 5px 10px;
+      height: 5px;
+      width: 10px;
+      vertical-align: 1px;
+      background: image-url("assets/icon-caret-down.png") no-repeat center center;
+      background-size: 10px 5px;
     }
   }
 
@@ -41,7 +42,7 @@
       line-height: 20px;
     }
 
-    font-size: 15px;
+    font-size: 13px;
 
     .current {
       display: inline-block;

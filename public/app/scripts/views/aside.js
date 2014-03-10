@@ -51,8 +51,6 @@ define([
     setDataCollections: function(indicators) {
       var dataAgencies, dataTypes, agencies, types;
 
-      console.log(indicators);
-
       dataAgencies = _.uniq(_.pluck(indicators, 'agency'));
       dataTypes = _.uniq(_.pluck(indicators, 'type'));
       agencies = _.map(dataAgencies, function(agency) {
