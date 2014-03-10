@@ -76,7 +76,6 @@ define([
       var current = $(e.currentTarget);
       this.$el.find('.mod-aside-agencies a').removeClass('current');
       this.$el.find('.mod-aside-types a').removeClass('current');
-      this.$el.find('.mod-aside-types a[data-type="all"]').addClass('current');
       this.filter.set('agency', current.data('agency'));
       current.addClass('current');
       e.preventDefault();
@@ -86,8 +85,10 @@ define([
       var current = $(e.currentTarget);
       this.$el.find('.mod-aside-types a').removeClass('current');
       this.$el.find('.mod-aside-agencies a').removeClass('current');
-      this.$el.find('.mod-aside-agencies a[data-agency="all"]').addClass('current');
       this.filter.set('type', current.data('type'));
+      if (current.data('type') === 'all') {
+        this.filter.set('agency', 'all');
+      }
       current.addClass('current');
       e.preventDefault();
     },
