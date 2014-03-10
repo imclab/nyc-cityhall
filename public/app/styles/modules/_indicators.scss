@@ -36,15 +36,17 @@
   table {
     width: 100%;
     text-align: center;
-    min-height: 45px;
   }
 
   th {
+    padding: 2px 0;
     font-weight: normal;
     font-size: 11px;
+    color: rgba(0, 0, 0, .5);
   }
 
   td {
+    padding: 5px 0;
     font-size: 19px;
   }
 
@@ -56,12 +58,18 @@
     }
   }
 
+  .mod-indicators-footer {
+    margin-top: 10px;
+    min-height: 50px;
+  }
+
   .mod-indicators-frequency, .mod-indicators-agency {
     display: block;
   }
 
   .mod-indicators-frequency {
     text-transform: capitalize;
+    color: rgba(0, 0, 0, .5);
     &:before {
       display: inline-block;
       content: ' ';
@@ -79,6 +87,7 @@
   .mod-indicators-agency {
     background-color: $primary;
     padding: 3px 10px;
+    font-weight: bold;
     color: $secondary;
   }
 
@@ -193,6 +202,9 @@
     .mod-indicators-value-item {
       font-size: 40px;
       line-height: 65px;
+    }
+    .mod-indicators-footer {
+      margin-top: 0;
     }
   }
 }
