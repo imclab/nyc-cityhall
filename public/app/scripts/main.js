@@ -43,7 +43,7 @@ require.config({
 
 });
 
-require(['router'], function(Router) {
+require(['jquerymobile', 'router'], function($, Router) {
 
   new Router();
 
