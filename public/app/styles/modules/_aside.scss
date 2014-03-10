@@ -1,5 +1,5 @@
 .mod-aside-content {
-  padding: 40px 25px 25px;
+  padding: 40px 0;
   position: relative;
 
   .icon-close {
@@ -12,15 +12,18 @@
     list-style: none;
     margin: 30px 0;
     padding: 0;
+    border-top: 1px solid $seventh;
   }
 
   li {
     font-weight: bold;
-    //text-transform: capitalize;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   a {
+    display: block;
+    padding: 7px 20px;
+    border-bottom: 1px solid $seventh;
     color: $fifth;
 
     @include transition(all .3s ease);

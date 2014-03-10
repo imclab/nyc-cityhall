@@ -1,20 +1,21 @@
 <div class="mod-aside-content">
   <button class="icon icon-close"></button>
+
+  <ul class="mod-aside-types">
+    <li><a href="#all" class="current" data-type="all">All indicators</a></li>
+    {{#each types}}
+      <li><a href="#{{slug}}" data-type="{{slug}}">{{name}}</a></li>
+    {{/each}}
+    <li><a href="#urgent"  data-type="urgent">Urgent</a></li>
+    <li><a href="#worsening" data-type="worsening">Worsening</a></li>
+    <li><a href="#improving" data-type="improving">Improving or Stable</a></li>
+  </ul>
+
   <ul class="mod-aside-agencies">
     <li><a href="#all" class="current" data-agency="all">All agencies</a></li>
     {{#each agencies}}
       <li><a href="#{{name}}" data-agency="{{name}}">{{name}}</a></li>
     {{/each}}
-  </ul>
-
-  <ul class="mod-aside-types">
-    <li><a href="#all" class="current" data-type="all">All indicators</a></li>
-    {{#each types}}
-      <li><a href="#{{name}}" data-type="{{name}}">{{name}}</a></li>
-    {{/each}}
-    <li><a href="#urgent"  data-type="urgent">Urgent</a></li>
-    <li><a href="#worsening" data-type="worsening">Worsening</a></li>
-    <li><a href="#improving" data-type="improving">Improving or Stable</a></li>
   </ul>
 
 </div>

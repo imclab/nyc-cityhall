@@ -160,3 +160,27 @@
     left: 30%;
   }
 }
+
+@media screen and (min-width: $lg) {
+  .layout-aside.is-active {
+    width: 25%;
+  }
+  .layout-page.is-moved .layout-page-header {
+    left: 25%;
+  }
+  .layout-page.is-moved {
+    left: 25%;
+  }
+}
+
+@media screen and (min-width: $xl) {
+  .layout-aside.is-active {
+    width: 20%;
+  }
+  .layout-page.is-moved .layout-page-header {
+    left: 20%;
+  }
+  .layout-page.is-moved {
+    left: 20%;
+  }
+}

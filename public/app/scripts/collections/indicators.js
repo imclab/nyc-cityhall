@@ -36,7 +36,6 @@ define([
       }
 
       result = _.map(this.data, function(row) {
-        //console.log(row);
         var indicator = {
           id: row.indicator_id,
           agency: row.agency,
@@ -47,7 +46,7 @@ define([
           previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
           previousValue: row.previous_fytd,
           full: row.full_green_percent,
-          type: row.measure_type,
+          type: row.measure_t,
           date: row.date,
           geoType1: row.geog_type1,
           geoType2: row.geog_type2
@@ -113,9 +112,6 @@ define([
           break;
         }
 
-
-
-
         indicator.color = self.colors[0];
 
         _.each(self.colors, function(color, index) {
@@ -136,8 +132,6 @@ define([
             indicator.color = self.colors[7];
           }
         });
-
-
 
         //format for display
         indicator.displayValue=indicator.value+ '%';
