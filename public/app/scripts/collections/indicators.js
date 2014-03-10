@@ -134,7 +134,7 @@ define([
         });
 
         //format for display
-        indicator.displayValue=indicator.value+ '%';
+        indicator.displayValue = (indicator.value > 0) ? '+' + indicator.value + '%' : indicator.value + '%';
 
         indicator.displayCurrentValue = self.numberWithCommas(indicator.currentValue);
         indicator.displayPreviousValue = self.numberWithCommas(indicator.previousValue );
