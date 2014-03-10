@@ -45,6 +45,7 @@ rows: [
 		geog_type2: null,
 		frequency: "weekly",
 		full_green_percent: -2.5,
+		has_historical_geo: true,
 		recording_units: "value",
 		current: 30,
 		previous: 12,
@@ -63,6 +64,7 @@ rows: [
 		geog_type2: "nycd",
 		frequency: "weekly",
 		full_green_percent: -1.25,
+		has_historical_geo: false,
 		recording_units: "percent",
 		current: -0.2,
 		previous: -1.1,
@@ -75,6 +77,8 @@ rows: [
 ```
 
 ** Sort by ** 
+
+has_historical_geo when TRUE, means that we can show a % change map. if it is false, only the raw value map is possible.
 
 Always works by the (full_green_percent - "Main value"). I'll show you how to calculate the main value below.
 
