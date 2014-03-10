@@ -5,7 +5,7 @@
   left: 100%;
   width: 100%;
   height: 122px;
-  z-index: 10;
+  z-index: 1000;
 
   @include transition(all .3s ease);
 
@@ -29,14 +29,13 @@
 
   z-index: 1;
 
-  @include clearfix;
   @include box-shadow(0 0 15px rgba(0, 0, 0, .5));
   @include transition(all .3s ease);
 
   &.is-active {
     left: 0;
     &#applicationView {
-      top: auto;
+      top: 0;
       position: absolute;
       height: auto;
     }
@@ -54,6 +53,8 @@
   width: 0px;
 
   background: $fourth;
+
+  overflow: auto;
 
   @include transition(all .3s ease);
 
@@ -103,17 +104,23 @@
   bottom: 0;
   left: 0;
   right: 0;
-  top: 122px;
-
-  overflow: auto;
+  top: 0;
 
   #applicationView > & {
     position: relative;
+    bottom: auto;
+    padding-top: 122px;
   }
 }
 
 
 @media screen and (max-width: $sm) {
+  .layout-page-header {
+    height: 95px;
+    #applicationView > & {
+      height: 132px;
+    }
+  }
   #header {
     height: 95px;
   }
@@ -121,6 +128,9 @@
     width: 80%;
   }
   .layout-page.is-moved {
+    left: 80%;
+  }
+  .layout-page.is-moved .layout-page-header {
     left: 80%;
   }
   .layout-header {
@@ -131,9 +141,8 @@
       margin-left: 10px;
     }
   }
-
-  .layout-content {
-    top: 95px;
+  #applicationView .layout-content, .layout-content {
+    padding-top: 95px;
   }
 }
 
