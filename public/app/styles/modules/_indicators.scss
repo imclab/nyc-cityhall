@@ -302,11 +302,11 @@
 @media only screen and (min-width: $xl) {
   .mod-indicators-item {
     width: 19%;
-    &:hover {
-      z-index: 100;
-      @include transition(all .15s ease);
-      @include transform(scale(1.02));
-    }
+    // &:hover {
+    //   z-index: 100;
+    //   @include transition(all .15s ease);
+    //   @include transform(scale(1.01));
+    // }
   }
 }
 

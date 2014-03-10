@@ -26,6 +26,7 @@ define([
       this.$titles = $('#applicationTitle, #mapTitle');
 
       this.filter.on('change:type', this.changeTitle, this);
+      this.filter.on('change:agency', this.changeTitle, this);
 
       Backbone.Events.on('application:toggle', this.toggle, this);
     },
@@ -35,7 +36,10 @@ define([
     },
 
     changeTitle: function() {
-      this.$titles.text($('.mod-aside-types').find('a[data-type="' + this.filter.get('type') + '"]').text());
+      var self = this;
+      _.delay(function() {
+        self.$titles.text($('.mod-aside-content').find('.current').text());
+      }, 100);
     },
 
     show: function() {
