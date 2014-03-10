@@ -1,9 +1,10 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone',
   'models/filter'
-], function(Backbone, filterModel) {
+], function(_, Backbone, filterModel) {
 
   var ApplicationView = Backbone.View.extend({
 
