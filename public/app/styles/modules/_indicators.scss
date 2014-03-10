@@ -143,6 +143,9 @@
     float: right;
     width: 25%;
   }
+  .mod-indicators-footer {
+    margin-top: 0;
+  }
   .mod-indicators-value {
     border-bottom: 0;
     border-right: 0;
@@ -161,7 +164,7 @@
 
     h2 {
       height: auto;
-      font-size: 13px;
+      font-size: 17px;
       font-weight: normal;
       padding-right: 10px;
     }
@@ -171,7 +174,7 @@
     }
 
     td {
-      font-size: 13px;
+      font-size: 17px;
     }
 
     .mod-indicators-agency, .mod-indicators-frequency {
@@ -188,7 +191,7 @@
       border-bottom: 0;
       border-right: 1px solid $primary;
       width: 49.5%;
-      height: 65px;
+      height: 75px;
     }
     .mod-indicators-value, .mod-indicators-footer {
       float: right;
@@ -201,7 +204,7 @@
     }
     .mod-indicators-value-item {
       font-size: 40px;
-      line-height: 65px;
+      line-height: 75px;
     }
     .mod-indicators-footer {
       margin-top: 0;
@@ -279,6 +282,17 @@
 @media only screen and (min-width: $lg) {
   .mod-indicators-item {
     width: 24%;
+  }
+  .mod-indicators-map  {
+    table {
+      margin-top: 15px;
+    }
+    td {
+      font-size: 25px;
+    }
+    .mod-indicators-value-item {
+      font-size: 50px;
+    }
   }
 }
 
