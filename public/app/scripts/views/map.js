@@ -151,8 +151,12 @@ define([
       this.map.invalidateSize();
     },
 
-    hide: function() {
+    hide: function(e) {
       this.$el.removeClass('is-active');
+      if (e) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
     }
 
   });
