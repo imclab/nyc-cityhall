@@ -18,18 +18,19 @@
   position: fixed;
   bottom: 0;
   top: 0;
-  left: 100%;
+  left: 0;
   width: 100%;
 
   background: $primary;
 
   z-index: 1;
 
+  @include transform(translateX(100%));
   @include box-shadow(0 0 15px rgba(0, 0, 0, .5));
   @include transition(all .3s ease);
 
   &.is-active {
-    left: 0;
+    @include transform(translateX(0));
   }
   &.is-moved {
     @include transform(translateX(20%));
