@@ -134,6 +134,9 @@ define([
         });
 
         //format for display
+        if (indicator.value !== '0' && indicator.value[indicator.value.length -1] === '0') {
+          indicator.value = indicator.value.substring(0, indicator.value.length -2);
+        }
         indicator.displayValue = (indicator.value > 0) ? '+' + indicator.value + '%' : indicator.value + '%';
 
         indicator.displayCurrentValue = self.numberWithCommas(indicator.currentValue);
@@ -144,15 +147,15 @@ define([
           indicator.displayPreviousValue = indicator.displayPreviousValue + '%';
         }
 
-        if(indicator.value==='Infinity' || indicator.value==='NaN'){
-          indicator.value=0;
-          indicator.full=0;
-          indicator.displayValue='-';
-          indicator.color='#fff';
+        if (indicator.value === 'Infinity' || indicator.value === 'NaN') {
+          indicator.value = 0;
+          indicator.full = 0;
+          indicator.displayValue = '-';
+          indicator.color = '#fff';
         }
 
-        indicator.status = (indicator.value/indicator.full>=0  || indicator.full===0  || indicator.value===null || indicator.value===0 )?'improving':'worsening';
-        indicator.urgent = (indicator.value/indicator.full<=-1 && indicator.full!==0 && indicator.value!==null)?'true':'false';
+        indicator.status = (indicator.value / indicator.full >= 0 || indicator.full === 0 || indicator.value === null || indicator.value === 0) ? 'improving' : 'worsening';
+        indicator.urgent = (indicator.value / indicator.full <= -1 && indicator.full !== 0 && indicator.value !== null) ? 'true' : 'false';
 
         return indicator;
       });
