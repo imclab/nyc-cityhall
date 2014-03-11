@@ -24,8 +24,8 @@ define([
       return {
         'click .mod-toolbar-selector a': 'changeFilter',
         'click .mod-toolbar-selector .current': 'expandOptions',
-        'mouseout .mod-toolbar-selector li': 'timerToClose',
-        'mouseover .mod-toolbar-selector li': 'cancelTimerToClose'
+        'mouseout .mod-toolbar-selector': 'timerToClose',
+        'mouseover .mod-toolbar-selector': 'cancelTimerToClose'
       };
     },
 
@@ -83,12 +83,18 @@ define([
       this.timer = setInterval(function() {
         self.contractOptions();
       }, this.options.pause);
+
+      $(document).on('click', function() {
+        self.contractOptions();
+        self.cancelTimerToClose();
+      });
     },
 
     cancelTimerToClose: function() {
       if (this.timer) {
         clearInterval(this.timer);
       }
+      $(document).off('click');
     }
 
   });
