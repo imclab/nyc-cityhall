@@ -9,6 +9,10 @@ define([
 
     el: '#toolbarView',
 
+    options: {
+      pause: 3000
+    },
+
     events: function() {
       if ('ontouchstart' in window) {
         return {
@@ -19,7 +23,9 @@ define([
 
       return {
         'click .mod-toolbar-selector a': 'changeFilter',
-        'click .mod-toolbar-selector .current': 'expandOptions'
+        'click .mod-toolbar-selector .current': 'expandOptions',
+        'mouseout .mod-toolbar-selector li': 'timerToClose',
+        'mouseover .mod-toolbar-selector li': 'cancelTimerToClose'
       };
     },
 
@@ -34,6 +40,7 @@ define([
       });
 
       Backbone.Events.on('map:opened map:closed', this.toggleItems, this);
+      Backbone.Events.on('filter:close', this.contractOptions, this);
     },
 
     changeFilter: function(e) {
@@ -67,6 +74,21 @@ define([
 
     contractOptions: function() {
       this.$options.removeClass('is-expanded');
+      this.cancelTimerToClose();
+    },
+
+    timerToClose: function() {
+      var self = this;
+
+      this.timer = setInterval(function() {
+        self.contractOptions();
+      }, this.options.pause);
+    },
+
+    cancelTimerToClose: function() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
     }
 
   });

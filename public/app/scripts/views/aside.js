@@ -78,6 +78,7 @@ define([
       this.$el.find('.mod-aside-types a').removeClass('current');
       this.filter.set('agency', current.data('agency'));
       current.addClass('current');
+      Backbone.Events.trigger('filter:close');
       e.preventDefault();
     },
 
@@ -90,6 +91,7 @@ define([
         this.filter.set('agency', 'all');
       }
       current.addClass('current');
+      Backbone.Events.trigger('filter:close');
       e.preventDefault();
     },
 
