@@ -117,7 +117,7 @@ define([
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
       options = _.extend({}, this.options.cartodb, {
-        interactivity: 'name, current',
+        interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
