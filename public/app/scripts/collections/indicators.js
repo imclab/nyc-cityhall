@@ -122,10 +122,12 @@ define([
             if (indicator.value < step) {
               indicator.color = color;
             }
+            if (indicator.zeroTolerance && indicator.value<0) {indicator.color = self.colors[14];}
           } else if (indicator.full < 0) {
             if (indicator.value > step) {
               indicator.color = color;
             }
+            if (indicator.zeroTolerance && indicator.value>0) {indicator.color = self.colors[14];}
 
           } else {
             indicator.color = self.colors[7];
