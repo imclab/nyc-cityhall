@@ -30,8 +30,6 @@ define([
     },
 
     initialize: function() {
-      var self = this;
-
       this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
 
