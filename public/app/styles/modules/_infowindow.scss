@@ -1,3 +1,5 @@
+$infowindow-border-color: rgba(0, 0, 0, .2);
+
 .mod-infowindow {
   position: absolute;
   background: $sixth;
@@ -5,6 +7,7 @@
   bottom: 30px;
   left: -80px;
   min-width: 200px;
+  outline: 3px solid $infowindow-border-color;
 
   color: $primary;
 
@@ -14,7 +17,7 @@
     right: 10px;
   }
 
-  &:after {
+  &:after, &:before {
     top: 100%;
     left: 50%;
     border: solid transparent;
@@ -23,10 +26,19 @@
     width: 0;
     position: absolute;
     pointer-events: none;
+  }
+  &:after {
     border-color: transparent;
     border-top-color: $sixth;
     border-width: 20px;
     margin-left: -20px;
+  }
+
+  &:before {
+    border-color: transparent;
+    border-top-color: $infowindow-border-color;
+    border-width: 24px;
+    margin-left: -24px;
   }
 }
 
