@@ -76,6 +76,8 @@ define([
         $mods.addClass('is-hidden');
         $('.mod-indicators-item[data-agency="' + this.filter.get('agency') + '"]').removeClass('is-hidden');
       }
+
+      Backbone.Events.trigger('application:scrolltop');
     },
 
     filterByType: function() {
@@ -87,6 +89,8 @@ define([
         $mods.addClass('is-hidden');
         $('.mod-indicators-item[data-type="' + this.filter.get('type') + '"]').removeClass('is-hidden');
       }
+
+      Backbone.Events.trigger('application:scrolltop');
     },
 
     sortAndRender: function() {
@@ -113,6 +117,8 @@ define([
       this.render();
       this.filterByAgency();
       this.filterByType();
+
+      Backbone.Events.trigger('application:scrolltop');
     },
 
     openMapView: function(e) {

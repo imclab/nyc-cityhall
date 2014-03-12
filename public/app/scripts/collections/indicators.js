@@ -49,7 +49,9 @@ define([
           type: row.measure_t,
           date: row.date,
           geoType1: row.geog_type1,
-          geoType2: row.geog_type2
+          geoType2: row.geog_type2,
+          historicalGeo: row.has_historical_geo,
+          zeroTolerance: row.zero_tolerance
         };
 
         switch(self.filter.get('period')) {

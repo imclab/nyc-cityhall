@@ -35,10 +35,6 @@ define([
       this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
 
-      this.filter.on('change', function() {
-        console.log(self.filter.toJSON());
-      });
-
       Backbone.Events.on('map:opened map:closed', this.toggleItems, this);
       Backbone.Events.on('filter:close', this.contractOptions, this);
     },

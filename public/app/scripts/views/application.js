@@ -30,6 +30,7 @@ define([
       this.filter.on('change:agency', this.changeTitle, this);
 
       Backbone.Events.on('application:toggle', this.toggle, this);
+      Backbone.Events.on('application:scrolltop', this.scrollTop, this);
     },
 
     toggle: function() {
@@ -49,6 +50,10 @@ define([
 
     hide: function() {
       this.$el.removeClass('is-active');
+    },
+
+    scrollTop: function() {
+      this.$el.find('.layout-content').scrollTop(0);
     }
 
   });
