@@ -41,9 +41,9 @@ define([
           agency: row.agency,
           frequency: row.frequency,
           name: row.indicator_name,
-          currentDate: moment(row.date).format('MMM. YYYY'),
+          currentDate: moment(row.date).format('MMM, YYYY'),
           currentValue: row.current_fytd,
-          previousDate: moment(row.date).subtract('years', 1).format('MMM. YYYY'),
+          previousDate: moment(row.date).subtract('years', 1).format('MMM, YYYY'),
           previousValue: row.previous_fytd,
           full: row.full_green_percent,
           type: row.measure_t,
@@ -74,41 +74,41 @@ define([
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous_year_period;
-          switch (row.frequency){
+          switch (row.frequency) {
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM')+','+moment(row.date).format('YYYY');
+              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM') + ', ' + moment(row.date).format('YYYY');
               break;
             case 'weekly':
-              indicator.currentDate = 'Week '+moment(row.date).format('WW, YYYY');
-              indicator.previousDate = 'Week '+moment(row.date).format('WW')+','+(moment(row.date).format('YYYY')-1);
+              indicator.currentDate = 'Week ' + moment(row.date).format('WW, YYYY');
+              indicator.previousDate = 'Week ' + moment(row.date).format('WW') + ', ' + (moment(row.date).format('YYYY') - 1);
               break;
             case 'daily':
               indicator.currentDate = moment(row.date).format('MM/DD/YYYY');
-              indicator.previousDate = moment(row.date).format('MM')+'/'+moment(row.date).format('DD')+'/'+(moment(row.date).format('YYYY')-1);
+              indicator.previousDate = moment(row.date).format('MM') + '/' + moment(row.date).format('DD') + '/' + (moment(row.date).format('YYYY') - 1);
               break;
           }
           break;
         case 'mmddyy':
           if (row.recording_units === 'value') {
-            indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1) ;
-          } else if(row.recording_units === 'percent') {
-            indicator.value = (row.current - row.previous).toFixed(1) ;
+            indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1);
+          } else if (row.recording_units === 'percent') {
+            indicator.value = (row.current - row.previous).toFixed(1);
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous;
-          switch (row.frequency){
+          switch (row.frequency) {
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM')+','+moment(row.date).format('YYYY');
+              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM') + ', ' + moment(row.date).format('YYYY');
               break;
             case 'weekly':
-              indicator.currentDate = 'Week '+moment(row.date).format('WW, YYYY');
-              indicator.previousDate = 'Week '+moment(row.date).format('WW')+','+(moment(row.date).format('YYYY')-1);
+              indicator.currentDate = 'Week ' + moment(row.date).format('WW, YYYY');
+              indicator.previousDate = 'Week ' + moment(row.date).format('WW') + ', ' + (moment(row.date).format('YYYY') - 1);
               break;
             case 'daily':
               indicator.currentDate = moment(row.date).format('MM/DD/YYYY');
-              indicator.previousDate = moment(row.date).format('MM')+'/'+moment(row.date).format('DD')+'/'+(moment(row.date).format('YYYY')-1);
+              indicator.previousDate = moment(row.date).format('MM') + '/' + moment(row.date).format('DD') + '/' + (moment(row.date).format('YYYY') - 1);
               break;
           }
           break;
@@ -122,12 +122,16 @@ define([
             if (indicator.value < step) {
               indicator.color = color;
             }
-            if (indicator.zeroTolerance && indicator.value<0) {indicator.color = self.colors[14];}
+            if (indicator.zeroTolerance && indicator.value < 0) {
+              indicator.color = self.colors[14];
+            }
           } else if (indicator.full < 0) {
             if (indicator.value > step) {
               indicator.color = color;
             }
-            if (indicator.zeroTolerance && indicator.value>0) {indicator.color = self.colors[14];}
+            if (indicator.zeroTolerance && indicator.value > 0) {
+              indicator.color = self.colors[14];
+            }
 
           } else {
             indicator.color = self.colors[7];

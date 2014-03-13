@@ -42,8 +42,8 @@
 @media screen and (max-width: $sm) {
   .mod-login-form {
     position: relative;
-    top: 30%;
+    top: auto;
     left: auto;
-    margin: 0 auto;
+    margin: 30% auto 0 auto;
   }
 }

@@ -85,6 +85,8 @@ define([
 
       $mods.addClass('is-hidden');
 
+      this.filter.set('agency', 'all');
+
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
       } else if (this.filter.get('type') === 'improving') {
@@ -102,6 +104,8 @@ define([
     },
 
     sortAndRender: function() {
+      this.filter.set('type', 'all');
+
       switch (this.filter.get('sort')) {
       case 'worst':
 
@@ -124,7 +128,6 @@ define([
       this.indicators.sort();
       this.render();
       this.filterByAgency();
-      this.filterByType();
 
       Backbone.Events.trigger('application:scrolltop');
     },
