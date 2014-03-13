@@ -212,11 +212,14 @@ define([
     },
 
     hide: function(e) {
-      this.$el.removeClass('is-active');
       if (e) {
         e.stopPropagation();
         e.stopImmediatePropagation();
       }
+
+      this.$el.removeClass('is-active');
+
+      return false;
     }
 
   });
