@@ -7,14 +7,18 @@
     <table>
       {{#previous}}
         <td>{{previous}}</td>
-        <td>{{current}}</td>
+        <td>
+          {{#current}}{{current}}{{/current}}
+          {{^current}}0{{/current}}
+        </td>
       {{/previous}}
       <td class="mod-infowindow-value">
         {{#last_monthdayyear}}
           {{last_monthdayyear}}%
         {{/last_monthdayyear}}
         {{^last_monthdayyear}}
-          {{current}}
+          {{#current}}{{current}}{{/current}}
+          {{^current}}0{{/current}}
         {{/last_monthdayyear}}
       </td>
     </table>
