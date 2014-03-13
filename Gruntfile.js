@@ -190,7 +190,6 @@ module.exports = function(grunt) {
         files: {
           '<%= root.dist %>/styles/main.css': [
             '<%= root.app %>/vendor/normalize-css/normalize.css',
-            '<%= root.app %>/vendor/cartodb.js/dist/cartodb.css',
             '<%= root.tmp %>/styles/{,*/}*.css'
           ]
         }

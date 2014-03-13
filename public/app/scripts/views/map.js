@@ -6,11 +6,10 @@ define([
   'handlebars',
   'sprintf',
   'moment',
-  'cartodb',
   'models/filter',
   'models/indicator',
   'text!../../templates/infowindow.mustache'
-], function(_, Backbone, Handlebars, sprintf, moment, cartodbLib, filterModel, IndicatorModel, tpl) {
+], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, tpl) {
 
   var MapView = Backbone.View.extend({
 
