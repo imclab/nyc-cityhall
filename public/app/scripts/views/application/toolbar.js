@@ -73,11 +73,9 @@ define([
 
     timerToClose: function() {
       var self = this;
-
       this.timer = setInterval(function() {
         self.contractOptions();
       }, this.options.pause);
-
       $(document).on('click', function() {
         self.contractOptions();
         self.cancelTimerToClose();

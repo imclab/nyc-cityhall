@@ -41,7 +41,9 @@ define([
       var self = this;
 
       if (this.indicators.length > 0) {
-        this.indicators.set(this.indicators.getDataByFilters(), {remove: true});
+        this.indicators.set(this.indicators.getDataByFilters(), {
+          remove: true
+        });
         this.sortAndRender();
       } else {
         this.indicators.getData(function(err) {
@@ -107,30 +109,34 @@ define([
     },
 
     sortAndRender: function() {
-     // this.filter.set('type', 'all');
-     if(this.filter.get('agency') !== 'all')this.filterByAgency();
-      if(this.filter.get('type') !== 'all')this.filterByType();
+      // this.filter.set('type', 'all');
+      if (this.filter.get('agency') !== 'all') {this.filterByAgency();}
+      if (this.filter.get('type') !== 'all') {this.filterByType();}
       console.log(this.filter.get('agency'));
       console.log(this.filter.get('type'));
 
 
       switch (this.filter.get('sort')) {
-      case 'worst':
+        case 'worst':
 
-        this.indicators.comparator = function(indicator) {
-          if(indicator.get('value')===null || indicator.get('full')===0) {return 0;}
-          return indicator.get('value') / indicator.get('full');
-        };
-        break;
-      case 'best':
-        this.indicators.comparator = function(indicator) {
-          if(indicator.get('value')===null || indicator.get('full')===0) {return 0;}
-          return -(indicator.get('value') / indicator.get('full'));
-        };
-        break;
-      case 'department':
-        this.indicators.comparator = 'agency';
-        break;
+          this.indicators.comparator = function(indicator) {
+            if (indicator.get('value') === null || indicator.get('full') === 0) {
+              return 0;
+            }
+            return indicator.get('value') / indicator.get('full');
+          };
+          break;
+        case 'best':
+          this.indicators.comparator = function(indicator) {
+            if (indicator.get('value') === null || indicator.get('full') === 0) {
+              return 0;
+            }
+            return -(indicator.get('value') / indicator.get('full'));
+          };
+          break;
+        case 'department':
+          this.indicators.comparator = 'agency';
+          break;
       }
 
       this.indicators.sort();
