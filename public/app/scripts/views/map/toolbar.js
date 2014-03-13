@@ -2,10 +2,8 @@
 
 define([
   'backbone',
-  'handlebars',
-  'models/indicator',
-  'text!../../../templates/toolbar-map.handlebars'
-], function(Backbone, Handlebars, IndicatorModel, tpl) {
+  'models/indicator'
+], function(Backbone, IndicatorModel) {
 
   var MapToolbarView = Backbone.View.extend({
 
@@ -31,8 +29,6 @@ define([
       };
     },
 
-    template: Handlebars.compile(tpl),
-
     initialize: function() {
       this.indicator = new IndicatorModel();
       this.$options = this.$el.find('.mod-toolbar-options');
@@ -41,20 +37,8 @@ define([
       Backbone.Events.on('map:changed', this.changeData, this);
     },
 
-    render: function() {
-      this.$el.html(this.template(this.data));
-    },
-
     changeData: function(data) {
       this.indicator.set(data);
-
-      this.data = {};
-
-      if (this.indicator.get('historicalGeo')) {
-        this.data.mmddyy = true;
-      }
-
-      this.render();
     },
 
     changeMap: function(e) {
@@ -65,17 +49,9 @@ define([
 
       current.text(element.text());
 
-      this.contractOptions();
+      Backbone.Events.trigger('map:toggle', element.data('value'));
 
-      if (this.indicator.get('historicalGeo')) {
-        console.log('last_monthdayyear');
-        Backbone.Events.trigger('map:toggle', 'history');
-        // last_monthdayyear
-      } else {
-        console.log('current');
-        Backbone.Events.trigger('map:toggle', 'current');
-        // current
-      }
+      this.contractOptions();
 
       e.preventDefault();
     },
