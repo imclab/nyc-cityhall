@@ -25,7 +25,7 @@ define([
       },
       tiles: {
         //url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
-        url: 'images/assets/blanktile.png',
+        url: 'images/blanktile.png',
         attribution: 'Mapbox'
       },
       cartodb: {

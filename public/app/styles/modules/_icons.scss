@@ -1,6 +1,7 @@
 .icon {
   display: block;
-  background: no-repeat;
+  background-color: inherit;
+  background-repeat: no-repeat;
 }
 
 button.icon {
@@ -12,41 +13,35 @@ button.icon {
 .icon-menu {
   height: 23px;
   width: 28px;
-  background-image: image-url("assets/icon-menu.png");
-  background-size: 28px 23px;
+  @include sprite-background(icon-menu);
 }
 
 .icon-close {
   width: 23px;
   height: 23px;
-  background-image: image-url("assets/icon-close.png");
-  background-position: center center;
-  background-size: 23px 23px;
+  @include sprite-background(icon-close);
 }
 
 .icon-back {
   width: 37px;
   height: 37px;
-  background-image: image-url("assets/icon-back.png");
-  background-position: center center;
-  background-size: 37px 37px;
+  @include sprite-background(icon-back);
 }
 
 .icon-basic_services, .icon-equality_measure, .icon-public {
   width: 16px;
   height: 17px;
-  background-position: center center;
   background-size: 16px 17px;
 }
 
 .icon-basic_services {
-  background-image: image-url("assets/icon-basic-services.png");
+  @include sprite-background(icon-basic-services);
 }
 
 .icon-equality_measure {
-  background-image: image-url("assets/icon-equality-measure.png");
+  @include sprite-background(icon-equality-measure);
 }
 
 .icon-public {
-  background-image: image-url("assets/icon-public.png");
+  @include sprite-background(icon-public);
 }

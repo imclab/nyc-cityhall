@@ -87,12 +87,9 @@
       display: inline-block;
       content: ' ';
       width: 15px;
-      height: 12px;
       margin-right: 5px;
-
-      background: image-url("assets/icon-frequency.png") no-repeat center center;
-      background-size: 15px 12px;
-
+      @include sprite-background(icon-frequency);
+      height: 12px;
       vertical-align: -1px;
     }
   }

@@ -22,3 +22,12 @@
   &::-moz-placeholder          {@content}
   &:-ms-input-placeholder      {@content}
 }
+
+@mixin sprite-background($name) {
+  background-image: sprite-url($icons);
+  background-position: 0 round(nth(sprite-position($icons, $name), 2) / 2);
+  height: round(image-height(sprite-file($icons, $name)) / 2);
+  width: round(image-width(sprite-file($icons, $name)) /2 );
+
+  @include background-size(auto 162px);
+}
