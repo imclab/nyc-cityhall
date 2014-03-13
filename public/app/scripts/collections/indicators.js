@@ -158,7 +158,7 @@ define([
           indicator.displayPreviousValue = indicator.displayPreviousValue + '%';
         }
 
-        if (indicator.value === 'Infinity' || indicator.value === 'NaN') {
+        if (indicator.value === 'Infinity' || indicator.value === '-Infinity' || indicator.value === 'NaN') {
           indicator.value = 0;
           indicator.full = 0;
           indicator.displayValue = '-';
