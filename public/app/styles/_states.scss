@@ -2,3 +2,7 @@
   display: none !important;
   visibility: hidden;
 }
+
+.is-clearfix {
+  @include clearfix;
+}

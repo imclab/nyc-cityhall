@@ -12,7 +12,6 @@ button.icon {
 .icon-menu {
   height: 23px;
   width: 28px;
-
   background-image: image-url("assets/icon-menu.png");
   background-size: 28px 23px;
 }
@@ -20,7 +19,6 @@ button.icon {
 .icon-close {
   width: 23px;
   height: 23px;
-
   background-image: image-url("assets/icon-close.png");
   background-position: center center;
   background-size: 23px 23px;
@@ -29,8 +27,26 @@ button.icon {
 .icon-back {
   width: 37px;
   height: 37px;
-
   background-image: image-url("assets/icon-back.png");
   background-position: center center;
   background-size: 37px 37px;
+}
+
+.icon-basic_services, .icon-equality_measure, .icon-public {
+  width: 16px;
+  height: 17px;
+  background-position: center center;
+  background-size: 16px 17px;
+}
+
+.icon-basic_services {
+  background-image: image-url("assets/icon-basic-services.png");
+}
+
+.icon-equality_measure {
+  background-image: image-url("assets/icon-equality-measure.png");
+}
+
+.icon-public {
+  background-image: image-url("assets/icon-public.png");
 }
