@@ -92,10 +92,10 @@ define([
 
       Backbone.Events.trigger('map:changed', indicator);
 
-      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
+      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
-      if (self.indicator.get('historicalGeo') === true) {
+      if (indicator.historicalGeo) {
         _.each(this.options.colors, function(color, index) {
           var step = indicator.full - ((index + 1) * indicator.full / 8);
           if (indicator.full < 0) {
@@ -123,9 +123,11 @@ define([
       }
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
+      console.log(indicator);
+
       options = _.extend({}, this.options.cartodb, {
         //interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
-        interactivity: 'name, current',
+        interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear' : 'name, current',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
@@ -135,7 +137,10 @@ define([
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
 
-        console.log(layer);
+        layer.on('error', function(err) {
+          window.history.back();
+          throw err;
+        });
 
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
@@ -151,7 +156,11 @@ define([
       }
 
       _.delay(function() {
-        cartodb.createLayer(self.map, options, {https: true}).done(addLayerToMap);
+        cartodb.createLayer(self.map, options, {https: true})
+          .on('done', addLayerToMap)
+          .on('error', function(err) {
+            throw err;
+          });
       }, 301);
     },
 
