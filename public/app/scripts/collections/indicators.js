@@ -77,15 +77,15 @@ define([
           switch (row.frequency) {
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM') + ', ' + moment(row.date).format('YYYY');
+              indicator.previousDate = moment(row.date).subtract('years', 1).format('MMM, YYYY');
               break;
             case 'weekly':
               indicator.currentDate = 'Week ' + moment(row.date).format('WW, YYYY');
-              indicator.previousDate = 'Week ' + moment(row.date).format('WW') + ', ' + (moment(row.date).format('YYYY') - 1);
+              indicator.previousDate = 'Week ' + moment(row.date).subtract('years', 1).format('WW, YYYY');
               break;
             case 'daily':
               indicator.currentDate = moment(row.date).format('MM/DD/YYYY');
-              indicator.previousDate = moment(row.date).format('MM') + '/' + moment(row.date).format('DD') + '/' + (moment(row.date).format('YYYY') - 1);
+              indicator.previousDate = moment(row.date).subtract('years', 1).format('MM/DD/YYYY');
               break;
           }
           break;
@@ -100,15 +100,15 @@ define([
           switch (row.frequency) {
             case 'monthly':
               indicator.currentDate = moment(row.date).format('MMM, YYYY');
-              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM') + ', ' + moment(row.date).format('YYYY');
+              indicator.previousDate = moment(row.date).subtract('months', 1).format('MMM, YYYY');
               break;
             case 'weekly':
               indicator.currentDate = 'Week ' + moment(row.date).format('WW, YYYY');
-              indicator.previousDate = 'Week ' + moment(row.date).format('WW') + ', ' + (moment(row.date).format('YYYY') - 1);
+              indicator.previousDate = 'Week ' + moment(row.date).subtract('weeks', 1).format('WW, YYYY');
               break;
             case 'daily':
               indicator.currentDate = moment(row.date).format('MM/DD/YYYY');
-              indicator.previousDate = moment(row.date).format('MM') + '/' + moment(row.date).format('DD') + '/' + (moment(row.date).format('YYYY') - 1);
+              indicator.previousDate = moment(row.date).subtract('days', 1).format('MM/DD/YYYY');
               break;
           }
           break;
@@ -149,6 +149,9 @@ define([
 
         indicator.displayCurrentValue = self.numberWithCommas(indicator.currentValue);
         indicator.displayPreviousValue = self.numberWithCommas(indicator.previousValue );
+
+        if(indicator.displayCurrentValue===null){indicator.displayCurrentValue='-';}
+        if(indicator.displayPreviousValue===null){indicator.displayPreviousValue='-';}
 
         if (row.recording_units === 'percent') {
           indicator.displayCurrentValue = indicator.displayCurrentValue + '%';
