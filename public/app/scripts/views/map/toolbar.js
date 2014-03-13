@@ -39,6 +39,11 @@ define([
 
     changeData: function(data) {
       this.indicator.set(data);
+
+      if (!this.indicator.get('historicalGeo')) {
+        this.$el.find('.current').text(this.$options.find('a[data-value="current"]').text());
+        Backbone.Events.trigger('map:toggle', 'current');
+      }
     },
 
     changeMap: function(e) {
