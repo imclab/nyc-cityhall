@@ -18,6 +18,16 @@
         </table>
       </div>
     {{/previous}}
-    <div class="mod-infowindow-value">{{current}}%</div>
+
+    {{#last_monthdayyear}}
+      <div class="mod-infowindow-value">
+        {{last_monthdayyear}}%
+      </div>
+    {{/last_monthdayyear}}
+    {{#current}}
+      <div class="mod-infowindow-value">
+        {{current}}
+      </div>
+    {{/current}}
   </div>
 </div>
