@@ -71,7 +71,8 @@ define([
         attribution: this.options.tiles.attribution
       }).addTo(this.map);
     },
-     changeMapView: function(arg) {
+
+    changeMapView: function(arg) {
       console.log(arg);
       this.changeVisualization(arg);
     },
@@ -122,11 +123,17 @@ define([
               index = 0;
             }
           }
-
-          legendItems.push({
-            name: step.toString(),
-            value: color
-          });
+          if (indicator.full !== 0){
+            legendItems.push({
+              name: step.toString(),
+              value: color
+            });
+          }else{
+            legendItems[0]={
+              name: 'NEUTRAL',
+              value: self.options.colors[7]
+            };
+          }
 
           cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
         });
@@ -149,7 +156,6 @@ define([
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }
-
       this.currentLegend = new cdb.geo.ui.Legend({
         type: 'custom',
         data: legendItems
