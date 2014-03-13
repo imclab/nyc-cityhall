@@ -12,8 +12,9 @@ define([
   'views/application/indicators',
 
   'views/map/indicator',
-  'views/map/spin'
-], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView, MapSpinView) {
+  'views/map/spin',
+  'views/map/toolbar'
+], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView, MapSpinView, MapToolbarView) {
 
   var app = {}, Router;
 
@@ -26,6 +27,7 @@ define([
   app.map = new MapView();
   app.mapIndicator = new MapIndicatorView();
   app.mapSpinView = new MapSpinView();
+  app.mapToolbarView = new MapToolbarView();
 
   Router = Backbone.Router.extend({
 
