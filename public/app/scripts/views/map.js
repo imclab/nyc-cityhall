@@ -109,11 +109,14 @@ define([
       if (indicator.historicalGeo && type==='history') {
 
         _.each(this.options.colors, function(color, index) {
+
+
           var step = indicator.full - ((index + 1) * indicator.full / 8);
 
-          if (indicator.full < 0) {
-            index = self.options.colors.length - (index + 1);
-          } else if (indicator.full === 0) {
+          // if (indicator.full > 0) {
+          //   //index = self.options.colors.length - (index + 1);
+          // } else
+          if (indicator.full === 0) {
             index = 7;
           }
 
@@ -127,7 +130,7 @@ define([
           if (indicator.full !== 0){
             legendItems.push({
               name: step.toString(),
-              value: color
+              value: self.options.colors[index]
             });
           }else{
             legendItems[0]={
@@ -135,12 +138,12 @@ define([
               value: self.options.colors[7]
             };
           }
-          if(indicator.full>0){
+          if(indicator.full<0){
             cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[0]);
-            cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+            cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           }else{
             //cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[14]);
-            cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+            cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           }
         });
       } else {
@@ -152,7 +155,7 @@ define([
             name: step.toString(),
             value: color
           });
-
+          cartocss = cartocss + sprintf(' #%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.abscolors[0]);
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
