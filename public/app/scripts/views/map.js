@@ -95,7 +95,7 @@ define([
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
-      cartocss = cartocss + '[ last_monthdayyear != null]{ ';
+      if (self.indicator.get('historicalGeo')===true){
       _.each(this.options.colors, function(color, index) {
         var step = indicator.full - ((index + 1) * indicator.full / 8);
         if (indicator.full < 0) {
@@ -105,24 +105,25 @@ define([
         }
         cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
       });
-      cartocss = cartocss + '} ';
-      cartocss = cartocss + '[ last_monthdayyear = null]{ ';
+
+    }else{
       _.each(this.options.abscolors, function(color, index) {
         var step = 100 - ((index + 1) * 100 / 8);
         index = self.options.abscolors.length - (index + 1);
         cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
       });
-      cartocss = cartocss + '} ';
-
+    }
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
       options = _.extend({}, this.options.cartodb, {
-        interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
+        //interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
+        interactivity: 'name, current',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
         }]
       });
+      console.log(cartocss);
 
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
