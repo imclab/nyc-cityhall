@@ -136,8 +136,10 @@ define([
             };
           }
           if(indicator.full>0){
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[0]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           }else{
+            //cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[14]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           }
         });
