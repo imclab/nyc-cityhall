@@ -113,9 +113,10 @@ define([
 
           var step = indicator.full - ((index + 1) * indicator.full / 8);
 
-          if (indicator.full > 0) {
-            //index = self.options.colors.length - (index + 1);
-          } else if (indicator.full === 0) {
+          // if (indicator.full > 0) {
+          //   //index = self.options.colors.length - (index + 1);
+          // } else
+          if (indicator.full === 0) {
             index = 7;
           }
 
