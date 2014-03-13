@@ -45,6 +45,7 @@ define([
 
       current.text(element.text());
       this.filter.set(element.data('filter'), element.data('value'));
+      console.log('filters',element.data('filter'), element.data('value'));
 
       this.contractOptions();
 

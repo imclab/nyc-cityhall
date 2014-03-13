@@ -63,17 +63,19 @@ define([
       }));
     },
 
-    setAgency: function(e) {
-      var value = $(e.currentTarget).data('agency');
-      this.filter.set('agency', value);
-      e.preventDefault();
-      e.stopPropagation();
-    },
+    // setAgency: function(e) {
+    //   var value = $(e.currentTarget).data('agency');
+    //   this.filter.set('agency', value);
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    // },
 
     filterByAgency: function() {
+      console.log(this.filter.get('agency'));
+      //this.render();
       var $mods = $('.mod-indicators-item');
       $mods.addClass('is-hidden');
-      this.filter.set('type', 'all');
+      //this.filter.set('type', 'all');
 
       if (this.filter.get('agency') === 'all') {
         $mods.removeClass('is-hidden');
@@ -86,11 +88,13 @@ define([
     },
 
     filterByType: function() {
+      console.log(this.filter.get('type'));
+      //this.render();
       var $mods = $('.mod-indicators-item');
 
       $mods.addClass('is-hidden');
 
-      this.filter.set('agency', 'all');
+      //this.filter.set('agency', 'all');
 
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
@@ -141,10 +145,10 @@ define([
 
       this.render();
 
-      if (this.filter.get('agency') !== 'all') {this.filterByAgency();}
-      if (this.filter.get('type') !== 'all') {this.filterByType();}
-      console.log(this.filter.get('agency'));
-      console.log(this.filter.get('type'));
+      if (this.filter.get('agency') !== 'all') {this.filterByAgency();console.log('after sort: '+this.filter.get('agency'));}
+      if (this.filter.get('type') !== 'all') {this.filterByType();console.log('after sort: '+this.filter.get('type'));}
+
+
 
 
       Backbone.Events.trigger('application:scrolltop');
