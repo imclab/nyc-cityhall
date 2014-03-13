@@ -100,10 +100,21 @@ define([
         var step = indicator.full - ((index + 1) * indicator.full / 8);
         if (indicator.full < 0) {
           index = self.options.colors.length - (index + 1);
-        } else {
+        } else if (indicator.full === 0){
           index = 7;
         }
+
+
+        if(self.indicator.get('zeroTolerance')===true){
+            if (indicator.full > 0 && index>7) {
+              index=14;
+            }else if (indicator.full < 0 && index<7) {
+              index=0;
+            }
+
+        }
         cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+
       });
 
     }else{
