@@ -58,6 +58,7 @@ $infowindow-border-color: rgba(0, 0, 0, .2);
   @include clearfix;
 
   table {
+    margin: 10px 0;
     width: 100%;
   }
 
@@ -70,12 +71,14 @@ $infowindow-border-color: rgba(0, 0, 0, .2);
     strong {
       font-size: 12px;
       line-height: 12px;
+      font-weight: normal;
     }
   }
 
   .mod-infowindow-value {
     min-width: 120px;
     font-size: 37px;
+    line-height: 40px;
     font-weight: bold;
     text-align: center;
   }
