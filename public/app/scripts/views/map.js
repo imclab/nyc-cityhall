@@ -31,7 +31,8 @@ define([
       },
       cartodb: {
         user_name: 'nyc-cityhall',
-        type: 'cartodb'
+        type: 'cartodb',
+        legends: true
       },
       colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
       abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff',]
@@ -75,12 +76,13 @@ define([
         return false;
       }
 
-      Backbone.Events.trigger('spinner:start');
-
-      var self, indicator, sql, cartocss, options;
+      var self, indicator, sql, cartocss, options, legendItems;
 
       self = this;
+      legendItems = [];
       indicator = this.indicator.toJSON();
+
+      Backbone.Events.trigger('spinner:start');
 
       if (this.currentLayer) {
         this.map.removeLayer(this.currentLayer);
@@ -96,34 +98,55 @@ define([
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
       if (indicator.historicalGeo) {
+
         _.each(this.options.colors, function(color, index) {
           var step = indicator.full - ((index + 1) * indicator.full / 8);
+
           if (indicator.full < 0) {
             index = self.options.colors.length - (index + 1);
           } else if (indicator.full === 0) {
             index = 7;
           }
 
-          if (self.indicator.get('zeroTolerance') === true) {
+          if (indicator.zeroTolerance) {
             if (indicator.full > 0 && index > 7) {
               index = 14;
             } else if (indicator.full < 0 && index < 7) {
               index = 0;
             }
           }
+
+          legendItems.push({
+            name: step.toString(),
+            value: color
+          });
+
           cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
         });
-
       } else {
         _.each(this.options.abscolors, function(color, index) {
           var step = 100 - ((index + 1) * 100 / 8);
           index = self.options.abscolors.length - (index + 1);
+
+          legendItems.push({
+            name: step.toString(),
+            value: color
+          });
+
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
+
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
-      console.log(indicator);
+      if (this.currentLegend) {
+        $(this.currentLegend.render().el).remove();
+      }
+
+      this.currentLegend = new cdb.geo.ui.Legend({
+        type: 'custom',
+        data: legendItems
+      });
 
       options = _.extend({}, this.options.cartodb, {
         //interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
@@ -151,6 +174,7 @@ define([
         sublayer.setInteraction(true);
         self.map.setView(self.options.map.center, self.options.map.zoom);
         self.map.addLayer(layer);
+        self.$el.append(self.currentLegend.render().el);
 
         Backbone.Events.trigger('spinner:stop');
       }

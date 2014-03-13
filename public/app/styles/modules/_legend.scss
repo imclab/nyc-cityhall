@@ -1,0 +1,27 @@
+div.cartodb-legend.custom {
+  background: $primary;
+  border: 0;
+
+  @include border-radius(0);
+  @include box-shadow(none);
+
+  ul li {
+    display: block;
+    height: auto;
+    font-size: 13px;
+    line-height: 15px;
+    margin-bottom: 5px;
+
+    color: rgba(246, 246, 246, .5);
+    font-weight: normal;
+
+    .bullet {
+      display: inline-block;
+      float: none;
+      width: 15px;
+      height: 15px;
+      vertical-align: middle;
+      @include border-radius(0);
+    }
+  }
+}
