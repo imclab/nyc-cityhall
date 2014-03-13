@@ -70,6 +70,9 @@ define([
 
     filterByAgency: function() {
       var $mods = $('.mod-indicators-item');
+
+      this.filter.set('type', 'all');
+
       if (this.filter.get('agency') === 'all') {
         $mods.removeClass('is-hidden');
       } else {
@@ -104,7 +107,12 @@ define([
     },
 
     sortAndRender: function() {
-      this.filter.set('type', 'all');
+     // this.filter.set('type', 'all');
+     if(this.filter.get('agency') !== 'all')this.filterByAgency();
+      if(this.filter.get('type') !== 'all')this.filterByType();
+      console.log(this.filter.get('agency'));
+      console.log(this.filter.get('type'));
+
 
       switch (this.filter.get('sort')) {
       case 'worst':
@@ -126,8 +134,10 @@ define([
       }
 
       this.indicators.sort();
+
+
       this.render();
-      this.filterByAgency();
+
 
       Backbone.Events.trigger('application:scrolltop');
     },
