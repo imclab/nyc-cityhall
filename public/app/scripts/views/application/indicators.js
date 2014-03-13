@@ -63,19 +63,9 @@ define([
       }));
     },
 
-    // setAgency: function(e) {
-    //   var value = $(e.currentTarget).data('agency');
-    //   this.filter.set('agency', value);
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    // },
-
     filterByAgency: function() {
-      console.log(this.filter.get('agency'));
-      //this.render();
       var $mods = $('.mod-indicators-item');
       $mods.addClass('is-hidden');
-      //this.filter.set('type', 'all');
 
       if (this.filter.get('agency') === 'all') {
         $mods.removeClass('is-hidden');
@@ -88,13 +78,9 @@ define([
     },
 
     filterByType: function() {
-      console.log(this.filter.get('type'));
-      //this.render();
       var $mods = $('.mod-indicators-item');
 
       $mods.addClass('is-hidden');
-
-      //this.filter.set('agency', 'all');
 
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
@@ -105,7 +91,6 @@ define([
       } else if (this.filter.get('type') === 'urgent') {
         $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
       } else {
-        //$('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
         $('.mod-indicators-item[data-type="' + this.filter.get('type') + '"]').removeClass('is-hidden');
       }
 
@@ -113,10 +98,6 @@ define([
     },
 
     sortAndRender: function() {
-      // this.filter.set('type', 'all');
-
-
-
       switch (this.filter.get('sort')) {
         case 'worst':
 
@@ -142,14 +123,13 @@ define([
 
       this.indicators.sort();
 
-
       this.render();
 
-      if (this.filter.get('agency') !== 'all') {this.filterByAgency();console.log('after sort: '+this.filter.get('agency'));}
-      if (this.filter.get('type') !== 'all') {this.filterByType();console.log('after sort: '+this.filter.get('type'));}
-
-
-
+      if (this.filter.get('agency') !== 'all') {
+        this.filterByAgency();
+      } else if (this.filter.get('type') !== 'all') {
+        this.filterByType();
+      }
 
       Backbone.Events.trigger('application:scrolltop');
     },
