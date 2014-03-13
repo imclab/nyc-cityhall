@@ -4,30 +4,19 @@
     <h2>{{name}}</h2>
   </header>
   <div class="mod-infowindow-content">
-    {{#previous}}
-      <div class="mod-infowindow-data">
-        <table>
-          <tr>
-            <th>%s</th>
-            <th>%s</th>
-          </tr>
-          <tr>
-            <td>%s</td>
-            <td>%s</td>
-          </tr>
-        </table>
-      </div>
-    {{/previous}}
-
-    {{#last_monthdayyear}}
-      <div class="mod-infowindow-value">
-        {{last_monthdayyear}}%
-      </div>
-    {{/last_monthdayyear}}
-    {{#current}}
-      <div class="mod-infowindow-value">
-        {{current}}
-      </div>
-    {{/current}}
+    <table>
+      {{#previous}}
+        <td>{{previous}}</td>
+        <td>{{current}}</td>
+      {{/previous}}
+      <td class="mod-infowindow-value">
+        {{#last_monthdayyear}}
+          {{last_monthdayyear}}%
+        {{/last_monthdayyear}}
+        {{^last_monthdayyear}}
+          {{current}}
+        {{/last_monthdayyear}}
+      </td>
+    </table>
   </div>
 </div>

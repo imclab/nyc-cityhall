@@ -150,7 +150,7 @@ define([
 
       options = _.extend({}, this.options.cartodb, {
         //interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
-        interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear' : 'name, current',
+        interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear, current, previous' : 'name, current',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
