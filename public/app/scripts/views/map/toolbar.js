@@ -42,7 +42,6 @@ define([
     },
 
     render: function() {
-      console.log(this.data);
       this.$el.html(this.template(this.data));
     },
 
@@ -54,8 +53,6 @@ define([
       if (!this.indicator.get('historicalGeo')) {
         this.data.mmddyy = true;
       }
-
-      console.log(this.indicator);
 
       this.render();
     },
