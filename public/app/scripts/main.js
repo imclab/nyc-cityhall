@@ -11,7 +11,6 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     moment: '../vendor/momentjs/moment',
-    cartodb: '../vendor/cartodb.js/dist/cartodb.nojquery',
     spin: '../vendor/spinjs/spin'
   },
 
@@ -35,9 +34,6 @@ require.config({
     },
     sprintf: {
       exports: 'sprintf'
-    },
-    cartodb: {
-      exports: 'cartodb'
     }
   }
 
