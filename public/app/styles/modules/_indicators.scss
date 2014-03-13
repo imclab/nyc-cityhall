@@ -74,6 +74,7 @@
   .mod-indicators-type, .mod-indicators-agency, .mod-indicators-frequency {
     display: block;
     float: left;
+    font-size: 13px;
   }
 
   .mod-indicators-frequency {
@@ -97,9 +98,8 @@
 
   .mod-indicators-agency {
     background-color: $primary;
-    padding: 3px 10px;
+    padding: 3px 7px;
     line-height: 11px;
-    font-size: 11px;
     font-weight: bold;
     color: $secondary;
   }
