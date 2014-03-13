@@ -71,8 +71,10 @@ define([
       this.contractOptions();
 
       if (this.indicator.get('historicalGeo')) {
+        console.log('last_monthdayyear');
         // last_monthdayyear
       } else {
+        console.log('current');
         // current
       }
 
