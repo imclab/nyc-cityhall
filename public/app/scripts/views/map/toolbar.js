@@ -50,7 +50,7 @@ define([
 
       this.data = {};
 
-      if (!this.indicator.get('historicalGeo')) {
+      if (this.indicator.get('historicalGeo')) {
         this.data.mmddyy = true;
       }
 
@@ -69,9 +69,11 @@ define([
 
       if (this.indicator.get('historicalGeo')) {
         console.log('last_monthdayyear');
+        Backbone.Events.trigger('map:toggle', 'history');
         // last_monthdayyear
       } else {
         console.log('current');
+        Backbone.Events.trigger('map:toggle', 'current');
         // current
       }
 

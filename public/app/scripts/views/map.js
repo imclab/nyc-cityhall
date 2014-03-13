@@ -61,6 +61,7 @@ define([
       this.indicator.on('change', this.changeVisualization, this);
       this.filter.on('change', this.changeVisualization, this);
       Backbone.Events.on('map:open', this.show, this);
+      Backbone.Events.on('map:toggle', this.changeMapView, this);
     },
 
     setMap: function() {
@@ -70,8 +71,14 @@ define([
         attribution: this.options.tiles.attribution
       }).addTo(this.map);
     },
+     changeMapView: function(arg) {
+      console.log(arg);
+      this.changeVisualization(arg);
+    },
 
-    changeVisualization: function() {
+
+    changeVisualization: function(type) {
+      if (!type){type='history';}
       if (!this.$el.hasClass('is-active')) {
         return false;
       }
@@ -97,7 +104,7 @@ define([
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
-      if (indicator.historicalGeo) {
+      if (indicator.historicalGeo && type==='history') {
 
         _.each(this.options.colors, function(color, index) {
           var step = indicator.full - ((index + 1) * indicator.full / 8);
