@@ -83,10 +83,18 @@ define([
     filterByType: function() {
       var $mods = $('.mod-indicators-item');
 
+      $mods.addClass('is-hidden');
+
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
+      } else if (this.filter.get('type') === 'improving') {
+        $('.mod-indicators-item[data-status="improving"]').removeClass('is-hidden');
+      } else if (this.filter.get('type') === 'worsening') {
+        $('.mod-indicators-item[data-status="worsening"]').removeClass('is-hidden');
+      } else if (this.filter.get('type') === 'urgent') {
+        $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
       } else {
-        $mods.addClass('is-hidden');
+        $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
         $('.mod-indicators-item[data-type="' + this.filter.get('type') + '"]').removeClass('is-hidden');
       }
 
