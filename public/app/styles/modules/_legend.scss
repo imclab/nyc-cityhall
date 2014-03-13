@@ -25,3 +25,7 @@ div.cartodb-legend.custom {
     }
   }
 }
+
+@media only screen and (max-width: $sm) {
+  display: none !important;
+}
