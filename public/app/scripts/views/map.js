@@ -95,35 +95,32 @@ define([
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous <> 0 THEN 100*(i.current - i.previous)/i.previous ELSE null END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
-      if (self.indicator.get('historicalGeo')===true){
-      _.each(this.options.colors, function(color, index) {
-        var step = indicator.full - ((index + 1) * indicator.full / 8);
-        if (indicator.full < 0) {
-          index = self.options.colors.length - (index + 1);
-        } else if (indicator.full === 0){
-          index = 7;
-        }
+      if (self.indicator.get('historicalGeo') === true) {
+        _.each(this.options.colors, function(color, index) {
+          var step = indicator.full - ((index + 1) * indicator.full / 8);
+          if (indicator.full < 0) {
+            index = self.options.colors.length - (index + 1);
+          } else if (indicator.full === 0) {
+            index = 7;
+          }
 
-
-        if(self.indicator.get('zeroTolerance')===true){
-            if (indicator.full > 0 && index>7) {
-              index=14;
-            }else if (indicator.full < 0 && index<7) {
-              index=0;
+          if (self.indicator.get('zeroTolerance') === true) {
+            if (indicator.full > 0 && index > 7) {
+              index = 14;
+            } else if (indicator.full < 0 && index < 7) {
+              index = 0;
             }
+          }
+          cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+        });
 
-        }
-        cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
-
-      });
-
-    }else{
-      _.each(this.options.abscolors, function(color, index) {
-        var step = 100 - ((index + 1) * 100 / 8);
-        index = self.options.abscolors.length - (index + 1);
-        cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
-      });
-    }
+      } else {
+        _.each(this.options.abscolors, function(color, index) {
+          var step = 100 - ((index + 1) * 100 / 8);
+          index = self.options.abscolors.length - (index + 1);
+          cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
+        });
+      }
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
       options = _.extend({}, this.options.cartodb, {
@@ -134,10 +131,11 @@ define([
           cartocss: cartocss
         }]
       });
-      console.log(cartocss);
 
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
+
+        console.log(layer);
 
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
