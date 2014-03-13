@@ -239,7 +239,6 @@
     }
     .mod-indicators-value-item {
       font-size: 20px;
-      line-height: 110px;
       text-align: right;
     }
   }
@@ -250,7 +249,7 @@
       width: auto;
       border-right: 0;
       border-bottom: 1px solid $primary;
-      height: 80px;
+      height: auto;
       overflow: hidden;
 
       h2 {
@@ -266,6 +265,10 @@
     }
     .mod-indicators-footer {
       width: 60%;
+      height: 60px;
+    }
+    .mod-indicators-value-item {
+      line-height: 60px;
     }
   }
 }
