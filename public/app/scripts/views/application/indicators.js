@@ -72,7 +72,7 @@ define([
 
     filterByAgency: function() {
       var $mods = $('.mod-indicators-item');
-
+      $mods.addClass('is-hidden');
       this.filter.set('type', 'all');
 
       if (this.filter.get('agency') === 'all') {
@@ -101,7 +101,7 @@ define([
       } else if (this.filter.get('type') === 'urgent') {
         $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
       } else {
-        $('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
+        //$('.mod-indicators-item[data-urgent="true"]').removeClass('is-hidden');
         $('.mod-indicators-item[data-type="' + this.filter.get('type') + '"]').removeClass('is-hidden');
       }
 
@@ -110,10 +110,7 @@ define([
 
     sortAndRender: function() {
       // this.filter.set('type', 'all');
-      if (this.filter.get('agency') !== 'all') {this.filterByAgency();}
-      if (this.filter.get('type') !== 'all') {this.filterByType();}
-      console.log(this.filter.get('agency'));
-      console.log(this.filter.get('type'));
+
 
 
       switch (this.filter.get('sort')) {
@@ -143,6 +140,11 @@ define([
 
 
       this.render();
+
+      if (this.filter.get('agency') !== 'all') {this.filterByAgency();}
+      if (this.filter.get('type') !== 'all') {this.filterByType();}
+      console.log(this.filter.get('agency'));
+      console.log(this.filter.get('type'));
 
 
       Backbone.Events.trigger('application:scrolltop');
