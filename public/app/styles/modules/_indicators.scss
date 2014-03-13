@@ -80,6 +80,7 @@
   .mod-indicators-frequency {
     text-transform: capitalize;
     line-height: 17px;
+    float: right;
     margin-left: 5px;
     color: rgba(0, 0, 0, .5);
     &:before {
@@ -277,11 +278,6 @@
 @media only screen and (min-width: $md +1px) {
   .mod-indicators-item {
     width: 32.33333%;
-  }
-  .mod-indicators-frequency {
-    position: absolute;
-    right: 10px;
-    top: 10px;
   }
 }
 
