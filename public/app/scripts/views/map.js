@@ -111,7 +111,7 @@ define([
         _.each(this.options.colors, function(color, index) {
           var step = indicator.full - ((index + 1) * indicator.full / 8);
 
-          if (indicator.full < 0) {
+          if (indicator.full > 0) {
             index = self.options.colors.length - (index + 1);
           } else if (indicator.full === 0) {
             index = 7;
@@ -127,7 +127,7 @@ define([
           if (indicator.full !== 0){
             legendItems.push({
               name: step.toString(),
-              value: color
+              value: self.options.colors[index]
             });
           }else{
             legendItems[0]={
