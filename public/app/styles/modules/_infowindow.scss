@@ -43,29 +43,30 @@ $infowindow-border-color: rgba(0, 0, 0, .2);
 }
 
 .mod-infowindow-header {
-  border-bottom: 1px solid $primary;
   padding: 10px 0;
 
   h2 {
     margin: 0;
     font-size: 17px;
+    padding-right: 30px;
   }
 }
 
 .mod-infowindow-content {
+  border-top: 1px solid $primary;
   @include clearfix;
 
   table {
-    width: 100%;
+    //width: 100%;
   }
 
   td {
-    min-width: 100px;
+    //min-width: 100px;
     font-size: 18px;
   }
 
   .mod-infowindow-value {
-    min-width: 150px;
+    //min-width: 150px;
     font-size: 37px;
     font-weight: bold;
     text-align: center;

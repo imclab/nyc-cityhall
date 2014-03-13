@@ -32,6 +32,8 @@ define([
     initialize: function() {
       this.indicator = new IndicatorModel();
       this.$options = this.$el.find('.mod-toolbar-options');
+      this.$historyOption = $('#historyOption');
+      this.$currentOption = $('#currentOption');
 
       Backbone.Events.on('map:closed', this.contractOptions, this);
       Backbone.Events.on('map:changed', this.changeData, this);
@@ -40,8 +42,13 @@ define([
     changeData: function(data) {
       this.indicator.set(data);
 
-      if (!this.indicator.get('historicalGeo')) {
-        this.$el.find('.current').text(this.$options.find('a[data-value="current"]').text());
+      if (this.indicator.get('historicalGeo')) {
+        this.$historyOption.show();
+        this.$el.find('.current').text(this.$historyOption.text());
+        Backbone.Events.trigger('map:toggle', 'history');
+      } else {
+        this.$historyOption.hide();
+        this.$el.find('.current').text(this.$currentOption.text());
         Backbone.Events.trigger('map:toggle', 'current');
       }
     },

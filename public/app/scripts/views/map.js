@@ -36,6 +36,7 @@ define([
       },
       colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
       abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff',]
+      //abscolors:['#d1e3ff','#b7c9e4','#9db0ca','#8397af','#687d94','#4e647a','#344a5f']
     },
 
     events: function() {
@@ -103,7 +104,7 @@ define([
       Backbone.Events.trigger('map:changed', indicator);
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
-
+      console.log(sql);
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
       if (indicator.historicalGeo && type==='history') {
 
@@ -116,13 +117,13 @@ define([
             index = 7;
           }
 
-          if (indicator.zeroTolerance) {
-            if (indicator.full > 0 && index > 7) {
-              index = 14;
-            } else if (indicator.full < 0 && index < 7) {
-              index = 0;
-            }
-          }
+          // if (indicator.zeroTolerance) {
+          //   if (indicator.full > 0 && index > 7) {
+          //     index = 0;
+          //   } else if (indicator.full < 0 && index < 7) {
+          //     index = 14;
+          //   }
+          // }
           if (indicator.full !== 0){
             legendItems.push({
               name: step.toString(),
@@ -134,13 +135,18 @@ define([
               value: self.options.colors[7]
             };
           }
-
-          cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+          if(indicator.full>0){
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[0]);
+            cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+          }else{
+            //cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[14]);
+            cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+          }
         });
       } else {
         _.each(this.options.abscolors, function(color, index) {
           var step = 100 - ((index + 1) * 100 / 8);
-          index = self.options.abscolors.length - (index + 1);
+          //index = self.options.abscolors.length - (index + 1);
 
           legendItems.push({
             name: step.toString(),
@@ -152,7 +158,7 @@ define([
       }
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-
+      console.log(cartocss);
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }
