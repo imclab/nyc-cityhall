@@ -67,6 +67,12 @@ define([
       var $mods = $('.mod-indicators-item');
       $mods.addClass('is-hidden');
 
+      this.filter.set({
+        type: 'all'
+      }, {
+        silent: true
+      });
+
       if (this.filter.get('agency') === 'all') {
         $mods.removeClass('is-hidden');
       } else {
@@ -81,6 +87,12 @@ define([
       var $mods = $('.mod-indicators-item');
 
       $mods.addClass('is-hidden');
+
+      this.filter.set({
+        agency: 'all'
+      }, {
+        silent: true
+      });
 
       if (this.filter.get('type') === 'all') {
         $mods.removeClass('is-hidden');
