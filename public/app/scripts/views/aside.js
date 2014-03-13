@@ -88,9 +88,6 @@ define([
       this.$el.find('.mod-aside-types a').removeClass('current');
       this.$el.find('.mod-aside-agencies a').removeClass('current');
       this.filter.set('type', current.data('type'));
-      if (current.data('type') === 'all') {
-        this.filter.set('agency', 'all');
-      }
       current.addClass('current');
       this.close();
       Backbone.Events.trigger('filter:close');
