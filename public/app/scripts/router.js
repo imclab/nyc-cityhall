@@ -48,6 +48,7 @@ define([
       app.application.hide();
       app.map.hide();
       app.login.show();
+      this.checkAuth();
     },
 
     showApp: function() {
