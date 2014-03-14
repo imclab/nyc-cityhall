@@ -29,5 +29,5 @@
   height: round(image-height(sprite-file($icons, $name)) / 2);
   width: round(image-width(sprite-file($icons, $name)) /2 );
 
-  @include background-size(38px 200px);
+  @include background-size(38px 191px);
 }

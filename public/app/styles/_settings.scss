@@ -18,4 +18,4 @@ $fifth: #707070;
 $sixth: #f6f6f6;
 $seventh: #4c4c4c;
 
-$icons: sprite-map("icons/*.png");
+$icons: sprite-map("icons/*.png", $spacing: 2px);
