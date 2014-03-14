@@ -16,6 +16,11 @@ button.icon {
 
 .icon-close {
   @include sprite-background(icon-close);
+  height: 23px;
+}
+
+.icon-infowindow-close {
+  @include sprite-background(icon-infowindow-close);
 }
 
 .icon-back {
