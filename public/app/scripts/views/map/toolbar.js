@@ -36,7 +36,7 @@ define([
       this.$currentOption = $('#currentOption');
 
       Backbone.Events.on('map:closed', this.contractOptions, this);
-      Backbone.Events.on('map:changed', this.changeData, this);
+      Backbone.Events.on('map:done', this.changeData, this);
     },
 
     changeData: function(data) {

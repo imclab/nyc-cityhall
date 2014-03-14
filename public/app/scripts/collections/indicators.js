@@ -90,7 +90,7 @@ define([
               break;
           }
           break;
-        case 'mmddyy':
+        case 'mmwwdd':
           if (row.recording_units === 'value') {
             indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1);
           } else if (row.recording_units === 'percent') {

@@ -146,9 +146,32 @@ define([
     },
 
     openMapView: function(e) {
-      var indicator = this.indicators.get($(e.currentTarget).data('id'));
+      var indicator;
 
-      Backbone.Events.trigger('map:open', indicator.toJSON());
+      indicator = this.indicators.get($(e.currentTarget).data('id'));
+
+      if (indicator.get('historicalGeo')) {
+        this.currentPeriod =  this.filter.get('period');
+
+        this.filter.set({
+          period: 'mmwwdd'
+        }, {
+          silent: true
+        });
+
+        indicator = _.findWhere(this.indicators.getDataByFilters(), {id: indicator.id});
+
+        this.filter.set({
+          period: this.currentPeriod
+        }, {
+          silent: true
+        });
+
+      } else {
+        indicator = indicator.toJSON();
+      }
+
+      Backbone.Events.trigger('map:open', indicator);
     }
 
   });

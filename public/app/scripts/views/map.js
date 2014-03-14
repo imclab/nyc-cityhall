@@ -84,6 +84,7 @@ define([
       legendItems = [];
       indicator = this.indicator.toJSON();
 
+      Backbone.Events.trigger('map:changed', indicator);
       Backbone.Events.trigger('spinner:start');
 
       if (this.currentLayer) {
@@ -207,7 +208,7 @@ define([
     show: function(indicator) {
       this.$el.addClass('is-active');
       this.indicator.set(indicator);
-      Backbone.Events.trigger('map:changed', indicator);
+      Backbone.Events.trigger('map:done', indicator);
       this.map.invalidateSize();
     },
 
