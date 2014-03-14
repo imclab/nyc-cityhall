@@ -6,12 +6,12 @@
   <div class="mod-infowindow-content">
     <table>
       {{#previous}}
-        <td><strong>Previous</strong><br>{{previous}}</td>
         <td>
           <strong>Current</strong><br>
           {{#current}}{{current}}{{/current}}
           {{^current}}0{{/current}}
         </td>
+        <td><strong>Previous</strong><br>{{previous}}</td>
       {{/previous}}
       <td class="mod-infowindow-value">
         {{#last_monthdayyear}}

@@ -36,6 +36,7 @@ define([
       }
 
       result = _.map(this.data, function(row) {
+
         var indicator = {
           id: row.indicator_id,
           agency: row.agency,
