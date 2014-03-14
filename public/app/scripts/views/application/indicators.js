@@ -112,7 +112,6 @@ define([
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
         case 'worst':
-
           this.indicators.comparator = function(indicator) {
             if (indicator.get('value') === null || indicator.get('full') === 0) {
               return 0;
