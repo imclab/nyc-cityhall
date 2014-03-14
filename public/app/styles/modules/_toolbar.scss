@@ -28,9 +28,6 @@
       margin-right: 5px;
       vertical-align: 1px;
       @include sprite-background(icon-caret-down);
-      height: 4px;
-      // background: image-url("assets/icon-caret-down.png") no-repeat center center;
-      // background-size: 10px 5px;
     }
   }
 
@@ -53,6 +50,7 @@
 
   .mod-toolbar-options {
     max-height: 0;
+    padding: 10px 0;
     position: absolute;
     width: 205px;
 
