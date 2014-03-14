@@ -163,7 +163,7 @@ define([
           indicator.value = 0;
           indicator.full = 0;
           indicator.displayValue = '-';
-          indicator.color = '#fff';
+          indicator.color = '#b7c9e4';
         }
 
         indicator.status = (indicator.value / indicator.full >= 0 || indicator.full === 0 || indicator.value === null || indicator.value === 0) ? 'improving' : 'worsening';
