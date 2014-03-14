@@ -11,27 +11,15 @@ button.icon {
 }
 
 .icon-menu {
-  height: 23px;
-  width: 28px;
   @include sprite-background(icon-menu);
 }
 
 .icon-close {
-  width: 23px;
-  height: 23px;
   @include sprite-background(icon-close);
 }
 
 .icon-back {
-  width: 37px;
-  height: 37px;
   @include sprite-background(icon-back);
-}
-
-.icon-basic_services, .icon-equality_measure, .icon-public {
-  width: 16px;
-  height: 17px;
-  background-size: 16px 17px;
 }
 
 .icon-basic_services {

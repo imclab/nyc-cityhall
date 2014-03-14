@@ -26,11 +26,11 @@
       display: inline-block;
       content: ' ';
       margin-right: 5px;
-      height: 5px;
-      width: 10px;
       vertical-align: 1px;
-      background: image-url("assets/icon-caret-down.png") no-repeat center center;
-      background-size: 10px 5px;
+      @include sprite-background(icon-caret-down);
+      height: 4px;
+      // background: image-url("assets/icon-caret-down.png") no-repeat center center;
+      // background-size: 10px 5px;
     }
   }
 
