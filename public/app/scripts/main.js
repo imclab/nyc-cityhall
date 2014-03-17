@@ -60,7 +60,7 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
       context = context.toFixed(2);
     }
     if (units === 'seconds') {
-      return moment().seconds(context).format('HH:mm:ss');
+      return moment().hours(0).minutes(0).seconds(context).format('HH:mm:ss');
     }
     return context.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });

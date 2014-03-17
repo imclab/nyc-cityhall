@@ -173,11 +173,11 @@ define([
         indicator.urgent = (indicator.value / indicator.full <= -1 && indicator.full !== 0 && indicator.value !== null) ? 'true' : 'false';
 
         if (indicator.displayUnits === 'seconds' && indicator.displayCurrentValue !== '-') {
-          indicator.displayCurrentValue = moment().seconds(indicator.displayCurrentValue).format('HH:mm:ss');
+          indicator.displayCurrentValue = moment().hours(0).minutes(0).seconds(indicator.displayCurrentValue).format('HH:mm:ss');
         }
 
         if (indicator.displayUnits === 'seconds' && indicator.displayPreviousValue !== '-') {
-          indicator.displayPreviousValue = moment().seconds(indicator.displayPreviousValue).format('HH:mm:ss');
+          indicator.displayPreviousValue = moment().hours(0).minutes(0).seconds(indicator.displayPreviousValue).format('HH:mm:ss');
         }
 
         return indicator;
