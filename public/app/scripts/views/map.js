@@ -105,39 +105,26 @@ define([
 
           var step = indicator.full - ((index + 1) * indicator.full / 8);
 
-          // if (indicator.full > 0) {
-          //   //index = self.options.colors.length - (index + 1);
-          // } else
-          if (indicator.full === 0) {
-            index = 7;
-          }
-
-          // if (indicator.zeroTolerance) {
-          //   if (indicator.full > 0 && index > 7) {
-          //     index = 0;
-          //   } else if (indicator.full < 0 && index < 7) {
-          //     index = 14;
-          //   }
-          // }
-          if (indicator.full !== 0){
+          if (indicator.full !== 0) {
             legendItems.push({
               name: step.toString(),
               value: self.options.colors[index]
             });
-          }else{
-            legendItems[0]={
+          } else {
+            legendItems[0] = {
               name: 'NEUTRAL',
-              value: self.options.colors[7]
+              value: '#ffffff'
             };
           }
-          if(indicator.full<0){
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[0]);
+
+          if (indicator.full < 0) {
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.colors[0]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
-          }else if(indicator.full>0){
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[0]);
+          } else if (indicator.full > 0) {
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.colors[0]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
-          }else {
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id,self.options.colors[7]);
+          } else {
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, '#ffffff');
           }
         });
       } else {
