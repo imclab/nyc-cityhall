@@ -1,6 +1,6 @@
 .icon {
   display: block;
-  background-color: inherit;
+  background-color: transparent;
   background-repeat: no-repeat;
 }
 
@@ -8,6 +8,10 @@ button.icon {
   border: 0;
   padding: 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
 }
 
 .icon-menu {
