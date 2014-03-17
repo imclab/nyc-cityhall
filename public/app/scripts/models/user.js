@@ -19,6 +19,7 @@ define(['backbone', 'moment', 'sprintf'], function(Backbone, moment, sprintf) {
       function onError(model, err) {
         if (callback && typeof callback === 'function') {
           callback(err);
+          window.sessionStorage.removeItem('token');
         }
       }
 

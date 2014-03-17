@@ -203,6 +203,7 @@ define([
       function onError(collection, err) {
         if (callback  && typeof callback === 'function') {
           callback(err);
+          window.sessionStorage.removeItem('token');
         }
       }
 
