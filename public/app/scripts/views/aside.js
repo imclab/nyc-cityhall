@@ -82,6 +82,9 @@ define([
       this.agencies.add(agencies);
       this.types.add(types);
 
+      this.types.comparator = 'name';
+      this.types.sort();
+
       this.render();
       this.show();
     },

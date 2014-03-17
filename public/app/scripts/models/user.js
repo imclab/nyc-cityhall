@@ -13,7 +13,8 @@ define(['backbone', 'moment', 'sprintf'], function(Backbone, moment, sprintf) {
     check: function(username, password, callback) {
       var date, query;
 
-      date = moment().format();
+      date = moment().add('hours', 4).format();
+
       query = sprintf('SELECT log_in(\'%s\',\'%s\',\'%s\') AS token', username, password, date);
 
       function onError(model, err) {
