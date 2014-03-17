@@ -166,6 +166,14 @@ define([
         indicator.status = (indicator.value / indicator.full >= 0 || indicator.full === 0 || indicator.value === null || indicator.value === 0) ? 'improving' : 'worsening';
         indicator.urgent = (indicator.value / indicator.full <= -1 && indicator.full !== 0 && indicator.value !== null) ? 'true' : 'false';
 
+        if (row.display_units === 'seconds' && indicator.displayCurrentValue !== '-') {
+          indicator.displayCurrentValue = moment().seconds(indicator.displayCurrentValue).format('HH:mm:ss');
+        }
+
+        if (row.display_units === 'seconds' && indicator.displayPreviousValue !== '-') {
+          indicator.displayPreviousValue = moment().seconds(indicator.displayPreviousValue).format('HH:mm:ss');
+        }
+
         return indicator;
       });
 
