@@ -39,7 +39,17 @@ require.config({
 
 });
 
-require(['jquerymobile', 'router'], function($, Router) {
+require(['underscore', 'jquerymobile', 'handlebars', 'router'], function(_, $, Handlebars, Router) {
+
+  // CARTODB Hacks
+  cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
+    handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
+  });
+
+  // Handlebars helper
+  Handlebars.registerHelper('plus', function(context) {
+    return (context > 0) ? '+' + context : context;
+  });
 
   new Router();
 

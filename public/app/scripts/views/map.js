@@ -174,6 +174,8 @@ define([
         }]
       });
 
+      console.log(cdb.core.Template.compilers);
+
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
 
@@ -185,7 +187,8 @@ define([
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
           infowindowTemplate: self.template,
-          cursorInteraction: false
+          cursorInteraction: false,
+          templateType: 'handlebars'
         });
 
         sublayer.setInteraction(true);

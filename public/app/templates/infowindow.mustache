@@ -5,23 +5,21 @@
   </header>
   <div class="mod-infowindow-content">
     <table>
-      {{#previous}}
+      {{#if previous}}
         <td>
           <strong>Current</strong><br>
-          {{#current}}{{current}}{{/current}}
-          {{^current}}0{{/current}}
+          {{#if current}}{{current}}{{else}}0{{/if}}
         </td>
         <td><strong>Previous</strong><br>{{previous}}</td>
-      {{/previous}}
+      {{/if}}
       <td class="mod-infowindow-value">
-        {{#last_monthdayyear}}
-          {{last_monthdayyear}}%
-        {{/last_monthdayyear}}
-        {{^last_monthdayyear}}
-          {{#current}}{{current}}{{/current}}
-          {{^current}}0{{/current}}
-        {{/last_monthdayyear}}
+        {{#if last_monthdayyear}}
+          {{plus last_monthdayyear}}%
+        {{else}}
+          {{#if current}}{{current}}{{else}}0{{/if}}
+        {{/if}}
       </td>
     </table>
+
   </div>
 </div>
