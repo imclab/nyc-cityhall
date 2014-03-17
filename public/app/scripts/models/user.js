@@ -17,13 +17,13 @@ define(['backbone', 'moment', 'sprintf'], function(Backbone, moment, sprintf) {
       query = sprintf('SELECT log_in(\'%s\',\'%s\',\'%s\') AS token', username, password, date);
 
       function onError(model, err) {
-        if (callback  && typeof callback === 'function') {
+        if (callback && typeof callback === 'function') {
           callback(err);
         }
       }
 
       function onSuccess(model) {
-        if (callback  && typeof callback === 'function') {
+        if (callback && typeof callback === 'function') {
           callback(undefined, model);
         }
       }
@@ -33,6 +33,7 @@ define(['backbone', 'moment', 'sprintf'], function(Backbone, moment, sprintf) {
           q: query,
           format: 'json'
         },
+        dataType: 'jsonp',
         success: onSuccess,
         error: onError
       });

@@ -37,7 +37,6 @@ define([
     },
 
     initialize: function() {
-      console.log('initialize');
       Backbone.history.start({
         pushState: false
       });

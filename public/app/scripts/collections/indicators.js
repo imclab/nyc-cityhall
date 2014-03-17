@@ -217,6 +217,7 @@ define([
           q: query,
           format: 'json'
         },
+        dataType: 'jsonp',
         success: onSuccess,
         error: onError
       });
