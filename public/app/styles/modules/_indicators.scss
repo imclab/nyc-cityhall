@@ -46,7 +46,7 @@
   }
 
   td {
-    padding: 5px 0;
+    padding: 2px 0 5px 0;
     font-size: 19px;
   }
 
@@ -63,18 +63,20 @@
   }
 
   .mod-indicators-footer {
-    margin-top: 10px;
+    margin-top: 13px;
     min-height: 50px;
   }
 
   .mod-indicators-type {
     margin-right: 5px;
+    margin-top: -10px;
+    margin-left: -10px;
   }
 
   .mod-indicators-type, .mod-indicators-agency, .mod-indicators-frequency {
     display: block;
     float: left;
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .mod-indicators-frequency {
@@ -97,7 +99,7 @@
   .mod-indicators-agency {
     background-color: $primary;
     padding: 3px 7px;
-    line-height: 11px;
+    line-height: 10px;
     font-weight: bold;
     color: $secondary;
   }
@@ -126,17 +128,24 @@
     margin-top: 10px;
   }
 
+  th {
+    font-size: 11px;
+  }
+
   td {
     font-size: 17px;
   }
 
   .mod-indicators-type {
     margin-right: 5px;
+    margin-top: -10px;
+    margin-left: -10px;
   }
 
   .mod-indicators-type, .mod-indicators-agency {
     display: block;
     float: left;
+    font-size: 11px;
   }
 
   .mod-indicators-frequency {
