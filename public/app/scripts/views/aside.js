@@ -58,10 +58,26 @@ define([
           name: agency
         };
       });
-      types = _.map(dataTypes, function(type) {
+      types = _.map(dataTypes, function(dataType) {
+        var type;
+
+        console.log(dataType);
+
+        switch(dataType) {
+          case 'basic_services':
+            type = 'Basic Services';
+            break;
+          case 'equality_measure':
+            type = 'Equality Measure';
+            break;
+          case 'public_service':
+            type = 'Public Service';
+            break;
+        }
+
         return {
-          slug: type,
-          name: (type === 'basic_services') ? 'Basic services' : 'Equality measure'
+          slug: dataType,
+          name: type,
         };
       });
 
