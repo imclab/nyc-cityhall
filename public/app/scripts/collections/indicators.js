@@ -135,10 +135,7 @@ define([
             }
 
           } else {
-            indicator.color = self.colors[7];
-          }
-          if (indicator.value === 0) {
-            indicator.color = self.colors[7];
+            indicator.color = '#fff';
           }
         });
 
