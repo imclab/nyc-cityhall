@@ -148,8 +148,12 @@ define([
         indicator.displayCurrentValue = self.numberWithCommas(indicator.currentValue);
         indicator.displayPreviousValue = self.numberWithCommas(indicator.previousValue );
 
-        if(indicator.displayCurrentValue===null){indicator.displayCurrentValue='-';}
-        if(indicator.displayPreviousValue===null){indicator.displayPreviousValue='-';}
+        if (indicator.displayCurrentValue === null) {
+          indicator.displayCurrentValue = '-';
+        }
+        if (indicator.displayPreviousValue === null) {
+          indicator.displayPreviousValue = '-';
+        }
 
         if (row.recording_units === 'percent') {
           indicator.displayCurrentValue = indicator.displayCurrentValue + '%';

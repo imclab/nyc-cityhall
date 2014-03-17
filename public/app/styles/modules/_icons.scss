@@ -29,6 +29,10 @@ button.icon {
 
 .icon-basic_services {
   @include sprite-background(icon-basic-services);
+
+  .mod-indicators-item[data-agency="311"] & {
+    @include sprite-background(icon-public);
+  }
 }
 
 .icon-equality_measure {

@@ -174,8 +174,6 @@ define([
         }]
       });
 
-      console.log(cdb.core.Template.compilers);
-
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
 
