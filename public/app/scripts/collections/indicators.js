@@ -161,6 +161,7 @@ define([
         }
 
         if (indicator.value === 'Infinity' || indicator.value === '-Infinity' || indicator.value === 'NaN') {
+          indicator.isnull=true;
           indicator.value = 0;
           indicator.full = 0;
           indicator.displayValue = '-';

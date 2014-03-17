@@ -61,8 +61,6 @@ define([
       types = _.map(dataTypes, function(dataType) {
         var type;
 
-        console.log(dataType);
-
         switch(dataType) {
           case 'basic_services':
             type = 'Basic Services';

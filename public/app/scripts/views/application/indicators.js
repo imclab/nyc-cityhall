@@ -113,16 +113,22 @@ define([
       switch (this.filter.get('sort')) {
         case 'worst':
           this.indicators.comparator = function(indicator) {
+            if (indicator.get('isnull')) {
+              return 100000000;
+            }
             if (indicator.get('value') === null || indicator.get('full') === 0) {
-              return 0;
+              return 1000000;
             }
             return indicator.get('value') / indicator.get('full');
           };
           break;
         case 'best':
           this.indicators.comparator = function(indicator) {
+            if (indicator.get('isnull')) {
+              return 100000000;
+            }
             if (indicator.get('value') === null || indicator.get('full') === 0) {
-              return 0;
+              return 1000000;
             }
             return -(indicator.get('value') / indicator.get('full'));
           };
