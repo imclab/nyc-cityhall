@@ -39,7 +39,7 @@ require.config({
 
 });
 
-require(['underscore', 'jquerymobile', 'handlebars', 'router'], function(_, $, Handlebars, Router) {
+require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], function(_, $, Handlebars, moment, Router) {
 
   // CARTODB Hacks
   cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
@@ -48,7 +48,21 @@ require(['underscore', 'jquerymobile', 'handlebars', 'router'], function(_, $, H
 
   // Handlebars helper
   Handlebars.registerHelper('plus', function(context) {
-    return (context > 0) ? '+' + context : context;
+    var result = (context > 0) ? '+' + context : context;
+    return result + '%';
+  });
+
+  Handlebars.registerHelper('commas', function(context, units) {
+    if (context === null) {
+      return null;
+    }
+    if (context % 1 !== 0) {
+      context = context.toFixed(2);
+    }
+    if (units === 'seconds') {
+      return moment().seconds(context).format('HH:mm:ss');
+    }
+    return context.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });
 
   new Router();

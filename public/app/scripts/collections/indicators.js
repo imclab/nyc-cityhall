@@ -52,7 +52,8 @@ define([
           geoType1: row.geog_type1,
           geoType2: row.geog_type2,
           historicalGeo: row.has_historical_geo,
-          zeroTolerance: row.zero_tolerance
+          zeroTolerance: row.zero_tolerance,
+          displayUnits: row.display_units
         };
 
         switch(self.filter.get('period')) {
@@ -171,11 +172,11 @@ define([
         indicator.status = (indicator.value / indicator.full >= 0 || indicator.full === 0 || indicator.value === null || indicator.value === 0) ? 'improving' : 'worsening';
         indicator.urgent = (indicator.value / indicator.full <= -1 && indicator.full !== 0 && indicator.value !== null) ? 'true' : 'false';
 
-        if (row.display_units === 'seconds' && indicator.displayCurrentValue !== '-') {
+        if (indicator.displayUnits === 'seconds' && indicator.displayCurrentValue !== '-') {
           indicator.displayCurrentValue = moment().seconds(indicator.displayCurrentValue).format('HH:mm:ss');
         }
 
-        if (row.display_units === 'seconds' && indicator.displayPreviousValue !== '-') {
+        if (indicator.displayUnits === 'seconds' && indicator.displayPreviousValue !== '-') {
           indicator.displayPreviousValue = moment().seconds(indicator.displayPreviousValue).format('HH:mm:ss');
         }
 

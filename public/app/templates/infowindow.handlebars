@@ -8,18 +8,17 @@
       {{#if previous}}
         <td>
           <strong>Current</strong><br>
-          {{#if current}}{{current}}{{else}}0{{/if}}
+          {{#if current}}{{commas current '%1$s'}}{{else}}0{{/if}}
         </td>
-        <td><strong>Previous</strong><br>{{previous}}</td>
+        <td><strong>Previous</strong><br>{{commas previous '%1$s'}}</td>
       {{/if}}
       <td class="mod-infowindow-value">
         {{#if last_monthdayyear}}
-          {{plus last_monthdayyear}}%
+          {{plus last_monthdayyear}}
         {{else}}
-          {{#if current}}{{current}}{{else}}0{{/if}}
+          {{#if current}}{{commas current}}{{else}}0{{/if}}
         {{/if}}
       </td>
     </table>
-
   </div>
 </div>

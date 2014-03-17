@@ -8,7 +8,7 @@ define([
   'moment',
   'models/filter',
   'models/indicator',
-  'text!../../templates/infowindow.mustache'
+  'text!../../templates/infowindow.handlebars'
 ], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, tpl) {
 
   var MapView = Backbone.View.extend({
@@ -25,8 +25,7 @@ define([
       },
       tiles: {
         //url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
-        url: 'images/tiles/blanktile.png',
-        attribution: 'Mapbox'
+        url: 'images/tiles/blanktile.png'
       },
       cartodb: {
         user_name: 'nyc-cityhall',
@@ -73,7 +72,9 @@ define([
     },
 
     changeVisualization: function(type) {
-      if (!type){type='history';}
+      if (!type) {
+        type = 'history';
+      }
       if (!this.$el.hasClass('is-active')) {
         return false;
       }
@@ -102,7 +103,6 @@ define([
 
         _.each(this.options.colors, function(color, index) {
 
-
           var step = indicator.full - ((index + 1) * indicator.full / 8);
 
           if (indicator.full !== 0) {
@@ -130,20 +130,19 @@ define([
       } else {
         _.each(this.options.abscolors, function(color, index) {
           var step = 100 - ((index + 1) * 100 / 8);
-          //index = self.options.abscolors.length - (index + 1);
 
           legendItems.push({
             name: step.toString(),
             value: color
           });
+
           cartocss = cartocss + sprintf(' #%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.abscolors[0]);
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-      //console.log(sql);
-      //console.log(cartocss);
+
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }
@@ -153,7 +152,6 @@ define([
       });
 
       options = _.extend({}, this.options.cartodb, {
-        //interactivity: 'name, current, ST_X(ST_Centroid(the_geom)) lon, ST_Y(ST_Centroid(the_geom)) lat',
         interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear, current, previous' : 'name, current',
         sublayers: [{
           sql: sql,
@@ -171,7 +169,7 @@ define([
 
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
-          infowindowTemplate: self.template,
+          infowindowTemplate: sprintf(self.template, indicator.displayUnits),
           cursorInteraction: false,
           templateType: 'handlebars'
         });
