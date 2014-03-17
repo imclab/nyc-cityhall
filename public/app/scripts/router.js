@@ -65,7 +65,6 @@ define([
     },
 
     checkAuth: function() {
-      console.log('check');
       if (!window.sessionStorage.getItem('token')) {
         this.navigate('login', {
           trigger: true
