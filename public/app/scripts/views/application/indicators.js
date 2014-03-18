@@ -112,7 +112,32 @@ define([
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
         case 'default':
+          
+          this.indicators.comparator = function(indicator) {
+            //console.log(indicator.get('defaultOrder'), indicator.get('type'));
+            var score;
+            if (indicator.get('isnull')) {
+              score = 100000;
+            }else if (indicator.get('value') === null || indicator.get('full') === 0) {
+              score = 10000;
+            } else{
+              score = -indicator.get('value') / indicator.get('full');
+            }
 
+            if(indicator.get('type')==='basic_services'){
+              score=score-10000000000000;
+            }
+
+            if(indicator.get('type')==='public_service'){
+              score=score+10000000000000;
+            }
+            console.log(score,indicator.get('type'));
+            return score;
+
+          };
+          // this.indicators.comparator = function(indicator) {
+          //     console.log(indicator.get('defaultOrder'));
+          //   };
           // this.indicators.comparator = function(indicator) {
           //   if (indicator.get('isnull')) {
           //     return  indicator.get('defaultOrder');
@@ -123,7 +148,7 @@ define([
           //   return  -(indicator.get('defaultOrder')+ (indicator.get('value') / indicator.get('full'))  /10000000000000);
           // };
 
-            this.indicators.comparator = 'defaultOrder';
+          //this.indicators.comparator = 'defaultOrder';
           break;
         case 'worst':
           this.indicators.comparator = function(indicator) {
