@@ -112,7 +112,18 @@ define([
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
         case 'default':
-          this.indicators.comparator = 'defaultOrder';
+
+          // this.indicators.comparator = function(indicator) {
+          //   if (indicator.get('isnull')) {
+          //     return  indicator.get('defaultOrder');
+          //   }
+          //   if (indicator.get('value') === null || indicator.get('full') === 0) {
+          //     return  indicator.get('defaultOrder')+0.000000000000000000000000001;
+          //   }
+          //   return  -(indicator.get('defaultOrder')+ (indicator.get('value') / indicator.get('full'))  /10000000000000);
+          // };
+
+            this.indicators.comparator = 'defaultOrder';
           break;
         case 'worst':
           this.indicators.comparator = function(indicator) {
