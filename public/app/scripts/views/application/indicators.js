@@ -111,6 +111,9 @@ define([
 
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
+        case 'default':
+          this.indicators.comparator = 'defaultOrder';
+          break;
         case 'worst':
           this.indicators.comparator = function(indicator) {
             if (indicator.get('isnull')) {
@@ -135,6 +138,9 @@ define([
           break;
         case 'department':
           this.indicators.comparator = 'agency';
+          break;
+        default:
+          this.indicators.comparator = 'defaultOrder';
           break;
       }
 

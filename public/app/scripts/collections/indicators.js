@@ -53,7 +53,8 @@ define([
           geoType2: row.geog_type2,
           historicalGeo: row.has_historical_geo,
           zeroTolerance: row.zero_tolerance,
-          displayUnits: row.display_units
+          displayUnits: row.display_units,
+          defaultOrder: row.default_order
         };
 
         switch(self.filter.get('period')) {
