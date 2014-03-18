@@ -115,7 +115,7 @@ define([
           
           this.indicators.comparator = function(indicator) {
             //console.log(indicator.get('defaultOrder'), indicator.get('type'));
-            var score;
+            var score=0;
             if (indicator.get('isnull')) {
               score = 1000000;
             }else if (indicator.get('value') === null || indicator.get('full') === 0) {
