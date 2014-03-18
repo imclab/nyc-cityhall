@@ -131,7 +131,7 @@ define([
             if(indicator.get('type')==='public_service'){
               score=score+10000000000000;
             }
-            console.log(score,indicator.get('type'));
+            console.log(score,indicator.get('type'),indicator.get('name'));
             return score;
 
           };
