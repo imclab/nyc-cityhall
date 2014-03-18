@@ -155,7 +155,6 @@ define([
       var indicator;
 
       indicator = this.indicators.get($(e.currentTarget).data('id'));
-
       if (indicator.get('historicalGeo')) {
         this.currentPeriod =  this.filter.get('period');
 
@@ -176,8 +175,8 @@ define([
       } else {
         indicator = indicator.toJSON();
       }
-
-      Backbone.Events.trigger('map:open', indicator);
+      //Backbone.Events.trigger('map:open', indicator);
+      if(indicator.geoType1!==null && indicator.geoType1!==''){Backbone.Events.trigger('map:open', indicator);}
     }
 
   });
