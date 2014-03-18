@@ -117,9 +117,9 @@ define([
             //console.log(indicator.get('defaultOrder'), indicator.get('type'));
             var score;
             if (indicator.get('isnull')) {
-              score = 100000;
+              score = 1000000;
             }else if (indicator.get('value') === null || indicator.get('full') === 0) {
-              score = 10000;
+              score = 100000;
             } else{
               score = -indicator.get('value') / indicator.get('full');
             }
