@@ -24,8 +24,9 @@ define([
         minZoom: 10
       },
       tiles: {
-        //url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
-        url: 'images/tiles/blanktile.png'
+        url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
+        attribution: 'Mapbox'
+        //url: 'images/tiles/blanktile.png'
       },
       cartodb: {
         user_name: 'nyc-cityhall',
@@ -98,7 +99,7 @@ define([
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
-      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id);
+      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 1; polygon-opacity: 0.7; }', indicator.id);
       if (indicator.historicalGeo && type==='history') {
 
         _.each(this.options.colors, function(color, index) {
@@ -118,13 +119,13 @@ define([
           }
 
           if (indicator.full < 0) {
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.colors[0]);
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929; }', indicator.id, self.options.colors[0]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           } else if (indicator.full > 0) {
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.colors[0]);
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  }', indicator.id, self.options.colors[0]);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
           } else {
-            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, '#ffffff');
+            cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;  }', indicator.id, '#ffffff');
           }
         });
       } else {
@@ -136,7 +137,7 @@ define([
             value: color
           });
 
-          cartocss = cartocss + sprintf(' #%s {polygon-fill: %s; line-color: #292929;  line-width: 2; polygon-opacity: 1; }', indicator.id, self.options.abscolors[0]);
+          cartocss = cartocss + sprintf(' #%s {polygon-fill: %s; line-color: #292929; }', indicator.id, self.options.abscolors[0]);
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
