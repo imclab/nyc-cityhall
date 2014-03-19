@@ -8,8 +8,9 @@ define([
   'moment',
   'models/filter',
   'models/indicator',
-  'text!../../templates/infowindow.handlebars'
-], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, tpl) {
+  'text!../../templates/infowindow.handlebars',
+  'text!../../templates/infowindow-historical.handlebars'
+], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, infowindowTpl, infowindowHistoricalTpl) {
 
   var MapView = Backbone.View.extend({
 
@@ -47,8 +48,6 @@ define([
         'click .icon-back': 'hide'
       };
     },
-
-    template: tpl,
 
     initialize: function() {
       this.indicator = new IndicatorModel();
@@ -102,6 +101,14 @@ define([
         this.map.removeLayer(this.currentLayer);
       }
 
+      if (this.currentLegend) {
+        $(this.currentLegend.render().el).remove();
+      }
+
+      if (this.infowindow) {
+        this.infowindow._closeInfowindow();
+      }
+
       if (!this.indicator.get('historicalGeo')) {
         if (this.tiles) {
           this.map.removeLayer(this.tiles);
@@ -113,10 +120,6 @@ define([
       }
 
       Backbone.Events.trigger('spinner:start');
-
-      if (this.infowindow) {
-        this.infowindow._closeInfowindow();
-      }
 
       sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
@@ -165,9 +168,6 @@ define([
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
-      if (this.currentLegend) {
-        $(this.currentLegend.render().el).remove();
-      }
       this.currentLegend = new cdb.geo.ui.Legend({
         type: 'custom',
         data: legendItems
@@ -182,16 +182,26 @@ define([
       });
 
       function addLayerToMap(layer) {
-        var sublayer = layer.getSubLayer(0);
+        var sublayer = layer.getSubLayer(0),
+          template;
+
+        if (self.indicator.get('historicalGeo')) {
+          template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+        } else {
+          template = infowindowTpl;
+        }
 
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
-          infowindowTemplate: sprintf(self.template, indicator.displayUnits),
+          infowindowTemplate: template,
           cursorInteraction: false,
           templateType: 'handlebars'
         });
 
-        sublayer.setInteraction(true);
+        sublayer.on('featureClick', function(e, latlng, point, data) {
+          console.log(data);
+        });
+
         self.map.setView(self.options.map.center, self.options.map.zoom);
         self.map.addLayer(layer);
         self.$el.append(self.currentLegend.render().el);
