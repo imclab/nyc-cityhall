@@ -112,13 +112,13 @@ define([
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
         case 'default':
-          
+
           this.indicators.comparator = function(indicator) {
-            //console.log(indicator.get('defaultOrder'), indicator.get('type'));
-            var score=0;
+            var score = 0;
+
             if (indicator.get('isnull')) {
               score = 1000000;
-            }else if (indicator.get('value') === null || indicator.get('full') === 0) {
+            } else if (indicator.get('value') === null || indicator.get('full') === 0) {
               score = 100000;
             } else{
               score = -indicator.get('value') / indicator.get('full');
@@ -135,20 +135,7 @@ define([
             return score;
 
           };
-          // this.indicators.comparator = function(indicator) {
-          //     console.log(indicator.get('defaultOrder'));
-          //   };
-          // this.indicators.comparator = function(indicator) {
-          //   if (indicator.get('isnull')) {
-          //     return  indicator.get('defaultOrder');
-          //   }
-          //   if (indicator.get('value') === null || indicator.get('full') === 0) {
-          //     return  indicator.get('defaultOrder')+0.000000000000000000000000001;
-          //   }
-          //   return  -(indicator.get('defaultOrder')+ (indicator.get('value') / indicator.get('full'))  /10000000000000);
-          // };
 
-          //this.indicators.comparator = 'defaultOrder';
           break;
         case 'worst':
           this.indicators.comparator = function(indicator) {
@@ -197,6 +184,7 @@ define([
       var indicator;
 
       indicator = this.indicators.get($(e.currentTarget).data('id'));
+
       if (indicator.get('historicalGeo')) {
         this.currentPeriod =  this.filter.get('period');
 
@@ -217,8 +205,10 @@ define([
       } else {
         indicator = indicator.toJSON();
       }
-      //Backbone.Events.trigger('map:open', indicator);
-      if(indicator.geoType1!==null && indicator.geoType1!==''){Backbone.Events.trigger('map:open', indicator);}
+
+      if (indicator.geoType1 !== null && indicator.geoType1 !== '') {
+        Backbone.Events.trigger('map:open', indicator);
+      }
     }
 
   });

@@ -58,8 +58,6 @@ define([
 
       this.setMap();
 
-      // this.indicator.on('change', this.changeVisualization, this);
-      // this.filter.on('change', this.changeVisualization, this);
       Backbone.Events.on('map:open', this.show, this);
       Backbone.Events.on('map:toggle', this.changeVisualization, this);
     },
