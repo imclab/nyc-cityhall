@@ -1,34 +1,11 @@
-.mod-map {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background: $primary;
-
-  z-index: 3;
-
-  @include transition(all .3s ease);
-
-  &.is-active {
-    top: 130px;
-  }
-
-  .icon-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-  }
-}
-
 #map {
   position: absolute;
   top: 115px;
   left: 1%;
   right: 1%;
   bottom: 10px;
+
+  background: $fourth;
 }
 
 @media only screen and (max-width: $sm) {

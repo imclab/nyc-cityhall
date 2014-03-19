@@ -26,7 +26,6 @@ define([
       tiles: {
         url: 'https://{s}.tiles.mapbox.com/v3/d4weed.hf61abb1/{z}/{x}/{y}.png',
         attribution: 'Mapbox'
-        //url: 'images/tiles/blanktile.png'
       },
       cartodb: {
         user_name: 'nyc-cityhall',
@@ -34,8 +33,7 @@ define([
         legends: true
       },
       colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
-      abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff',]
-      //abscolors:['#d1e3ff','#b7c9e4','#9db0ca','#8397af','#687d94','#4e647a','#344a5f']
+      abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff']
     },
 
     events: function() {
@@ -57,6 +55,7 @@ define([
       this.filter = filterModel.instance;
 
       this.setMap();
+      this.setTiles();
 
       Backbone.Events.on('map:open', this.show, this);
       Backbone.Events.on('map:toggle', this.changeVisualization, this);
@@ -64,32 +63,56 @@ define([
 
     setMap: function() {
       this.map = L.map(this.options.canvas, this.options.map);
+    },
 
-      L.tileLayer(this.options.tiles.url, {
+    setTiles: function() {
+      var tiles;
+
+      if (this.tiles) {
+        this.map.removeLayer(this.tiles);
+      }
+
+      tiles = L.tileLayer(this.options.tiles.url, {
         attribution: this.options.tiles.attribution
-      }).addTo(this.map);
+      });
+
+      this.tiles = tiles;
+
+      this.tiles.addTo(this.map);
     },
 
     changeVisualization: function(type) {
-      if (!type) {
-        type = 'history';
-      }
-      if (!this.$el.hasClass('is-active')) {
-        return false;
-      }
-
       var self, indicator, sql, cartocss, options, legendItems;
 
       self = this;
       legendItems = [];
       indicator = this.indicator.toJSON();
 
+      if (!type) {
+        type = 'history';
+      }
+
+      if (!this.$el.hasClass('is-active')) {
+        return false;
+      }
+
       Backbone.Events.trigger('map:changed', indicator);
-      Backbone.Events.trigger('spinner:start');
 
       if (this.currentLayer) {
         this.map.removeLayer(this.currentLayer);
       }
+
+      if (!this.indicator.get('historicalGeo')) {
+        if (this.tiles) {
+          this.map.removeLayer(this.tiles);
+        }
+        Backbone.Events.trigger('notify:show');
+        return false;
+      } else {
+        this.setTiles();
+      }
+
+      Backbone.Events.trigger('spinner:start');
 
       if (this.infowindow) {
         this.infowindow._closeInfowindow();
@@ -161,11 +184,6 @@ define([
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0);
 
-        layer.on('error', function(err) {
-          window.history.back();
-          throw err;
-        });
-
         self.currentLayer = layer;
         self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
           infowindowTemplate: sprintf(self.template, indicator.displayUnits),
@@ -203,6 +221,7 @@ define([
         e.stopImmediatePropagation();
       }
 
+      Backbone.Events.trigger('notify:hide');
       this.$el.removeClass('is-active');
 
       return false;

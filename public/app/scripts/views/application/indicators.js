@@ -216,9 +216,7 @@ define([
         indicator = indicator.toJSON();
       }
 
-      if (indicator.geoType1 !== null && indicator.geoType1 !== '') {
-        Backbone.Events.trigger('map:open', indicator);
-      }
+      Backbone.Events.trigger('map:open', indicator);
     }
 
   });

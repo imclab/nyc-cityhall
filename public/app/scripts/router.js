@@ -7,6 +7,7 @@ define([
   'views/map',
   'views/login',
   'views/aside',
+  'views/notify',
 
   'views/application/toolbar',
   'views/application/indicators',
@@ -14,7 +15,7 @@ define([
   'views/map/indicator',
   'views/map/spin',
   'views/map/toolbar'
-], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, ToolbarView, IndicatorsView, MapIndicatorView, MapSpinView, MapToolbarView) {
+], function(_, Backbone, ApplicationView, MapView, LoginView, AsideView, NotifyView, ToolbarView, IndicatorsView, MapIndicatorView, MapSpinView, MapToolbarView) {
 
   var app = {}, Router;
 
@@ -23,6 +24,7 @@ define([
   app.aside = new AsideView();
   app.toolbar = new ToolbarView();
   app.indicators = new IndicatorsView();
+  app.notify = new NotifyView();
 
   app.map = new MapView();
   app.mapIndicator = new MapIndicatorView();
