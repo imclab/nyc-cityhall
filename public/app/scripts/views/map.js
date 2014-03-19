@@ -127,9 +127,9 @@ define([
 
       if (indicator.historicalGeo && type === 'history') {
 
-        cartocss = cartocss + sprintf('#%s {polygon-fill: %s; line-color: #292929;}', indicator.id, self.options.colors[0]);
+        cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, self.options.colors[0]);
 
-        if (indicator.full) {
+        if (indicator.full !== 0) {
 
           _.each(this.options.colors, function(color, index) {
 
@@ -176,8 +176,6 @@ define([
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
-      console.log(cartocss);
-
       this.currentLegend = new cdb.geo.ui.Legend({
         type: 'custom',
         data: legendItems
@@ -206,10 +204,6 @@ define([
           infowindowTemplate: template,
           cursorInteraction: false,
           templateType: 'handlebars'
-        });
-
-        sublayer.on('featureClick', function(e, latlng, point, data) {
-          console.log(data);
         });
 
         self.map.setView(self.options.map.center, self.options.map.zoom);
