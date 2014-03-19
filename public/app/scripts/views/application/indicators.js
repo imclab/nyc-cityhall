@@ -28,8 +28,14 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      var self = this;
+
       this.filter = filterModel.instance;
       this.indicators = new IndicatorsCollection();
+
+      this.filter.on('change', function() {
+        console.log(self.filter.toJSON());
+      });
 
       this.filter.on('change:period', this.getData, this);
       this.filter.on('change:sort', this.sortAndRender, this);
@@ -112,31 +118,32 @@ define([
     sortAndRender: function() {
       switch (this.filter.get('sort')) {
         case 'default':
-
           this.indicators.comparator = function(indicator) {
-            var score = 0;
+            var result, score;
 
-            if (indicator.get('isnull')) {
-              score = 1000000;
-            } else if (indicator.get('value') === null || indicator.get('full') === 0) {
-              score = 100000;
-            } else{
-              score = -indicator.get('value') / indicator.get('full');
+            switch(indicator.get('type')) {
+              case 'basic_services':
+                score = 1000;
+                break;
+              case 'equality_measure':
+                score = 2000;
+                break;
+              case 'public_service':
+                score = 3000;
+                break;
             }
 
-            if(indicator.get('type')==='basic_services'){
-              score=score-10000000000000;
+            if (isFinite(indicator.get('value') / indicator.get('full'))) {
+              result = score - (indicator.get('value') / indicator.get('full'));
+            } else {
+              result = score + 500;
             }
 
-            if(indicator.get('type')==='public_service'){
-              score=score+10000000000000;
-            }
-            console.log(score,indicator.get('type'),indicator.get('name'));
-            return score;
+            return result;
 
           };
-
           break;
+
         case 'worst':
           this.indicators.comparator = function(indicator) {
             if (indicator.get('isnull')) {
@@ -148,6 +155,7 @@ define([
             return indicator.get('value') / indicator.get('full');
           };
           break;
+
         case 'best':
           this.indicators.comparator = function(indicator) {
             if (indicator.get('isnull')) {
@@ -159,9 +167,11 @@ define([
             return -(indicator.get('value') / indicator.get('full'));
           };
           break;
+
         case 'department':
           this.indicators.comparator = 'agency';
           break;
+
         default:
           this.indicators.comparator = 'defaultOrder';
           break;
