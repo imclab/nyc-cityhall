@@ -38,6 +38,9 @@ div.cartodb-legend {
     &.non-historical {
       @include background-image(linear-gradient(top right, #344a5f, #4e647a, #687d94, #8397af, #9db0ca, #b7c9e4, #d1e3ff));
     }
+    &.neutral {
+      @include background-image(linear-gradient(top right, #4e6859, #758d79, #99ad94, #b4c3a7, #cdd8bf, #e3ead6, #fafaed, #f9faed, #ffffff, #f9f5e6, #e9dbcb, #d5c0ae, #c3a693, #bd9b8f, #b68e8a, #a17177));
+    }
   }
 
   .min, .max, .center {

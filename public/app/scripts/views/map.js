@@ -34,7 +34,7 @@ define([
         legends: true
       },
       colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
-      neutralcolors: [],
+      neutralcolors: ['#4e6859', '#758d79', '#99ad94', '#b4c3a7', '#cdd8bf', '#e3ead6', '#fafaed', '#f9faed', '#ffffff', '#f9f5e6', '#e9dbcb', '#d5c0ae', '#c3a693', '#bd9b8f', '#b68e8a', '#a17177'],
       abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff']
     },
 
@@ -127,7 +127,7 @@ define([
 
       if (indicator.historicalGeo && type === 'history') {
 
-        cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, self.options.colors[0]);
+        cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
 
         if (indicator.full !== 0) {
 
@@ -135,13 +135,12 @@ define([
             type: 'custom',
             data: {},
             template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: (indicator.full < 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.colors.length) * indicator.full / 8),
-              right: (indicator.full > 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.colors.length) * indicator.full / 8)
+              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
+              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
             })
           });
 
           _.each(this.options.colors, function(color, index) {
-
             var step = indicator.full - ((index + 1) * indicator.full / 8);
 
             if (indicator.full < 0) {
@@ -149,19 +148,33 @@ define([
             } else if (indicator.full > 0) {
               cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
             }
-
           });
 
         } else {
+          // this.currentLegend = new cdb.geo.ui.Legend({
+          //   type: 'custom',
+          //   data: {
+          //     name: 'NEUTRAL',
+          //     value: '#ffffff'
+          //   }
+          // });
+
           this.currentLegend = new cdb.geo.ui.Legend({
             type: 'custom',
-            data: {
-              name: 'NEUTRAL',
-              value: '#ffffff'
-            }
+            data: {},
+            template: _.template('<ul><li class="graph"><div class="colors neutral"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+              left: (indicator.full < 0) ? 10 : -10,
+              right: (indicator.full < 0) ? -10 : 10
+            })
           });
 
-          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, '#ffffff');
+          _.each(this.options.colors, function(color, index) {
+            var step =  200 - ((index + 1) * 200 / 8);
+
+            console.log(step);
+
+            cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.neutralcolors[index]);
+          });
         }
 
       } else {
@@ -171,8 +184,8 @@ define([
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-            left: (indicator.full < 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.abscolors.length) * indicator.full / 8),
-            right: (indicator.full > 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.abscolors.length) * indicator.full / 8)
+            left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
+            right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.abscolors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.abscolors.length - 1) * indicator.full / 8))
           })
         });
 
@@ -207,6 +220,10 @@ define([
           infowindowTemplate: template,
           cursorInteraction: false,
           templateType: 'handlebars'
+        });
+
+        sublayer.on('featureClick', function(res, latng, point, data) {
+          console.log(data);
         });
 
         self.map.setView(self.options.map.center, self.options.map.zoom);

@@ -77,9 +77,9 @@
     }
 
     a {
-      display: inline-block;
+      display: block;
       color: $thirth;
-      line-height: .9;
+      line-height: 1.2;
       &:hover, &:active {
         color: $secondary;
       }
