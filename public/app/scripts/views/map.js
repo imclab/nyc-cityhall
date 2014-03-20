@@ -127,9 +127,9 @@ define([
 
       if (indicator.historicalGeo && type === 'history') {
 
-        cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
-
         if (indicator.full !== 0) {
+
+          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
 
           this.currentLegend = new cdb.geo.ui.Legend({
             type: 'custom',
@@ -151,14 +151,6 @@ define([
           });
 
         } else {
-          // this.currentLegend = new cdb.geo.ui.Legend({
-          //   type: 'custom',
-          //   data: {
-          //     name: 'NEUTRAL',
-          //     value: '#ffffff'
-          //   }
-          // });
-
           this.currentLegend = new cdb.geo.ui.Legend({
             type: 'custom',
             data: {},
@@ -169,7 +161,7 @@ define([
           });
 
           _.each(this.options.colors, function(color, index) {
-            var step =  200 - ((index + 1) * 200 / 8);
+            var step =  100 - ((index + 1) * 100 / 8);
             cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.neutralcolors[index]);
           });
         }
