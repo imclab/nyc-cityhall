@@ -24,7 +24,7 @@ define([
 
     initialize: function() {
       this.filter = filterModel.instance;
-      this.$titles = $('#applicationTitle, #mapTitle');
+      this.$titles = $('#applicationTitle, #mapTitle').find('.title');
 
       this.filter.on('change:type', this.changeTitle, this);
       this.filter.on('change:agency', this.changeTitle, this);

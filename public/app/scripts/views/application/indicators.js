@@ -134,7 +134,7 @@ define([
             }
 
             if (isFinite(indicator.get('value') / indicator.get('full'))) {
-              result = score - (indicator.get('value') / indicator.get('full'));
+              result = score + (indicator.get('value') / indicator.get('full'));
             } else {
               result = score + 500;
             }
