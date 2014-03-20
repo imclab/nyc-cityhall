@@ -63,13 +63,13 @@ define([
 
         switch(dataType) {
           case 'basic_services':
-            type = 'Basic Services';
+            type = 'Operations';
             break;
           case 'equality_measure':
-            type = 'Equality Measure';
+            type = 'Equity';
             break;
           case 'public_service':
-            type = 'Public Service';
+            type = 'Public';
             break;
         }
 
@@ -82,7 +82,7 @@ define([
       this.agencies.add(agencies);
       this.types.add(types);
 
-      this.types.comparator = 'name';
+      this.types.comparator = 'slug';
       this.types.sort();
 
       this.render();
