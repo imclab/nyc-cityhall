@@ -140,11 +140,6 @@ define([
                 name: step.toString(),
                 value: self.options.colors[index]
               });
-            } else {
-              legendItems[0] = {
-                name: 'NEUTRAL',
-                value: '#ffffff'
-              };
             }
 
             if (indicator.full < 0) {
@@ -156,6 +151,11 @@ define([
           });
 
         } else {
+          legendItems[0] = {
+            name: 'NEUTRAL',
+            value: '#ffffff'
+          };
+
           cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, '#ffffff');
         }
 
