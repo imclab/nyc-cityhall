@@ -134,8 +134,8 @@ define([
             type: 'custom',
             data: {},
             template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: indicator.full - (indicator.full / 8),
-              right: indicator.full - ((this.options.colors.length) * indicator.full / 8)
+              left: (indicator.full > 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.colors.length) * indicator.full / 8),
+              right: (indicator.full < 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.colors.length) * indicator.full / 8)
             })
           });
 
@@ -170,8 +170,8 @@ define([
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-            left: indicator.full - (indicator.full / 8),
-            right: indicator.full - ((this.options.abscolors.length) * indicator.full / 8)
+            left: (indicator.full > 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.abscolors.length) * indicator.full / 8),
+            right: (indicator.full > 0) ? indicator.full - (indicator.full / 8) : indicator.full - ((this.options.abscolors.length) * indicator.full / 8)
           })
         });
 
