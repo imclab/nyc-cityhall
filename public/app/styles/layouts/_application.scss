@@ -78,7 +78,7 @@
 
   .icon-menu, .icon-back {
     display: inline-block;
-    vertical-align: -2px;
+    vertical-align: -1px;
     margin-right: 5px;
   }
 
@@ -90,7 +90,7 @@
     float: left;
     margin: 0;
 
-    line-height: 40px;
+    line-height: 36px;
   }
 }
 
@@ -130,6 +130,10 @@
 
     h1 {
       font-size: 20px;
+    }
+
+    .icon-menu {
+      vertical-align: -4px;
     }
 
     .icon-back {

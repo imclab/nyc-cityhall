@@ -41,12 +41,12 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'touchstart .icon-back': 'hide'
+          'touchstart #mapTitle button': 'hide'
         };
       }
 
       return {
-        'click .icon-back': 'hide'
+        'click #mapTitle button': 'hide'
       };
     },
 
