@@ -75,12 +75,14 @@
   }
 
   .icon-menu {
-    margin-top: 8px;
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 5px;
   }
 
   h1 {
     float: left;
-    margin: 0 0 0 20px;
+    margin: 0;
 
     line-height: 40px;
   }

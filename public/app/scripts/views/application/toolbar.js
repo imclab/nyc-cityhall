@@ -23,7 +23,7 @@ define([
 
       return {
         'click .mod-toolbar-selector a': 'changeFilter',
-        'click .mod-toolbar-selector .current': 'expandOptions',
+        'click .mod-toolbar-current': 'expandOptions',
         'mouseout .mod-toolbar-selector': 'timerToClose',
         'mouseover .mod-toolbar-selector': 'cancelTimerToClose'
       };

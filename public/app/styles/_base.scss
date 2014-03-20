@@ -24,7 +24,10 @@ a {
 }
 
 button {
+  background: none;
+  border: 0;
   cursor: pointer;
+  -webkit-appearance: none;
 }
 
 a, button, input {
