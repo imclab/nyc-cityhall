@@ -170,9 +170,6 @@ define([
 
           _.each(this.options.colors, function(color, index) {
             var step =  200 - ((index + 1) * 200 / 8);
-
-            console.log(step);
-
             cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.neutralcolors[index]);
           });
         }
@@ -220,10 +217,6 @@ define([
           infowindowTemplate: template,
           cursorInteraction: false,
           templateType: 'handlebars'
-        });
-
-        sublayer.on('featureClick', function(res, latng, point, data) {
-          console.log(data);
         });
 
         self.map.setView(self.options.map.center, self.options.map.zoom);
