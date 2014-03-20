@@ -1,11 +1,13 @@
-div.cartodb-legend.custom {
+div.cartodb-legend {
   background: $primary;
   border: 0;
 
   @include border-radius(0);
   @include box-shadow(none);
 
-  ul li {
+
+
+  &.custom ul li, ul li {
     display: block;
     height: auto;
     font-size: 13px;
@@ -23,6 +25,33 @@ div.cartodb-legend.custom {
       vertical-align: middle;
       @include border-radius(0);
     }
+  }
+
+  .colors {
+    display: block;
+    width: 200px;
+    height: 15px;
+
+    &.historical {
+      @include background-image(linear-gradient(top right, #088246, #379d4e, #66b757, #95d25f, #b1de79, #cce994, #e8f5ae, #fff8c3, #fddc9f, #fbbe79, #faa052, #f8822c, #ef632b, #e7452b, #de262a));
+    }
+    &.non-historical {
+      @include background-image(linear-gradient(top right, #344a5f, #4e647a, #687d94, #8397af, #9db0ca, #b7c9e4, #d1e3ff));
+    }
+  }
+
+  .min, .max, .center {
+    margin-bottom: 0;
+  }
+
+  .min {
+    float: left;
+  }
+  .center {
+    text-align: center;
+  }
+  .max {
+    float: right;
   }
 }
 

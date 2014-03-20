@@ -81,10 +81,9 @@ define([
     },
 
     changeVisualization: function(type) {
-      var self, indicator, sql, cartocss, options, legendItems;
+      var self, indicator, sql, cartocss, options;
 
       self = this;
-      legendItems = [];
       indicator = this.indicator.toJSON();
 
       if (!type) {
@@ -131,16 +130,18 @@ define([
 
         if (indicator.full !== 0) {
 
+          this.currentLegend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: {},
+            template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+              left: indicator.full - (indicator.full / 8),
+              right: indicator.full - ((this.options.colors.length) * indicator.full / 8)
+            })
+          });
+
           _.each(this.options.colors, function(color, index) {
 
             var step = indicator.full - ((index + 1) * indicator.full / 8);
-
-            if (indicator.full !== 0) {
-              legendItems.push({
-                name: step.toString(),
-                value: self.options.colors[index]
-              });
-            }
 
             if (indicator.full < 0) {
               cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
@@ -151,10 +152,13 @@ define([
           });
 
         } else {
-          legendItems[0] = {
-            name: 'NEUTRAL',
-            value: '#ffffff'
-          };
+          this.currentLegend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: {
+              name: 'NEUTRAL',
+              value: '#ffffff'
+            }
+          });
 
           cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, '#ffffff');
         }
@@ -162,24 +166,22 @@ define([
       } else {
         cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
 
+        this.currentLegend = new cdb.geo.ui.Legend({
+          type: 'custom',
+          data: {},
+          template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+            left: indicator.full - (indicator.full / 8),
+            right: indicator.full - ((this.options.abscolors.length) * indicator.full / 8)
+          })
+        });
+
         _.each(this.options.abscolors, function(color, index) {
           var step = 100 - ((index + 1) * 100 / 8);
-
-          legendItems.push({
-            name: step.toString(),
-            value: color
-          });
-
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-
-      this.currentLegend = new cdb.geo.ui.Legend({
-        type: 'custom',
-        data: legendItems
-      });
 
       options = _.extend({}, this.options.cartodb, {
         interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear, current, previous' : 'name, current',
