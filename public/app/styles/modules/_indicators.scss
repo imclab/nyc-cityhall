@@ -238,14 +238,19 @@
       width: 74%;
     }
     .mod-indicators-value {
+      display: table;
       width: 25%;
+      height: 110px;
     }
     .mod-indicators-footer {
       display: none;
     }
     .mod-indicators-value-item {
+      display: table-cell;
       font-size: 20px;
       text-align: right;
+      line-height: 1.2;
+      vertical-align: middle;
     }
   }
 
