@@ -17,7 +17,7 @@ define([
       if ('ontouchstart' in window) {
         return {
           'tap .mod-toolbar-selector a': 'changeFilter',
-          'tap .mod-toolbar-selector .current': 'expandOptions'
+          'tap .mod-toolbar-current': 'expandOptions'
         };
       }
 
@@ -52,6 +52,7 @@ define([
     },
 
     expandOptions: function(e) {
+      console.log('yeah', e);
       var currentOptions, expanded;
 
       currentOptions = $(e.currentTarget).closest('li').find('.mod-toolbar-options');

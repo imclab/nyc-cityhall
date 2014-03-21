@@ -241,6 +241,7 @@ define([
       }
 
       Backbone.Events.trigger('notify:hide');
+      Backbone.Events.trigger('filter:close');
       this.$el.removeClass('is-active');
 
       return false;

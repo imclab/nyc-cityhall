@@ -17,13 +17,13 @@ define([
       if ('ontouchstart' in window) {
         return {
           'tap .mod-toolbar-selector a': 'changeMap',
-          'tap .mod-toolbar-selector .mod-toolbar-current': 'expandOptions'
+          'tap .mod-toolbar-current': 'expandOptions'
         };
       }
 
       return {
         'click .mod-toolbar-selector a': 'changeMap',
-        'click .mod-toolbar-selector .mod-toolbar-current': 'expandOptions',
+        'click .mod-toolbar-current': 'expandOptions',
         'mouseout .mod-toolbar-selector': 'timerToClose',
         'mouseover .mod-toolbar-selector': 'cancelTimerToClose'
       };
