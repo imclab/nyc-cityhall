@@ -215,6 +215,10 @@ define([
         self.map.addLayer(layer);
         self.$el.append(self.currentLegend.render().el);
 
+        sublayer.on('featureClick', function(e, latlng, point, data) {
+          console.log(data);
+        });
+
         Backbone.Events.trigger('spinner:stop');
       }
 

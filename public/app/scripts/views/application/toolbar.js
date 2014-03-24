@@ -52,7 +52,6 @@ define([
     },
 
     expandOptions: function(e) {
-      console.log('yeah', e);
       var currentOptions, expanded;
 
       currentOptions = $(e.currentTarget).closest('li').find('.mod-toolbar-options');
