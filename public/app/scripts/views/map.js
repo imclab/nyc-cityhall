@@ -8,9 +8,10 @@ define([
   'moment',
   'models/filter',
   'models/indicator',
+  'collections/indicators',
   'text!../../templates/infowindow.handlebars',
   'text!../../templates/infowindow-historical.handlebars'
-], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, infowindowTpl, infowindowHistoricalTpl) {
+], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, indicatorsCollection, infowindowTpl, infowindowHistoricalTpl) {
 
   var MapView = Backbone.View.extend({
 
@@ -51,14 +52,15 @@ define([
     },
 
     initialize: function() {
+      this.indicators = indicatorsCollection.instance;
       this.indicator = new IndicatorModel();
       this.filter = filterModel.instance;
 
       this.setMap();
       this.setTiles();
 
+      this.filter.on('change:period', this.setIndicator, this);
       Backbone.Events.on('map:open', this.show, this);
-      Backbone.Events.on('map:toggle', this.changeVisualization, this);
     },
 
     setMap: function() {
@@ -81,15 +83,13 @@ define([
       this.tiles.addTo(this.map);
     },
 
-    changeVisualization: function(type) {
-      var self, indicator, sql, cartocss, options;
+    changeVisualization: function() {
+      var self, period, indicator, sql, cartocss, options, data;
 
       self = this;
       indicator = this.indicator.toJSON();
-
-      if (!type) {
-        type = 'history';
-      }
+      period = this.filter.get('period');
+      //console.log(period, indicator);
 
       if (!this.$el.hasClass('is-active')) {
         return false;
@@ -125,9 +125,22 @@ define([
 
       cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 1; polygon-opacity: 0.7; }', indicator.id);
 
-      if (indicator.historicalGeo && type === 'history') {
+      if (period !== 'latest') {
 
-        if (indicator.full !== 0) {
+        switch(this.filter.get('period')) {
+          case 'mmwwdd':
+            data = 'last_monthdayyear';
+            break;
+          default:
+            if (this.tiles) {
+              this.map.removeLayer(this.tiles);
+            }
+            Backbone.Events.trigger('notify:show');
+            Backbone.Events.trigger('spinner:stop');
+            return false;
+        }
+
+        if (indicator.full !== 0 && indicator.displayValue !== '-') {
 
           cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
 
@@ -144,25 +157,36 @@ define([
             var step = indicator.full - ((index + 1) * indicator.full / 8);
 
             if (indicator.full < 0) {
-              cartocss = cartocss + sprintf('#%s [last_monthdayyear >= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.colors[index]);
             } else if (indicator.full > 0) {
-              cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.colors[index]);
+              cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.colors[index]);
             }
           });
 
         } else {
+          // Neutral
+          var left, right;
+
+          if (indicator.neutral === 0) {
+            left  = (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1;
+            right = (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8));
+          } else {
+            left = -indicator.neutral;
+            right = indicator.neutral
+          }
+
           this.currentLegend = new cdb.geo.ui.Legend({
             type: 'custom',
             data: {},
             template: _.template('<ul><li class="graph"><div class="colors neutral"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: (indicator.full < 0) ? 10 : -10,
-              right: (indicator.full < 0) ? -10 : 10
+              left: left,
+              right: right
             })
           });
 
           _.each(this.options.colors, function(color, index) {
             var step =  100 - ((index + 1) * 100 / 8);
-            cartocss = cartocss + sprintf('#%s [last_monthdayyear <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.neutralcolors[index]);
+            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.neutralcolors[index]);
           });
         }
 
@@ -172,9 +196,9 @@ define([
         this.currentLegend = new cdb.geo.ui.Legend({
           type: 'custom',
           data: {},
-          template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-            left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
-            right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.abscolors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.abscolors.length - 1) * indicator.full / 8))
+          template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
+            left: 0,
+            right: 100
           })
         });
 
@@ -187,21 +211,23 @@ define([
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
       options = _.extend({}, this.options.cartodb, {
-        interactivity: (this.indicator.get('historicalGeo')) ? 'name, last_monthdayyear, current, previous' : 'name, current',
+        interactivity: (period !== 'latest' && indicator.historicalGeo) ? sprintf('name, %s, current, previous', data) : 'name, current',
         sublayers: [{
           sql: sql,
           cartocss: cartocss
         }]
       });
 
+      Backbone.Events.trigger('notify:hide');
+
       function addLayerToMap(layer) {
         var sublayer = layer.getSubLayer(0),
           template;
 
-        if (self.indicator.get('historicalGeo')) {
-          template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+        if (period === 'latest') {
+          template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
         } else {
-          template = infowindowTpl;
+          template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
         }
 
         self.currentLayer = layer;
@@ -231,11 +257,32 @@ define([
       }, 301);
     },
 
-    show: function(indicator) {
+    setIndicator: function() {
+      var self = this;
+
+      if (this.filter.get('period') === 'latest') {
+        this.changeVisualization();
+      } else {
+        if (this.indicators.length > 0) {
+          this.indicators.set(this.indicators.getDataByFilters(), {
+            remove: true
+          });
+          this.indicator.set(this.indicators.get(this.currentId).toJSON());
+          this.changeVisualization();
+        } else {
+          this.indicators.getData(function() {
+            self.indicator.set(self.indicators.get(self.currentId).toJSON());
+            self.changeVisualization();
+          });
+        }
+      }
+    },
+
+    show: function(id) {
+      this.currentId = id;
       this.$el.addClass('is-active');
-      this.indicator.set(indicator);
-      Backbone.Events.trigger('map:done', indicator);
-      this.map.invalidateSize();
+      Backbone.Events.trigger('map:done', id);
+      this.setIndicator();
     },
 
     hide: function(e) {
@@ -244,9 +291,15 @@ define([
         e.stopImmediatePropagation();
       }
 
+      if (this.filter.get('period') === 'latest') {
+        this.filter.set('period', 'fytd');
+      }
+
+      this.$el.removeClass('is-active');
+
       Backbone.Events.trigger('notify:hide');
       Backbone.Events.trigger('filter:close');
-      this.$el.removeClass('is-active');
+      Backbone.Events.trigger('map:closed');
 
       return false;
     }

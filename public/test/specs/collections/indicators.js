@@ -3,16 +3,16 @@
 define([
   'chai',
   'collections/indicators'
-], function(Chai, IndicatorsCollection) {
+], function(Chai, indicatorsCollection) {
 
   var expect = Chai.expect;
-  var indicators = new IndicatorsCollection();
+  var indicators = indicatorsCollection.instance;
 
   describe('#Collection: Indicators', function() {
 
     describe('@Create', function() {
       it('indicators should be a instance of IndicatorsCollection', function() {
-        expect(indicators).to.instanceOf(IndicatorsCollection);
+        expect(indicators).to.instanceOf(indicatorsCollection.collection);
       });
     });
 

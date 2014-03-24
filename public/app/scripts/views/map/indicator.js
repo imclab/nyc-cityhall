@@ -4,8 +4,10 @@ define([
   'backbone',
   'handlebars',
   'models/indicator',
+  'collections/indicators',
+  'models/filter',
   'text!../../../templates/indicator-map.handlebars'
-], function(Backbone, Handlebars, IndicatorModel, tpl) {
+], function(Backbone, Handlebars, IndicatorModel, indicatorsCollection, filterModel, tpl) {
 
   var MapIndicatorView = Backbone.View.extend({
 
@@ -15,17 +17,43 @@ define([
 
     initialize: function() {
       this.indicator = new IndicatorModel();
+      this.indicators = indicatorsCollection.instance;
+      this.filter = filterModel.instance;
 
-      Backbone.Events.on('map:changed', this.changeData, this);
+      this.filter.on('change:period', this.changeData, this);
+      Backbone.Events.on('map:done', this.changeData, this);
     },
 
     render: function() {
       this.$el.html(this.template(this.indicator.toJSON()));
     },
 
-    changeData: function(data) {
-      this.indicator.set(data);
-      this.render();
+    changeData: function(id) {
+      var self = this;
+
+      if (this.filter.get('period') === 'latest') {
+        this.indicator.set('color', '#b7c9e4');
+        this.indicator.unset('displayValue');
+        this.render();
+        return false;
+      }
+
+      if (id && typeof id === 'string') {
+        this.currentId = id;
+      }
+
+      if (this.indicators.length > 0) {
+        this.indicators.set(this.indicators.getDataByFilters(), {
+          remove: true
+        });
+        this.indicator.set(this.indicators.get(this.currentId).toJSON());
+        this.render();
+      } else {
+        this.indicators.getData(function() {
+          self.indicator.set(self.indicators.get(self.currentId).toJSON());
+          self.render();
+        });
+      }
     }
 
   });

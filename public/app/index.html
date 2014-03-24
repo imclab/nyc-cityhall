@@ -33,26 +33,26 @@
         <nav class="layout-toolbar">
           <div class="mod-toolbar" id="toolbarView">
             <div class="mod-toolbar-item">
-              <ul class="mod-toolbar-selector" id="indicatorPeriod">
+              <ul class="mod-toolbar-selector" id="periodFilter">
                 <li>
                   <span class="mod-toolbar-current"><span class="mod-toolbar-label">Timeframe</span> <span class="current">Year to Date</span></span>
                   <ul class="mod-toolbar-options">
-                    <li><a href="#" data-filter="period" data-value="fytd">Year To Date</a></li>
-                    <li><a href="#" data-filter="period" data-value="lastyear">Same Period Last Year</a></li>
-                    <li><a href="#" data-filter="period" data-value="mmwwdd">Last Month/Week/Day</a></li>
+                    <li><a href="#" data-value="fytd">Year To Date</a></li>
+                    <li><a href="#" data-value="lastyear">Same Period Last Year</a></li>
+                    <li><a href="#" data-value="mmwwdd">Last Month/Week/Day</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
             <div class="mod-toolbar-item">
-              <ul class="mod-toolbar-selector" id="indicatorSort">
+              <ul class="mod-toolbar-selector" id="sortFilter">
                 <li>
                   <span class="mod-toolbar-current"><span class="mod-toolbar-label">Sort</span> <span class="current">Default Order</span></span>
                   <ul class="mod-toolbar-options">
-                    <li><a href="#" data-filter="sort" data-value="default">Default Order</a></li>
-                    <li><a href="#" data-filter="sort" data-value="department">By Department</a></li>
-                    <li><a href="#" data-filter="sort" data-value="worst">Worst to Best</a></li>
-                    <li><a href="#" data-filter="sort" data-value="best">Best to Worst</a></li>
+                    <li><a href="#" data-value="default">Default Order</a></li>
+                    <li><a href="#" data-value="department">By Department</a></li>
+                    <li><a href="#" data-value="worst">Worst to Best</a></li>
+                    <li><a href="#" data-value="best">Best to Worst</a></li>
                   </ul>
                 </li>
               </ul>
@@ -80,10 +80,12 @@
             <div class="mod-toolbar-item">
               <ul class="mod-toolbar-selector">
                 <li>
-                  <span class="mod-toolbar-current"><span class="mod-toolbar-label">Timeframe</span> <span class="current">Last Month/Week/Day</span></span>
+                  <span class="mod-toolbar-current"><span class="mod-toolbar-label">Timeframe</span> <span class="current">Year to Date</span></span>
                   <ul class="mod-toolbar-options">
-                    <li id="currentOption"><a href="#" data-value="current">Latest Values</a></li>
-                    <li id="historyOption"><a href="#" data-value="history">Last Month/Week/Day</a></li>
+                    <li id="latestValues"><a href="#" data-value="latest">Latest Values</a></li>
+                    <li><a href="#" data-value="fytd">Year To Date</a></li>
+                    <li><a href="#" data-value="lastyear">Same Period Last Year</a></li>
+                    <li><a href="#" data-value="mmwwdd">Last Month/Week/Day</a></li>
                   </ul>
                 </li>
               </ul>

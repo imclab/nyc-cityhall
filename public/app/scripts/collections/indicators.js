@@ -47,6 +47,7 @@ define([
           previousDate: moment(row.date).subtract('years', 1).format('MMM, YYYY'),
           previousValue: row.previous_fytd,
           full: row.full_green_percent,
+          neutral: row.neutral_full_green,
           type: row.measure_t,
           date: row.date,
           geoType1: row.geog_type1,
@@ -162,10 +163,9 @@ define([
           indicator.displayPreviousValue = indicator.displayPreviousValue + '%';
         }
 
-        if (indicator.value === 'Infinity' || indicator.value === '-Infinity' || indicator.value === 'NaN') {
-          indicator.isnull=true;
+        if (!isFinite(indicator.value) || !indicator.value) {
+          //indicator.isnull = true;
           indicator.value = 0;
-          indicator.full = 0;
           indicator.displayValue = '-';
           indicator.color = '#fff';
         }
@@ -229,6 +229,9 @@ define([
 
   });
 
-  return IndicatorsCollection;
+  return {
+    collection: IndicatorsCollection,
+    instance: new IndicatorsCollection()
+  };
 
 });

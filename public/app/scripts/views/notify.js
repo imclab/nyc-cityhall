@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['backbone'], function(Backbone) {
 
   var NotifyView = Backbone.View.extend({
 
@@ -13,12 +13,18 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
     show: function() {
       var self = this;
-      _.delay(function() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
+      this.timer = setInterval(function() {
         self.$el.removeClass('is-hidden');
       }, 300);
     },
 
     hide: function() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
       this.$el.addClass('is-hidden');
     }
 

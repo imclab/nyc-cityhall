@@ -2,8 +2,8 @@
 
 define([
   'backbone',
-  'models/indicator'
-], function(Backbone, IndicatorModel) {
+  'models/filter'
+], function(Backbone, filterModel) {
 
   var MapToolbarView = Backbone.View.extend({
 
@@ -16,13 +16,13 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .mod-toolbar-selector a': 'changeMap',
+          'tap .mod-toolbar-selector a': 'changePeriod',
           'tap .mod-toolbar-current': 'expandOptions'
         };
       }
 
       return {
-        'click .mod-toolbar-selector a': 'changeMap',
+        'click .mod-toolbar-selector a': 'changePeriod',
         'click .mod-toolbar-current': 'expandOptions',
         'mouseout .mod-toolbar-selector': 'timerToClose',
         'mouseover .mod-toolbar-selector': 'cancelTimerToClose'
@@ -30,42 +30,34 @@ define([
     },
 
     initialize: function() {
-      this.indicator = new IndicatorModel();
+      this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
-      this.$historyOption = $('#historyOption');
-      this.$currentOption = $('#currentOption');
+      this.$latestValues = $('#latestValues');
 
+      this.filter.on('change:period', this.changePeriodLabel, this);
+
+      Backbone.Events.on('map:opened', this.toggleLatestValues, this);
       Backbone.Events.on('map:closed', this.contractOptions, this);
-      Backbone.Events.on('map:done', this.changeData, this);
     },
 
-    changeData: function(data) {
-      this.indicator.set(data);
-
-      if (this.indicator.get('historicalGeo')) {
-        this.$historyOption.show();
-        this.$el.find('.current').text(this.$historyOption.text());
-        Backbone.Events.trigger('map:toggle', 'history');
-      } else {
-        this.$historyOption.hide();
-        this.$el.find('.current').text(this.$currentOption.text());
-        Backbone.Events.trigger('map:toggle', 'current');
-      }
-    },
-
-    changeMap: function(e) {
-      var element, current;
-
-      element = $(e.currentTarget),
-      current = element.closest('.mod-toolbar-selector').find('.current');
-
-      current.text(element.text());
-
-      Backbone.Events.trigger('map:toggle', element.data('value'));
+    changePeriod: function(e) {
+      this.filter.set('period', $(e.currentTarget).data('value'));
 
       this.contractOptions();
 
       e.preventDefault();
+    },
+
+    changePeriodLabel: function() {
+      this.$el.find('.current').text(this.$el.find('a[data-value="' + this.filter.get('period') + '"]').text());
+    },
+
+    toggleLatestValues: function(historical) {
+      if (historical) {
+        this.$latestValues.show();
+      } else {
+        this.$latestValues.hide();
+      }
     },
 
     expandOptions: function(e) {

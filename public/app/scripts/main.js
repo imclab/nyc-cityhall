@@ -56,10 +56,24 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
     if (context === null) {
       return null;
     }
+
+    context = context.replace(',', '');
+    context = context.replace('%', '');
+
+    if (context === '-') {
+      return '-';
+    }
+
+    context = Number(context);
+
     if (context % 1 !== 0) {
       context = context.toFixed(2);
     }
-    console.log(units);
+
+    if (units === 'percentage') {
+      return context.toString() + '%';
+    }
+
     if (units === 'seconds') {
       if (context > 0) {
         return moment().hours(0).minutes(0).seconds(context).format('HH:mm:ss');

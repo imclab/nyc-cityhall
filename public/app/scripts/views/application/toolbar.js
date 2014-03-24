@@ -16,13 +16,15 @@ define([
     events: function() {
       if ('ontouchstart' in window) {
         return {
-          'tap .mod-toolbar-selector a': 'changeFilter',
+          'tap #sortFilter a': 'changeSort',
+          'tap #periodFilter a': 'changePeriod',
           'tap .mod-toolbar-current': 'expandOptions'
         };
       }
 
       return {
-        'click .mod-toolbar-selector a': 'changeFilter',
+        'click #sortFilter a': 'changeSort',
+        'click #periodFilter a': 'changePeriod',
         'click .mod-toolbar-current': 'expandOptions',
         'mouseout .mod-toolbar-selector': 'timerToClose',
         'mouseover .mod-toolbar-selector': 'cancelTimerToClose'
@@ -32,23 +34,38 @@ define([
     initialize: function() {
       this.filter = filterModel.instance;
       this.$options = this.$el.find('.mod-toolbar-options');
+      this.$periodFilter = $('#periodFilter');
+      this.$sortFilter = $('#sortFilter');
+
+      this.filter.on('change:period', this.changePeriodLabel, this);
+      this.filter.on('change:sort', this.changeSortLabel, this);
 
       Backbone.Events.on('map:opened map:closed', this.toggleItems, this);
       Backbone.Events.on('filter:close', this.contractOptions, this);
     },
 
-    changeFilter: function(e) {
-      var element, current;
-
-      element = $(e.currentTarget),
-      current = element.closest('.mod-toolbar-selector').find('.current');
-
-      current.text(element.text());
-      this.filter.set(element.data('filter'), element.data('value'));
+    changePeriod: function(e) {
+      this.filter.set('period', $(e.currentTarget).data('value'));
 
       this.contractOptions();
 
       e.preventDefault();
+    },
+
+    changeSort: function(e) {
+      this.filter.set('sort', $(e.currentTarget).data('value'));
+
+      this.contractOptions();
+
+      e.preventDefault();
+    },
+
+    changePeriodLabel: function() {
+      this.$periodFilter.find('.current').text(this.$el.find('a[data-value="' + this.filter.get('period') + '"]').text());
+    },
+
+    changeSortLabel: function() {
+      this.$sortFilter.find('.current').text(this.$el.find('a[data-value="' + this.filter.get('sort') + '"]').text());
     },
 
     expandOptions: function(e) {

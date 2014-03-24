@@ -7,7 +7,7 @@ define([
   'models/filter',
   'collections/indicators',
   'text!../../../templates/indicators-list.handlebars'
-], function(_, Backbone, Handlebars, filterModel, IndicatorsCollection, tpl) {
+], function(_, Backbone, Handlebars, filterModel, indicatorsCollection, tpl) {
 
   var IndicatorsView = Backbone.View.extend({
 
@@ -28,14 +28,8 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      var self = this;
-
       this.filter = filterModel.instance;
-      this.indicators = new IndicatorsCollection();
-
-      this.filter.on('change', function() {
-        console.log(self.filter.toJSON());
-      });
+      this.indicators = indicatorsCollection.instance;
 
       this.filter.on('change:period', this.getData, this);
       this.filter.on('change:sort', this.sortAndRender, this);
@@ -45,6 +39,10 @@ define([
 
     getData: function() {
       var self = this;
+
+      if (this.filter.get('period') === 'latest') {
+        return false;
+      }
 
       if (this.indicators.length > 0) {
         this.indicators.set(this.indicators.getDataByFilters(), {
@@ -123,17 +121,19 @@ define([
 
             switch(indicator.get('type')) {
               case 'basic_services':
-                score = 1000;
-                break;
-              case 'equality_measure':
                 score = 2000;
                 break;
-              case 'public_service':
+              case 'equality_measure':
                 score = 3000;
+                break;
+              case 'public_service':
+                score = 4000;
                 break;
             }
 
-            if (isFinite(indicator.get('value') / indicator.get('full'))) {
+            if (indicator.get('displayValue') === '-') {
+              result = score + 550;
+            } else if (isFinite(indicator.get('value') / indicator.get('full'))) {
               result = score + (indicator.get('value') / indicator.get('full'));
             } else {
               result = score + 500;
@@ -191,32 +191,7 @@ define([
     },
 
     openMapView: function(e) {
-      var indicator;
-
-      indicator = this.indicators.get($(e.currentTarget).data('id'));
-
-      if (indicator.get('historicalGeo')) {
-        this.currentPeriod =  this.filter.get('period');
-
-        this.filter.set({
-          period: 'mmwwdd'
-        }, {
-          silent: true
-        });
-
-        indicator = _.findWhere(this.indicators.getDataByFilters(), {id: indicator.id});
-
-        this.filter.set({
-          period: this.currentPeriod
-        }, {
-          silent: true
-        });
-
-      } else {
-        indicator = indicator.toJSON();
-      }
-
-      Backbone.Events.trigger('map:open', indicator);
+      Backbone.Events.trigger('map:open', $(e.currentTarget).data('id'));
     }
 
   });
