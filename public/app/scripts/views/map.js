@@ -84,16 +84,15 @@ define([
     },
 
     changeVisualization: function() {
-      var self, period, indicator, sql, cartocss, options, data;
-
-      self = this;
-      indicator = this.indicator.toJSON();
-      period = this.filter.get('period');
-      //console.log(period, indicator);
+      var self, period, indicator, sql, options;
 
       if (!this.$el.hasClass('is-active')) {
         return false;
       }
+
+      self = this;
+      indicator = this.indicator.toJSON();
+      period = this.filter.get('period');
 
       Backbone.Events.trigger('map:changed', indicator);
 
@@ -121,100 +120,30 @@ define([
 
       Backbone.Events.trigger('spinner:start');
 
-      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
-
-      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 1; polygon-opacity: 0.7; }', indicator.id);
-
-      if (period !== 'latest') {
-
-        switch(this.filter.get('period')) {
-          case 'mmwwdd':
-            data = 'last_monthdayyear';
-            break;
-          default:
-            if (this.tiles) {
-              this.map.removeLayer(this.tiles);
-            }
-            Backbone.Events.trigger('notify:show');
-            Backbone.Events.trigger('spinner:stop');
-            return false;
-        }
-
-        if (indicator.full !== 0 && indicator.displayValue !== '-') {
-
-          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
-
-          this.currentLegend = new cdb.geo.ui.Legend({
-            type: 'custom',
-            data: {},
-            template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
-              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
-            })
-          });
-
-          _.each(this.options.colors, function(color, index) {
-            var step = indicator.full - ((index + 1) * indicator.full / 8);
-
-            if (indicator.full < 0) {
-              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.colors[index]);
-            } else if (indicator.full > 0) {
-              cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.colors[index]);
-            }
-          });
-
-        } else {
-          // Neutral
-          var left, right;
-
-          if (indicator.neutral === 0) {
-            left  = (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1;
-            right = (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8));
-          } else {
-            left = -indicator.neutral;
-            right = indicator.neutral;
+      switch(this.filter.get('period')) {
+        case 'mmwwdd':
+          this.currentData = 'last_monthdayyear';
+          break;
+        case 'latest':
+          this.currentData = 'latest';
+          break;
+        default:
+          this.currentData = null;
+          if (this.tiles) {
+            this.map.removeLayer(this.tiles);
           }
-
-          this.currentLegend = new cdb.geo.ui.Legend({
-            type: 'custom',
-            data: {},
-            template: _.template('<ul><li class="graph"><div class="colors neutral"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: left,
-              right: right
-            })
-          });
-
-          _.each(this.options.colors, function(color, index) {
-            var step =  100 - ((index + 1) * 100 / 8);
-            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, data, step, self.options.neutralcolors[index]);
-          });
-        }
-
-      } else {
-        cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
-
-        this.currentLegend = new cdb.geo.ui.Legend({
-          type: 'custom',
-          data: {},
-          template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
-            left: 0,
-            right: 100
-          })
-        });
-
-        _.each(this.options.abscolors, function(color, index) {
-          var step = 100 - ((index + 1) * 100 / 8);
-          cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
-        });
+          Backbone.Events.trigger('notify:show');
+          Backbone.Events.trigger('spinner:stop');
+          return false;
       }
 
-      cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
+      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
 
       options = _.extend({}, this.options.cartodb, {
-        interactivity: (period !== 'latest' && indicator.historicalGeo) ? sprintf('name, %s, current, previous', data) : 'name, current',
+        interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, current, previous' : 'name, current',
         sublayers: [{
           sql: sql,
-          cartocss: cartocss
+          cartocss: this.getCartoCSS()
         }]
       });
 
@@ -239,7 +168,7 @@ define([
 
         self.map.setView(self.options.map.center, self.options.map.zoom);
         self.map.addLayer(layer);
-        self.$el.append(self.currentLegend.render().el);
+        self.setLegend();
 
         sublayer.on('featureClick', function(e, latlng, point, data) {
           console.log(data);
@@ -275,6 +204,95 @@ define([
             self.changeVisualization();
           });
         }
+      }
+    },
+
+    getCartoCSS: function() {
+      var cartocss, indicator, period, self;
+
+      self = this;
+      indicator = this.indicator.toJSON();
+      period = this.filter.get('period');
+
+      cartocss = sprintf('#%s {polygon-fill: #777; line-color: #292929;  line-width: 1; polygon-opacity: 0.7; }', indicator.id);
+
+      if (period !== 'latest') {
+
+        if (indicator.full !== 0 && indicator.displayValue !== '-') {
+          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
+
+          this.currentLegend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: {},
+            template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
+              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
+            })
+          });
+
+          _.each(this.options.colors, function(color, index) {
+            var step = indicator.full - ((index + 1) * indicator.full / 8);
+
+            if (indicator.full < 0) {
+              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.colors[index]);
+            } else if (indicator.full > 0) {
+              cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.colors[index]);
+            }
+          });
+
+        } else {
+          // Neutral
+          var left, right;
+
+          if (indicator.neutral === 0) {
+            left  = (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1;
+            right = (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8));
+          } else {
+            left = -indicator.neutral;
+            right = indicator.neutral;
+          }
+
+          this.currentLegend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: {},
+            template: _.template('<ul><li class="graph"><div class="colors neutral"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+              left: left,
+              right: right
+            })
+          });
+
+          _.each(this.options.colors, function(color, index) {
+            var step =  100 - ((index + 1) * 100 / 8);
+            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.neutralcolors[index]);
+          });
+        }
+
+      } else {
+        cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
+
+        this.currentLegend = new cdb.geo.ui.Legend({
+          type: 'custom',
+          data: {},
+          template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
+            left: 0,
+            right: 100
+          })
+        });
+
+        _.each(this.options.abscolors, function(color, index) {
+          var step = 100 - ((index + 1) * 100 / 8);
+          cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
+        });
+      }
+
+      cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
+
+      return cartocss;
+    },
+
+    setLegend: function() {
+      if (this.currentLegend) {
+        this.$el.append(this.currentLegend.render().el);
       }
     },
 
