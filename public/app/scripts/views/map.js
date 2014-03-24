@@ -172,7 +172,7 @@ define([
             right = (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8));
           } else {
             left = -indicator.neutral;
-            right = indicator.neutral
+            right = indicator.neutral;
           }
 
           this.currentLegend = new cdb.geo.ui.Legend({
