@@ -87,7 +87,7 @@ define([
     },
 
     changeVisualization: function() {
-      var self, period, indicator, sql, options;
+      var self, period, indicator;
 
       if (!this.$el.hasClass('is-active')) {
         return false;
@@ -107,18 +107,12 @@ define([
         this.infowindow._closeInfowindow();
       }
 
-      if (this.currentLayer) {
-        this.map.removeLayer(this.currentLayer);
-      }
-
       if (!this.indicator.get('historicalGeo')) {
         if (this.tiles) {
           this.map.removeLayer(this.tiles);
         }
         Backbone.Events.trigger('notify:show');
         return false;
-      } else {
-        this.setTiles();
       }
 
       Backbone.Events.trigger('spinner:start');
@@ -146,55 +140,52 @@ define([
           return false;
       }
 
-      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
-
       Backbone.Events.trigger('notify:hide');
 
       function addLayerToMap(layer) {
-        var sublayer = layer.getSubLayer(0),
-          template;
-
-        if (period === 'latest') {
-          template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
-        } else {
-          template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
-        }
-
         self.currentLayer = layer;
-        self.infowindow = cdb.vis.Vis.addInfowindow(self.map, sublayer, options.interactivity, {
-          infowindowTemplate: template,
-          cursorInteraction: false,
-          templateType: 'handlebars'
-        });
-
         self.map.setView(self.options.map.center, self.options.map.zoom);
         self.map.addLayer(layer);
         self.setLegend();
+        self.setInfowindow();
 
-        sublayer.on('featureClick', function(e, latlng, point, data) {
-          console.log(data);
-        });
+        // sublayer.on('featureClick', function(e, latlng, point, data) {
+        //   console.log(data);
+        // });
 
         Backbone.Events.trigger('spinner:stop');
       }
 
-      this.getMinMax(function() {
-        options = _.extend({}, self.options.cartodb, {
-          interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current',
-          sublayers: [{
-            sql: sql,
-            cartocss: self.getCartoCSS()
-          }]
-        });
+      if (this.currentLayer) {
+
+        this.currentLayer.getSubLayer(0).set({cartocss: this.getCartoCSS()});
+        this.setLegend();
+        this.setInfowindow();
+        Backbone.Events.trigger('spinner:stop');
+
+      } else {
+
+        var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
 
         _.delay(function() {
-          cartodb.createLayer(self.map, options, {https: true})
-            .on('done', addLayerToMap)
-            .on('error', function(err) {
-              throw err;
+          self.getMinMax(function() {
+            var options = _.extend({}, self.options.cartodb, {
+              interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current',
+              sublayers: [{
+                sql: sql,
+                cartocss: self.getCartoCSS()
+              }]
             });
+
+            cartodb.createLayer(self.map, options, {https: true})
+              .on('done', addLayerToMap)
+              .on('error', function(err) {
+                throw err;
+              });
+          });
         }, 301);
-      });
+
+      }
     },
 
     setIndicator: function() {
@@ -335,10 +326,44 @@ define([
       this.$el.append(this.currentLegend.render().el);
     },
 
+    setInfowindow: function() {
+      var period, indicator, interactivity, template;
+
+      if (!this.currentLayer) {
+        return false;
+      }
+
+      period = this.filter.get('period');
+      indicator = this.indicator;
+      interactivity = (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current';
+
+      if (period === 'latest') {
+        template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
+      } else {
+        template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+      }
+
+      if (this.infowindow) {
+        this.infowindow.remove();
+      }
+
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.currentLayer.getSubLayer(0), interactivity, {
+        infowindowTemplate: template,
+        cursorInteraction: false,
+        templateType: 'handlebars'
+      });
+    },
+
     show: function(id) {
       this.currentId = id;
       this.$el.addClass('is-active');
       Backbone.Events.trigger('map:done', id);
+
+      if (this.currentLayer) {
+        this.map.removeLayer(this.currentLayer);
+        this.currentLayer = null;
+      }
+
       this.setIndicator();
     },
 
@@ -348,14 +373,20 @@ define([
         e.stopImmediatePropagation();
       }
 
+      if (this.currentLayer) {
+        this.map.removeLayer(this.currentLayer);
+        this.currentLayer = null;
+      }
+
+      this.$el.removeClass('is-active');
+      Backbone.Events.trigger('notify:hide');
+      Backbone.Events.trigger('filter:close');
+
+
       if (this.filter.get('period') === 'latest') {
         this.filter.set('period', 'fytd');
       }
 
-      this.$el.removeClass('is-active');
-
-      Backbone.Events.trigger('notify:hide');
-      Backbone.Events.trigger('filter:close');
       Backbone.Events.trigger('map:closed');
 
       return false;
