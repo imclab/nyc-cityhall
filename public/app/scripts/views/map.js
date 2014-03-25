@@ -99,16 +99,16 @@ define([
 
       Backbone.Events.trigger('map:changed', indicator);
 
-      if (this.currentLayer) {
-        this.map.removeLayer(this.currentLayer);
-      }
-
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }
 
       if (this.infowindow) {
         this.infowindow._closeInfowindow();
+      }
+
+      if (this.currentLayer) {
+        this.map.removeLayer(this.currentLayer);
       }
 
       if (!this.indicator.get('historicalGeo')) {
@@ -180,7 +180,7 @@ define([
 
       this.getMinMax(function() {
         options = _.extend({}, self.options.cartodb, {
-          interactivity: (period !== 'latest' && indicator.historicalGeo) ? sprintf('name, %s, current, previous', self.currentData) : 'name, current',
+          interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current',
           sublayers: [{
             sql: sql,
             cartocss: self.getCartoCSS()
