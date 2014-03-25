@@ -110,6 +110,7 @@ define([
       if (!this.indicator.get('historicalGeo')) {
         if (this.tiles) {
           this.map.removeLayer(this.tiles);
+          this.tiles = null;
         }
         Backbone.Events.trigger('notify:show');
         return false;
@@ -149,9 +150,9 @@ define([
         self.setLegend();
         self.setInfowindow();
 
-        // sublayer.on('featureClick', function(e, latlng, point, data) {
-        //   console.log(data);
-        // });
+        self.currentLayer.getSubLayer(0).on('featureClick', function(e, latlng, point, data) {
+          console.log(data);
+        });
 
         Backbone.Events.trigger('spinner:stop');
       }
@@ -184,6 +185,10 @@ define([
               });
           });
         }, 301);
+
+        if (!this.tiles) {
+          this.setTiles();
+        }
 
       }
     },
@@ -333,18 +338,18 @@ define([
         return false;
       }
 
+      if (this.infowindow) {
+        this.infowindow.remove();
+      }
+
       period = this.filter.get('period');
-      indicator = this.indicator;
-      interactivity = (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current';
+      indicator = this.indicator.toJSON();
+      interactivity = (period !== 'latest') ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current';
 
       if (period === 'latest') {
         template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
       } else {
         template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
-      }
-
-      if (this.infowindow) {
-        this.infowindow.remove();
       }
 
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.currentLayer.getSubLayer(0), interactivity, {
