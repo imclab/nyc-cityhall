@@ -171,7 +171,7 @@ define([
         _.delay(function() {
           self.getMinMax(function() {
             var options = _.extend({}, self.options.cartodb, {
-              interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous' : 'name, current',
+              interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, previous_fytd, current_fytd' : 'name, current',
               sublayers: [{
                 sql: sql,
                 cartocss: self.getCartoCSS()
