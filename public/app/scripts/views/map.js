@@ -36,7 +36,7 @@ define([
       },
       colors: ['#088246', '#379d4e', '#66b757', '#95d25f', '#b1de79', '#cce994', '#e8f5ae', '#fff8c3', '#fddc9f', '#fbbe79', '#faa052', '#f8822c', '#ef632b', '#e7452b', '#de262a'],
       neutralcolors: ['#4e6859', '#758d79', '#99ad94', '#b4c3a7', '#cdd8bf', '#e3ead6', '#fafaed', '#f9faed', '#ffffff', '#f9f5e6', '#e9dbcb', '#d5c0ae', '#c3a693', '#bd9b8f', '#b68e8a', '#a17177'],
-      abscolors:['#344a5f','#4e647a','#687d94','#8397af','#9db0ca','#b7c9e4','#d1e3ff']
+      abscolors: ['#344a5f', '#4e647a', '#687d94', '#8397af', '#9db0ca', '#b7c9e4', '#d1e3ff']
     },
 
     events: function() {
@@ -52,6 +52,9 @@ define([
     },
 
     initialize: function() {
+      this.sql = new cartodb.SQL({
+        user: this.options.cartodb.user_name
+      });
       this.indicators = indicatorsCollection.instance;
       this.indicator = new IndicatorModel();
       this.filter = filterModel.instance;
@@ -124,6 +127,12 @@ define([
         case 'mmwwdd':
           this.currentData = 'last_monthdayyear';
           break;
+        case 'fytd':
+          this.currentData = 'last_fytd';
+          break;
+        case 'lastyear':
+          this.currentData = 'last_year_previous';
+          break;
         case 'latest':
           this.currentData = 'latest';
           break;
@@ -137,15 +146,7 @@ define([
           return false;
       }
 
-      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), moment().format());
-
-      options = _.extend({}, this.options.cartodb, {
-        interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, current, previous' : 'name, current',
-        sublayers: [{
-          sql: sql,
-          cartocss: this.getCartoCSS()
-        }]
-      });
+      sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
 
       Backbone.Events.trigger('notify:hide');
 
@@ -177,13 +178,23 @@ define([
         Backbone.Events.trigger('spinner:stop');
       }
 
-      _.delay(function() {
-        cartodb.createLayer(self.map, options, {https: true})
-          .on('done', addLayerToMap)
-          .on('error', function(err) {
-            throw err;
-          });
-      }, 301);
+      this.getMinMax(function() {
+        options = _.extend({}, self.options.cartodb, {
+          interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, current, previous' : 'name, current',
+          sublayers: [{
+            sql: sql,
+            cartocss: self.getCartoCSS()
+          }]
+        });
+
+        _.delay(function() {
+          cartodb.createLayer(self.map, options, {https: true})
+            .on('done', addLayerToMap)
+            .on('error', function(err) {
+              throw err;
+            });
+        }, 301);
+      });
     },
 
     setIndicator: function() {
@@ -207,6 +218,28 @@ define([
       }
     },
 
+    getMinMax: function(callback) {
+      var self = this;
+
+      this.sql.execute('SELECT * FROM get_geo_summary(\'{{indicator}}\', \'{{geotype}}\', \'{{{date}}}\', \'{{token}}\', \'{{cache}}\')', {
+        indicator: this.indicator.get('id'),
+        geotype: this.indicator.get('geoType1'),
+        date: this.indicator.get('date'),
+        token: window.sessionStorage.getItem('token'),
+        cache: (moment().format('HH') / 4).toFixed(0)
+      })
+        .done(function(data) {
+          self.currentMin = data.rows[0].current_min;
+          self.currentMax = data.rows[0].current_max;
+          if (callback && typeof callback === 'function') {
+            callback();
+          }
+        })
+        .error(function(errors) {
+          throw errors;
+        });
+    },
+
     getCartoCSS: function() {
       var cartocss, indicator, period, self;
 
@@ -221,15 +254,6 @@ define([
         if (indicator.full !== 0 && indicator.displayValue !== '-') {
           cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
 
-          this.currentLegend = new cdb.geo.ui.Legend({
-            type: 'custom',
-            data: {},
-            template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
-              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
-            })
-          });
-
           _.each(this.options.colors, function(color, index) {
             var step = indicator.full - ((index + 1) * indicator.full / 8);
 
@@ -240,6 +264,43 @@ define([
             }
           });
 
+        } else {
+          _.each(this.options.colors, function(color, index) {
+            var step =  100 - ((index + 1) * 100 / 8);
+            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.neutralcolors[index]);
+          });
+        }
+
+      } else {
+        cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
+        _.each(this.options.abscolors, function(color, index) {
+          var step = (self.currentMin + (((self.currentMax - self.currentMin) * (self.options.abscolors.length - index - 1)) / self.options.abscolors.length)).toFixed(0);
+          console.log(step);
+          cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
+        });
+      }
+
+      cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
+
+      return cartocss;
+    },
+
+    setLegend: function() {
+      var indicator, period;
+
+      indicator = this.indicator.toJSON();
+      period = this.filter.get('period');
+
+      if (period !== 'latest') {
+        if (indicator.full !== 0 && indicator.displayValue !== '-') {
+          this.currentLegend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: {},
+            template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
+              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
+              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
+            })
+          });
         } else {
           // Neutral
           var left, right;
@@ -260,40 +321,19 @@ define([
               right: right
             })
           });
-
-          _.each(this.options.colors, function(color, index) {
-            var step =  100 - ((index + 1) * 100 / 8);
-            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.neutralcolors[index]);
-          });
         }
-
       } else {
-        cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
-
         this.currentLegend = new cdb.geo.ui.Legend({
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
-            left: 0,
-            right: 100
+            left: this.currentMin.toFixed(0),
+            right: this.currentMax.toFixed(0)
           })
         });
-
-        _.each(this.options.abscolors, function(color, index) {
-          var step = 100 - ((index + 1) * 100 / 8);
-          cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
-        });
       }
 
-      cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-
-      return cartocss;
-    },
-
-    setLegend: function() {
-      if (this.currentLegend) {
-        this.$el.append(this.currentLegend.render().el);
-      }
+      this.$el.append(this.currentLegend.render().el);
     },
 
     show: function(id) {

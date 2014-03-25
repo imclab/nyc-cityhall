@@ -199,7 +199,7 @@ define([
 
     getData: function(callback) {
 
-      var query = sprintf('select * FROM data_overview(\'%s\', \'%s\')', window.sessionStorage.getItem('token'), moment().format());
+      var query = sprintf('select * FROM data_overview(\'%s\', \'%s\')', window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
 
       function onError(collection, err) {
         if (callback  && typeof callback === 'function') {

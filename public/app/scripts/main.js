@@ -57,6 +57,7 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
       return null;
     }
 
+    context = context.toString();
     context = context.replace(',', '');
     context = context.replace('%', '');
 
