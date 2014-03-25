@@ -180,7 +180,7 @@ define([
 
       this.getMinMax(function() {
         options = _.extend({}, self.options.cartodb, {
-          interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, current, previous' : 'name, current',
+          interactivity: (period !== 'latest' && indicator.historicalGeo) ? sprintf('name, %s, current, previous', self.currentData) : 'name, current',
           sublayers: [{
             sql: sql,
             cartocss: self.getCartoCSS()
@@ -275,7 +275,6 @@ define([
         cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
         _.each(this.options.abscolors, function(color, index) {
           var step = (self.currentMin + (((self.currentMax - self.currentMin) * (self.options.abscolors.length - index - 1)) / self.options.abscolors.length)).toFixed(0);
-          console.log(step);
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
         });
       }
