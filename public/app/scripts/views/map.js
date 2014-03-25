@@ -344,7 +344,7 @@ define([
 
       period = this.filter.get('period');
       indicator = this.indicator.toJSON();
-      interactivity = (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, previous_fytd, current_fytd' : 'name, current';
+      interactivity = (period !== 'latest') ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, previous_fytd, current_fytd' : 'name, current';
 
       if (period === 'latest') {
         template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
