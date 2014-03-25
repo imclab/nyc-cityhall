@@ -1,0 +1,18 @@
+<div class="mod-infowindow">
+  <a href="#close" class="icon icon-infowindow-close close"></a>
+  <header class="mod-infowindow-header">
+    <h2>{{name}}</h2>
+  </header>
+  <div class="mod-infowindow-content">
+    <table>
+      <td>
+        <strong>%2$s</strong><br>
+        {{#if current_fytd}}{{commas current_fytd '%1$s'}}{{else}}0{{/if}}
+      </td>
+      <td><strong>%3$s</strong><br>{{#if previous_fytd}}{{commas previous_fytd '%1$s'}}{{else}}0{{/if}}</td>
+      <td class="mod-infowindow-value">
+        {{#if last_fytd}}{{plus last_fytd}}{{else}}0&#37;{{/if}}
+      </td>
+    </table>
+  </div>
+</div>

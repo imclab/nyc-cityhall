@@ -10,8 +10,10 @@ define([
   'models/indicator',
   'collections/indicators',
   'text!../../templates/infowindow.handlebars',
-  'text!../../templates/infowindow-historical.handlebars'
-], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, indicatorsCollection, infowindowTpl, infowindowHistoricalTpl) {
+  'text!../../templates/infowindow-lastyear.handlebars',
+  'text!../../templates/infowindow-mmwwdd.handlebars',
+  'text!../../templates/infowindow-yftd.handlebars'
+], function(_, Backbone, Handlebars, sprintf, moment, filterModel, IndicatorModel, indicatorsCollection, infowindowTpl, infowindowLastYearTpl, infowindowMWDTpl, infowindowYFTDTpl) {
 
   var MapView = Backbone.View.extend({
 
@@ -97,8 +99,6 @@ define([
       indicator = this.indicator.toJSON();
       period = this.filter.get('period');
 
-      //console.log(indicator);
-
       Backbone.Events.trigger('spinner:start');
       Backbone.Events.trigger('map:changed', indicator);
 
@@ -169,10 +169,6 @@ define([
       } else {
 
         var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, i.current_fytd, i.previous_fytd, i.previous_year_period, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM nypp g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
-
-        // this.sql.execute(sql).done(function(data) {
-        //   console.log(data);
-        // });
 
         _.delay(function() {
           self.getMinMax(function() {
@@ -351,10 +347,18 @@ define([
       indicator = this.indicator.toJSON();
       interactivity = (period !== 'latest') ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, current_fytd, previous_fytd, previous_year_period' : 'name, current';
 
-      if (period === 'latest') {
-        template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
-      } else {
-        template = sprintf(infowindowHistoricalTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+      switch(period) {
+        case 'mmwwdd':
+          template = sprintf(infowindowMWDTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+          break;
+        case 'fytd':
+          template = sprintf(infowindowYFTDTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+          break;
+        case 'lastyear':
+          template = sprintf(infowindowLastYearTpl, indicator.displayUnits, indicator.currentDate, indicator.previousDate);
+          break;
+        default:
+          template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
       }
 
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.currentLayer.getSubLayer(0), interactivity, {
