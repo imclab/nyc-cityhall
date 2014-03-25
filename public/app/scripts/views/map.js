@@ -97,6 +97,9 @@ define([
       indicator = this.indicator.toJSON();
       period = this.filter.get('period');
 
+      console.log(indicator);
+
+      Backbone.Events.trigger('spinner:start');
       Backbone.Events.trigger('map:changed', indicator);
 
       if (this.currentLegend) {
@@ -113,10 +116,9 @@ define([
           this.tiles = null;
         }
         Backbone.Events.trigger('notify:show');
+        Backbone.Events.trigger('spinner:stop');
         return false;
       }
-
-      Backbone.Events.trigger('spinner:start');
 
       switch(this.filter.get('period')) {
         case 'mmwwdd':
@@ -150,9 +152,9 @@ define([
         self.setLegend();
         self.setInfowindow();
 
-        self.currentLayer.getSubLayer(0).on('featureClick', function(e, latlng, point, data) {
-          console.log(data);
-        });
+        // self.currentLayer.getSubLayer(0).on('featureClick', function(e, latlng, point, data) {
+        //   console.log(data);
+        // });
 
         Backbone.Events.trigger('spinner:stop');
       }
@@ -166,12 +168,16 @@ define([
 
       } else {
 
-        var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
+        var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, i.current_fytd, i.previous_fytd, i.previous_year_period, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM nypp g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
+
+        // this.sql.execute(sql).done(function(data) {
+        //   console.log(data);
+        // });
 
         _.delay(function() {
           self.getMinMax(function() {
             var options = _.extend({}, self.options.cartodb, {
-              interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, previous_fytd, current_fytd' : 'name, current',
+              interactivity: (period !== 'latest' && indicator.historicalGeo) ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, current_fytd, previous_fytd, previous_year_period' : 'name, current',
               sublayers: [{
                 sql: sql,
                 cartocss: self.getCartoCSS()
@@ -184,12 +190,11 @@ define([
                 throw err;
               });
           });
+
+          if (!self.tiles) {
+            self.setTiles();
+          }
         }, 301);
-
-        if (!this.tiles) {
-          this.setTiles();
-        }
-
       }
     },
 
@@ -322,8 +327,8 @@ define([
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
-            left: this.currentMin.toFixed(0),
-            right: this.currentMax.toFixed(0)
+            left: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.currentMin.toFixed(0) : '',
+            right: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.currentMax.toFixed(0) : ''
           })
         });
       }
@@ -344,7 +349,7 @@ define([
 
       period = this.filter.get('period');
       indicator = this.indicator.toJSON();
-      interactivity = (period !== 'latest') ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, previous_fytd, current_fytd' : 'name, current';
+      interactivity = (period !== 'latest') ? 'name, last_monthdayyear, last_fytd, last_year_previous, current, previous, current_fytd, previous_fytd, previous_year_period' : 'name, current';
 
       if (period === 'latest') {
         template = sprintf(infowindowTpl, indicator.displayUnits, indicator.currentDate);
