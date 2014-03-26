@@ -11,8 +11,7 @@
       </td>
       <td><strong>%3$s</strong><br>{{#if previous}}{{commas previous '%1$s'}}{{else}}0{{/if}}</td>
       <td class="mod-infowindow-value">
-        {{#if last_fytd}}{{plus last_fytd}}{{/if}}
-        {{#if last_monthdayyear}}{{plus last_monthdayyear}}0&#37;{{/if}}
+        {{#if last_monthdayyear}}{{plus last_monthdayyear}}{{else}}0&#37;{{/if}}
       </td>
     </table>
   </div>

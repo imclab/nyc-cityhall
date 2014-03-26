@@ -146,11 +146,10 @@ define([
 
         case 'worst':
           this.indicators.comparator = function(indicator) {
-            if (indicator.get('isnull')) {
-              return 100000000;
-            }
-            if (indicator.get('value') === null || indicator.get('full') === 0) {
-              return 1000000;
+            if (indicator.get('displayValue') === '-') {
+              return 4000;
+            } else if (!isFinite(indicator.get('value') / indicator.get('full'))) {
+              return 3000 + Number(indicator.get('value'));
             }
             return indicator.get('value') / indicator.get('full');
           };
@@ -158,11 +157,10 @@ define([
 
         case 'best':
           this.indicators.comparator = function(indicator) {
-            if (indicator.get('isnull')) {
-              return 100000000;
-            }
-            if (indicator.get('value') === null || indicator.get('full') === 0) {
-              return 1000000;
+            if (indicator.get('displayValue') === '-') {
+              return 4000;
+            } else if (!isFinite(indicator.get('value') / indicator.get('full'))) {
+              return 3000 - Number(indicator.get('value'));
             }
             return -(indicator.get('value') / indicator.get('full'));
           };
