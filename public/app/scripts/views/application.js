@@ -46,6 +46,9 @@ define([
 
     show: function() {
       this.$el.addClass('is-active');
+      _.delay(function() {
+        document.activeElement.blur();
+      }, 300);
     },
 
     hide: function() {
