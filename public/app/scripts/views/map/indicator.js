@@ -31,9 +31,11 @@ define([
     changeData: function(id) {
       var self = this;
 
+      this.indicator.set('latest', false);
+
       if (this.filter.get('period') === 'latest') {
         this.indicator.set('color', '#b7c9e4');
-        this.indicator.unset('displayValue');
+        this.indicator.set('latest', true);
         this.render();
         return false;
       }

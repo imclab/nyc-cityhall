@@ -325,8 +325,8 @@ define([
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
-            left: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.currentMin.toFixed(0) : '',
-            right: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.currentMax.toFixed(0) : ''
+            left: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.numberWithCommas(this.currentMin.toFixed(0)) : '',
+            right: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.numberWithCommas(this.currentMax.toFixed(0)) : ''
           })
         });
       }
@@ -406,6 +406,16 @@ define([
       Backbone.Events.trigger('map:closed');
 
       return false;
+    },
+
+    numberWithCommas: function(num) {
+      if (num === null) {
+        return null;
+      }
+      if (num % 1 !== 0) {
+        num = num.toFixed(2);
+      }
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
   });
