@@ -321,12 +321,31 @@ define([
           });
         }
       } else {
+        // Latest
+        var latestLeft, latestRight;
+
+        if (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) {
+          if (indicator.displayUnits === 'seconds') {
+            latestLeft = moment().hours(0).minutes(0).seconds(this.currentMin).format('HH:mm:ss');
+            latestRight = moment().hours(0).minutes(0).seconds(this.currentMax).format('HH:mm:ss');
+          } else if (indicator.displayUnits === 'percentage') {
+            latestLeft = this.currentMin.toFixed(0) + '%';
+            latestRight = this.currentMax.toFixed(0) + '%';
+          } else {
+            latestLeft = this.numberWithCommas(this.currentMin.toFixed(0));
+            latestRight = this.numberWithCommas(this.currentMax.toFixed(0));
+          }
+        } else {
+          latestLeft = '';
+          latestRight = '';
+        }
+
         this.currentLegend = new cdb.geo.ui.Legend({
           type: 'custom',
           data: {},
           template: _.template('<ul><li class="graph"><div class="colors non-historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li></ul>', {
-            left: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.numberWithCommas(this.currentMin.toFixed(0)) : '',
-            right: (!_.isNull(this.currentMin) && !_.isNull(this.currentMax)) ? this.numberWithCommas(this.currentMax.toFixed(0)) : ''
+            left: latestLeft,
+            right: latestRight
           })
         });
       }
