@@ -110,7 +110,7 @@ define([
         this.infowindow._closeInfowindow();
       }
 
-      if (!this.indicator.get('historicalGeo')) {
+      if (!indicator.historicalGeo || !indicator.geoType1) {
         if (this.tiles) {
           this.map.removeLayer(this.tiles);
           this.tiles = null;
