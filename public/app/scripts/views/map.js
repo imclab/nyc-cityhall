@@ -280,8 +280,6 @@ define([
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
 
-      console.log(cartocss);
-
       return cartocss;
     },
 
