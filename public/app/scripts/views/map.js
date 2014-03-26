@@ -152,9 +152,9 @@ define([
         self.setLegend();
         self.setInfowindow();
 
-        // self.currentLayer.getSubLayer(0).on('featureClick', function(e, latlng, point, data) {
-        //   console.log(data);
-        // });
+        self.currentLayer.getSubLayer(0).on('featureClick', function(e, latlng, point, data) {
+          console.log(data);
+        });
 
         Backbone.Events.trigger('spinner:stop');
       }
