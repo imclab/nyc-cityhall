@@ -249,7 +249,7 @@ define([
       if (period !== 'latest') {
 
         if (indicator.full !== 0 && indicator.displayValue !== '-') {
-          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
+          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[6]);
 
           _.each(this.options.colors, function(color, index) {
             var step = indicator.full - ((index + 1) * indicator.full / 8);
@@ -260,8 +260,8 @@ define([
               cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.colors[index]);
             }
           });
-
         } else {
+          // Neutral
           _.each(this.options.colors, function(color, index) {
             var step =  100 - ((index + 1) * 100 / 8);
             cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.neutralcolors[index]);
@@ -269,7 +269,9 @@ define([
         }
 
       } else {
+        // Latest Values
         cartocss = cartocss + sprintf(' #%s {polygon-fill: %s;}', indicator.id, self.options.abscolors[0]);
+
         _.each(this.options.abscolors, function(color, index) {
           var step = (self.currentMin + (((self.currentMax - self.currentMin) * (self.options.abscolors.length - index - 1)) / self.options.abscolors.length)).toFixed(0);
           cartocss = cartocss + sprintf(' #%s [current <= %s] {polygon-fill: %s;}', indicator.id, step, self.options.abscolors[index]);
@@ -277,6 +279,8 @@ define([
       }
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
+
+      console.log(cartocss);
 
       return cartocss;
     },
