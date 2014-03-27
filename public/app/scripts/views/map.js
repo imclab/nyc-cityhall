@@ -257,7 +257,7 @@ define([
       if (period !== 'latest') {
 
         if (indicator.full !== 0 && !indicator.isnull) {
-          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[6]);
+          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[7]);
 
           _.each(this.options.colors, function(color, index) {
             var step = indicator.full - ((index + 1) * indicator.full / 8);

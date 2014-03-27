@@ -127,20 +127,23 @@ define([
               indicator.color = color;
             }
             if (indicator.zeroTolerance && indicator.value < 0) {
-              indicator.color = self.colors[14];
+              indicator.color = self.colors[self.colors.length - 1];
             }
           } else if (indicator.full < 0) {
             if (indicator.value > step) {
               indicator.color = color;
             }
             if (indicator.zeroTolerance && indicator.value > 0) {
-              indicator.color = self.colors[14];
+              indicator.color = self.colors[self.colors.length - 1];
             }
-
           } else {
             indicator.color = '#fff';
           }
         });
+
+        if (indicator.value / indicator.full === 0) {
+          indicator.color = self.colors[7];
+        }
 
         //format for display
         if (indicator.value !== '0' && indicator.value[indicator.value.length -1] === '0') {
