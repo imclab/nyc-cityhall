@@ -102,6 +102,8 @@ define([
       Backbone.Events.trigger('spinner:start');
       Backbone.Events.trigger('map:changed', indicator);
 
+      //console.log(indicator);
+
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }

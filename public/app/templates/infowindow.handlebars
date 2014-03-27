@@ -6,7 +6,7 @@
   <div class="mod-infowindow-content">
     <table>
       <td class="mod-infowindow-value">
-        {{#if current}}{{commas current '%1$s'}}{{else}}0{{/if}}
+        {{#xif current}}{{commas current '%1$s'}}{{else}}-{{/xif}}
       </td>
     </table>
   </div>
