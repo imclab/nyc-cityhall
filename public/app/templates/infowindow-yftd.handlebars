@@ -7,11 +7,12 @@
     <table>
       <td>
         <strong>%2$s</strong><br>
-        {{#if current_fytd}}{{commas current_fytd '%1$s'}}{{else}}0{{/if}}
+        {{#xif current_fytd}}{{commas current_fytd '%1$s'}}{{else}}-{{/xif}}
       </td>
-      <td><strong>%3$s</strong><br>{{#if previous_fytd}}{{commas previous_fytd '%1$s'}}{{else}}0{{/if}}</td>
+      <td><strong>%3$s</strong><br>
+        {{#xif previous_fytd}}{{commas previous_fytd '%1$s'}}{{else}}-{{/xif}}</td>
       <td class="mod-infowindow-value">
-        {{#if last_fytd}}{{plus last_fytd}}{{else}}0&#37;{{/if}}
+        {{#xif last_fytd}}{{commas last_fytd '%1$s'}}{{else}}-{{/xif}}
       </td>
     </table>
   </div>

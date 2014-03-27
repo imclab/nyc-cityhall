@@ -7,11 +7,12 @@
     <table>
       <td>
         <strong>%2$s</strong><br>
-        {{#if current}}{{commas current '%1$s'}}{{else}}0{{/if}}
+        {{#xif current}}{{commas current '%1$s'}}{{else}}-{{/xif}}
       </td>
-      <td><strong>%3$s</strong><br>{{#if previous}}{{commas previous '%1$s'}}{{else}}0{{/if}}</td>
+      <td><strong>%3$s</strong><br>
+        {{#xif previous}}{{commas previous '%1$s'}}{{else}}-{{/xif}}</td>
       <td class="mod-infowindow-value">
-        {{#if last_monthdayyear}}{{plus last_monthdayyear}}{{else}}0&#37;{{/if}}
+        {{#xif last_monthdayyear}}{{plus last_monthdayyear '%1$s'}}{{else}}-{{/xif}}
       </td>
     </table>
   </div>
