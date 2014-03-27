@@ -99,8 +99,6 @@ define([
       indicator = this.indicator.toJSON();
       period = this.filter.get('period');
 
-      //console.log(indicator);
-
       Backbone.Events.trigger('spinner:start');
       Backbone.Events.trigger('map:changed', indicator);
 
