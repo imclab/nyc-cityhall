@@ -43,7 +43,7 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
 
   // Number extension
   Number.prototype.toCommas = function() {
-    return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');;
+    return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   // CARTODB Hacks
