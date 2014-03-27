@@ -92,3 +92,9 @@
     }
   }
 }
+
+@media screen and (max-width: $sm) {
+  .mod-toolbar .mod-toolbar-item {
+    float: none;
+  }
+}
