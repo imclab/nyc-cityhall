@@ -277,8 +277,8 @@ define([
 
           if (indicator.full < 0 ) {
               cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.full, self.options.colors[0]);
-            } else if (indicator.full > 0 && isFinite(indicator[self.currentData])) {
-              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.full, self.options.colors[14]);
+            } else if (indicator.full > 0 ) {
+              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.full, self.options.colors[0]);
             }
 
           _.each(this.options.colors, function(color, index) {
