@@ -268,7 +268,7 @@ define([
               cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.colors[index]);
             }
           });
-        } else {
+        } else if (indicator.full===0){
           // Neutral
           _.each(this.options.colors, function(color, index) {
             var step =  100 - ((index + 1) * 100 / 8);
