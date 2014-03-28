@@ -288,8 +288,14 @@ define([
               cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.colors[index]);
             }
           });
-        } else if (indicator.full===0){
+        } else if (indicator.full === 0){
           // Neutral
+          if (indicator.neutral < 0 ) {
+            cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.neutral, self.options.neutralcolors[0]);
+          } else if (indicator.neutral > 0 ) {
+            cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.neutral, self.options.neutralcolors[0]);
+          }
+
           _.each(this.options.colors, function(color, index) {
             var step =  100 - ((index + 1) * 100 / 8);
             cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, step, self.options.neutralcolors[index]);
