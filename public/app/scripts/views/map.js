@@ -176,11 +176,13 @@ define([
         Backbone.Events.trigger('spinner:stop');
 
       } else {
+
         var ispercent=indicator.displayUnits==='percent';
 
         //var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, i.current_fytd, i.previous_fytd, i.previous_year_period, CASE WHEN i.previous = 0 THEN sign(i.current) * 100 ELSE CASE WHEN i.previous IS NOT NULL THEN trunc(100*(i.current - i.previous)/i.previous, 1) ELSE null END END as last_monthdayyear, CASE WHEN i. previous_fytd = 0 THEN sign(i. current_fytd) * 100 ELSE CASE WHEN i.previous_fytd IS NOT NULL THEN trunc(100*(i.current_fytd - i.previous_fytd)/i.previous_fytd, 1) ELSE null END END as last_fytd, CASE WHEN i. previous_year_period = 0 THEN sign(i. current) * 100 ELSE CASE WHEN i.previous_year_period IS NOT NULL THEN trunc(100*(i.current - i.previous_year_period)/i.previous_year_period, 1) ELSE null END END as last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
 
         var sql = sprintf('WITH indicator AS (SELECT * FROM get_agg_geo(\'%1$s\',\'%2$s\',\'%3$s\',\'%4$s\',\'%5$s\')) SELECT g.cartodb_id, g.the_geom, g.geo_id, g.name, g.the_geom_webmercator, i.current, i.previous, i.current_fytd, i.previous_fytd, i.previous_year_period, percent_change(i.current, i.previous, '+ispercent+' ) AS last_monthdayyear, percent_change(i.current_fytd, i.previous_fytd, '+ispercent+') AS last_fytd, percent_change(i.current, i.previous_year_period, '+ispercent+') AS last_year_previous FROM %2$s g LEFT OUTER JOIN indicator i ON (g.geo_id = i.geo_id)', indicator.id, indicator.geoType1, indicator.date, window.sessionStorage.getItem('token'), (moment().format('HH') / 4).toFixed(0));
+
 
         // this.sql.execute(sql).on('done', function(data) {
         //   console.log(data);

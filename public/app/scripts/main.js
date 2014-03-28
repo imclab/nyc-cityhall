@@ -66,11 +66,11 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
       return context;
     }
 
-    if (context <= -999999.99) {
+    if (context <= -999999) {
       return '-∞';
     }
 
-    if (context >= 999999.99) {
+    if (context >= 999999) {
       return '+∞';
     }
 
