@@ -39,7 +39,7 @@ define([
 
         var indicator = {
           id: row.indicator_id,
-          agency: row.agency,
+          agency: (row.ytd_type === 'c') ? 'C' + row.agency.substring(1) : row.agency,
           frequency: row.frequency,
           name: row.indicator_name,
           currentDate: moment(row.date).format('MMM, YYYY'),
