@@ -31,6 +31,10 @@ define([
     changeData: function(id) {
       var self = this;
 
+      if (!$('#mapView').hasClass('is-active')) {
+        return false;
+      }
+
       this.indicator.set('latest', false);
 
       if (this.filter.get('period') === 'latest') {

@@ -205,6 +205,10 @@ define([
     setIndicator: function() {
       var self = this;
 
+      if (!this.$el.hasClass('is-active')) {
+        return false;
+      }
+
       if (this.filter.get('period') === 'latest') {
         this.changeVisualization();
       } else {
