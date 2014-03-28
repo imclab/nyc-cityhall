@@ -115,6 +115,9 @@ define([
           self.map.removeLayer(self.tiles);
           self.tiles = null;
         }
+        if (self.currentLayer) {
+          self.map.removeLayer(self.currentLayer);
+        }
         Backbone.Events.trigger('notify:show');
         Backbone.Events.trigger('spinner:stop');
         return false;
