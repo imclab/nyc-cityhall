@@ -66,6 +66,14 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
       return context;
     }
 
+    if (context <= -999999.99) {
+      return '-∞';
+    }
+
+    if (context >= 999999.99) {
+      return '+∞';
+    }
+
     if (context - Math.floor(context) !== 0) {
       context = Number(context.toFixed(1));
     }
