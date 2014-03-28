@@ -182,7 +182,6 @@ define([
         }
 
         if (!isFinite(indicator.value)) {
-          //indicator.isnull = true;
           indicator.value = 0;
           indicator.displayValue = '-';
           indicator.color = '#fff';
