@@ -51,6 +51,11 @@ define([
         this.indicator.set('color', '#b7c9e4');
         this.indicator.set('latest', true);
         this.render();
+        this.filter.set({
+          'period': 'latest'
+        }, {
+          silent: true
+        });
         return false;
       }
 
