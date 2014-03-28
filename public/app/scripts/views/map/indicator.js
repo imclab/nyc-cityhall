@@ -25,7 +25,6 @@ define([
     },
 
     render: function() {
-      console.log(this.indicator.toJSON());
       this.$el.html(this.template(this.indicator.toJSON()));
     },
 
