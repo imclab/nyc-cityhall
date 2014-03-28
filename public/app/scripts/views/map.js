@@ -268,6 +268,12 @@ define([
         if (indicator.full !== 0 && !indicator.isnull) {
           cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[7]);
 
+          if (indicator.full < 0) {
+              cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[14]);
+            } else if (indicator.full > 0) {
+              cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
+            }
+
           _.each(this.options.colors, function(color, index) {
             var step = indicator.full - ((index + 1) * indicator.full / 8);
 
@@ -296,7 +302,7 @@ define([
       }
 
       cartocss = cartocss + sprintf(' #%s [current = null] {polygon-fill: #777;}', indicator.id);
-
+      console.log(cartocss);
       return cartocss;
     },
 
