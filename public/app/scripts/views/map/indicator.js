@@ -25,6 +25,7 @@ define([
     },
 
     render: function() {
+      console.log(this.indicator.toJSON());
       this.$el.html(this.template(this.indicator.toJSON()));
     },
 
@@ -38,6 +39,15 @@ define([
       this.indicator.set('latest', false);
 
       if (this.filter.get('period') === 'latest') {
+        this.filter.set({
+          'period': 'mmwwdd'
+        }, {
+          silent: true
+        });
+        this.indicators.set(this.indicators.getDataByFilters(), {
+          remove: true
+        });
+        this.indicator.set(this.indicators.get(this.currentId).toJSON());
         this.indicator.set('color', '#b7c9e4');
         this.indicator.set('latest', true);
         this.render();
