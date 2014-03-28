@@ -65,6 +65,9 @@ define([
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current_fytd - row.previous_fytd).toFixed(1) ;
           }
+          if(row.current_fytd===0 && row.previous_fytd===0){
+            indicator.value =0;
+          }
           indicator.currentValue = row.current_fytd;
           indicator.previousValue = row.previous_fytd;
           indicator.currentDate = 'FYTD '+moment(row.date).format('YYYY');
@@ -75,6 +78,9 @@ define([
             indicator.value = (-100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1);
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous_year_period).toFixed(1);
+          }
+          if(row.current===0 && row.previous_year_period===0){
+            indicator.value =0;
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous_year_period;
@@ -98,6 +104,9 @@ define([
             indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1);
           } else if (row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous).toFixed(1);
+          }
+          if(row.current===0 && row.previous===0){
+            indicator.value =0;
           }
           indicator.currentValue = row.current;
           indicator.previousValue = row.previous;
@@ -166,7 +175,7 @@ define([
           indicator.displayPreviousValue = indicator.displayPreviousValue + '%';
         }
 
-        if (!isFinite(indicator.value) || !indicator.value) {
+        if (!isFinite(indicator.value)) {
           //indicator.isnull = true;
           indicator.value = 0;
           indicator.displayValue = '-';
