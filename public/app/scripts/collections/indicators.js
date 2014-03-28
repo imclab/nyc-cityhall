@@ -39,7 +39,7 @@ define([
 
         var indicator = {
           id: row.indicator_id,
-          agency: (row.ytd_type === 'c') ? 'C' + row.agency.substring(1) : row.agency,
+          agency: row.agency,
           frequency: row.frequency,
           name: row.indicator_name,
           currentDate: moment(row.date).format('MMM, YYYY'),
@@ -70,8 +70,14 @@ define([
           }
           indicator.currentValue = row.current_fytd;
           indicator.previousValue = row.previous_fytd;
-          indicator.currentDate = 'FYTD '+moment(row.date).format('YYYY');
-          indicator.previousDate = 'FYTD '+(moment(row.date).format('YYYY')-1);
+          if (row.ytd_type === 'c') {
+            indicator.currentDate = 'CYTD '+moment(row.date).format('YYYY');
+            indicator.previousDate = 'CYTD '+(moment(row.date).format('YYYY')-1);
+          } else {
+            indicator.currentDate = 'FYTD '+moment(row.date).format('YYYY');
+            indicator.previousDate = 'FYTD '+(moment(row.date).format('YYYY')-1);
+          }
+
           break;
         case 'lastyear':
           if (row.recording_units === 'value') {
