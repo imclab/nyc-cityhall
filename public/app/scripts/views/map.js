@@ -265,13 +265,13 @@ define([
 
       if (period !== 'latest') {
 
-        if (indicator.full !== 0 && !indicator.isnull) {
-          cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[7]);
+        if (indicator.full !== 0 && !indicator.isnull ) {
+          //cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[7]);
 
-          if (indicator.full < 0) {
-              cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[14]);
-            } else if (indicator.full > 0) {
-              cartocss = cartocss + sprintf('#%s {polygon-fill: %s;}', indicator.id, this.options.colors[0]);
+          if (indicator.full < 0 ) {
+              cartocss = cartocss + sprintf('#%s [%s <= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.full, self.options.colors[14]);
+            } else if (indicator.full > 0 && isFinite(indicator[self.currentData])) {
+              cartocss = cartocss + sprintf('#%s [%s >= %s] {polygon-fill: %s;}', indicator.id, self.currentData, indicator.full, self.options.colors[0]);
             }
 
           _.each(this.options.colors, function(color, index) {
