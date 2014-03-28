@@ -102,8 +102,6 @@ define([
       Backbone.Events.trigger('spinner:start');
       Backbone.Events.trigger('map:changed', indicator);
 
-      //console.log(indicator);
-
       if (this.currentLegend) {
         $(this.currentLegend.render().el).remove();
       }
@@ -112,10 +110,10 @@ define([
         this.infowindow._closeInfowindow();
       }
 
-      if (!indicator.historicalGeo || !indicator.geoType1) {
-        if (this.tiles) {
-          this.map.removeLayer(this.tiles);
-          this.tiles = null;
+      function noGeoData() {
+        if (self.tiles) {
+          self.map.removeLayer(self.tiles);
+          self.tiles = null;
         }
         Backbone.Events.trigger('notify:show');
         Backbone.Events.trigger('spinner:stop');
@@ -125,12 +123,21 @@ define([
       switch(this.filter.get('period')) {
         case 'mmwwdd':
           this.currentData = 'last_monthdayyear';
+          if (!indicator.has_previous_geo || !indicator.geoType1) {
+            return noGeoData();
+          }
           break;
         case 'fytd':
           this.currentData = 'last_fytd';
+          if (!indicator.has_previous_fytd_geo || !indicator.geoType1) {
+            return noGeoData();
+          }
           break;
         case 'lastyear':
           this.currentData = 'last_year_previous';
+          if (!indicator.has_previous_year_period_geo || !indicator.geoType1) {
+            return noGeoData();
+          }
           break;
         case 'latest':
           this.currentData = 'latest';

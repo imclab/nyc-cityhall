@@ -12,7 +12,7 @@
       <td><strong>%3$s</strong><br>
         {{#xif previous}}{{commas previous '%1$s'}}{{else}}-{{/xif}}</td>
       <td class="mod-infowindow-value">
-        {{#xif last_monthdayyear}}{{plus last_monthdayyear 'percentage'}}{{else}}-{{/xif}}
+        {{#xif last_monthdayyear}}{{commas last_monthdayyear 'percentage'}}{{else}}-{{/xif}}
       </td>
     </table>
   </div>
