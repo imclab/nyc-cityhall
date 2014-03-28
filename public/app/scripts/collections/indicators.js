@@ -193,7 +193,7 @@ define([
           indicator.displayPreviousValue = moment().hours(0).minutes(0).seconds(indicator.displayPreviousValue).format('HH:mm:ss');
         }
 
-        return indicator;
+        return _.extend({}, row, indicator);
       });
 
       return result;
