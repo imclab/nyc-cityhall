@@ -58,7 +58,6 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
   });
 
   Handlebars.registerHelper('commas', function(context, units) {
-    console.log(context);
     if (context === null || context === undefined) {
       return '-';
     }
