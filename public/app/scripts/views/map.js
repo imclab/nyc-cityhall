@@ -323,8 +323,6 @@ define([
       indicator = this.indicator.toJSON();
       period = this.filter.get('period');
 
-      console.log(indicator);
-
       if (period !== 'latest') {
         if (indicator.full !== 0 && !indicator.isnull) {
           this.currentLegend = new cdb.geo.ui.Legend({
