@@ -323,14 +323,16 @@ define([
       indicator = this.indicator.toJSON();
       period = this.filter.get('period');
 
+      console.log(indicator);
+
       if (period !== 'latest') {
         if (indicator.full !== 0 && !indicator.isnull) {
           this.currentLegend = new cdb.geo.ui.Legend({
             type: 'custom',
             data: {},
             template: _.template('<ul><li class="graph"><div class="colors historical"></div></li><li class="max"><%= right %></li><li class="min"><%= left %></li><li class="center">0</li></ul>', {
-              left: (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1,
-              right: (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.colors.length - 1) * indicator.full / 8))
+              left: (indicator.full < 0) ? Math.abs(indicator.full) : Math.abs(indicator.full) * -1,
+              right: (indicator.full < 0) ? Math.abs(indicator.full) * -1: Math.abs(indicator.full)
             })
           });
         } else {
@@ -338,8 +340,8 @@ define([
           var left, right;
 
           if (indicator.neutral === 0) {
-            left  = (indicator.full < 0) ? Math.abs(indicator.full - (2 * indicator.full / 8)) : Math.abs(indicator.full - (2 * indicator.full / 8)) * -1;
-            right = (indicator.full < 0) ? Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8)) * -1: Math.abs(indicator.full - ((this.options.neutralcolors.length - 2) * indicator.full / 8));
+            left  = (indicator.full < 0) ? Math.abs(indicator.full) : Math.abs(indicator.full) * -1;
+            right = (indicator.full < 0) ? Math.abs(indicator.full) * -1: Math.abs(indicator.full);
           } else {
             left = -indicator.neutral;
             right = indicator.neutral;
