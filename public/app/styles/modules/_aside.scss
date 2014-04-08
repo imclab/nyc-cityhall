@@ -28,7 +28,7 @@
 
     @include transition(all .3s ease);
 
-    &:hover, &:active, &.current {
+    &:active, &.current {
       color: $secondary;
     }
   }
@@ -39,6 +39,14 @@
     padding-top: 23px;
     .icon-close {
       top: 14px;
+    }
+  }
+}
+
+@media screen and (min-width: $md) {
+  .mod-aside-content {
+    li a:hover {
+      color: $secondary;
     }
   }
 }

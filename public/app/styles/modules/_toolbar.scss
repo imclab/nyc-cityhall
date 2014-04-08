@@ -86,7 +86,7 @@
       display: block;
       color: $thirth;
       line-height: 1.2;
-      &:hover, &:active {
+      &:active {
         color: $secondary;
       }
     }
@@ -96,5 +96,13 @@
 @media screen and (max-width: $sm) {
   .mod-toolbar .mod-toolbar-item {
     float: none;
+  }
+}
+
+@media screen and (min-width: $md) {
+  .mod-toolbar-options {
+    li a:hover {
+      color: $secondary;
+    }
   }
 }
