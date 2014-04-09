@@ -33,8 +33,14 @@ define([
       Backbone.Events.on('application:scrolltop', this.scrollTop, this);
     },
 
-    toggle: function() {
+    toggle: function(e) {
       this.$el.toggleClass('is-moved');
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+      return false;
     },
 
     changeTitle: function() {

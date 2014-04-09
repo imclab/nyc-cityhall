@@ -438,6 +438,7 @@ define([
 
     hide: function(e) {
       if (e) {
+        e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
       }
