@@ -232,7 +232,10 @@ module.exports = function(grunt) {
         options: {
           accessKeyId: secrets.production.key,
           secretAccessKey: secrets.production.secret,
-          bucket: secrets.production.bucket
+          bucket: secrets.production.bucket,
+          headers: {
+            CacheControl: 3600 * 24 //max-age=630720000, public
+          }
         },
         cwd: '<%= root.dist %>',
         src: '**'
