@@ -118,10 +118,17 @@ define([
 
     show: function() {
       this.$el.addClass('is-active');
+      this.$el.focus();
     },
 
-    close: function() {
+    close: function(e) {
       Backbone.Events.trigger('application:toggle');
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+      return false;
     }
 
   });

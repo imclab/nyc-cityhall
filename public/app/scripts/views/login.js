@@ -33,6 +33,8 @@ define([
 
       this.user.check(params[0].value, params[1].value, callback);
 
+      this.$el.find('input').blur();
+
       e.preventDefault();
     },
 
