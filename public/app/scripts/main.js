@@ -103,8 +103,8 @@ require(['underscore', 'jquerymobile', 'handlebars', 'moment', 'router'], functi
     return context.toCommas();
   });
 
-  Handlebars.registerHelper('xif', function (context, options) {
-    var result = !(context === undefined || context === null );
+  Handlebars.registerHelper('xif', function(context, options) {
+    var result = !(context === undefined || context === null);
     return (result) ? options.fn(this) : options.inverse(this);
   });
 
