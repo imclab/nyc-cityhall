@@ -64,6 +64,9 @@ define([
             indicator.value = (-100 * (1.0 - (row.current_fytd / row.previous_fytd))).toFixed(1);
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current_fytd - row.previous_fytd).toFixed(1) ;
+            if(row.current_fytd===null || row.previous_fytd===null){
+              indicator.value =1/0;
+            }
           }
           if(row.current_fytd===0 && row.previous_fytd===0){
             indicator.value =0;
@@ -84,6 +87,9 @@ define([
             indicator.value = (-100 * (1.0 - (row.current / row.previous_year_period))).toFixed(1);
           } else if(row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous_year_period).toFixed(1);
+            if(row.current===null || row.previous_year_period===null){
+              indicator.value =1/0;
+            }
           }
           if(row.current===0 && row.previous_year_period===0){
             indicator.value =0;
@@ -110,6 +116,9 @@ define([
             indicator.value = (-100 * (1.0 - (row.current / row.previous))).toFixed(1);
           } else if (row.recording_units === 'percent') {
             indicator.value = (row.current - row.previous).toFixed(1);
+            if(row.current===null || row.previous===null){
+              indicator.value =1/0;
+            }
           }
           if(row.current===0 && row.previous===0){
             indicator.value =0;
